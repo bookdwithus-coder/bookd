@@ -253,9 +253,9 @@ const STUDIOS = [
   },
 ];
 
-const NEIGHBORHOODS = ["West Hollywood","Santa Monica","Venice","Culver City","Malibu","Silver Lake","Brentwood","Topanga"];
+const NEIGHBORHOODS = ["Studio City","Venice","West Hollywood","Culver City","Beverly Hills","Malibu","Hollywood"];
 
-const CLASS_TYPES = ["Reformer","Mat","Megaformer","LaGree","Sculpt","Vinyasa","HIIT","Rowing","Breathwork","Sound Bath","Meditation"];
+const CLASS_TYPES = ["Reformer Pilates","Mat Pilates","Lagree","Sculpt","Barre","HIIT","Meditation"];
 
 const COMMUNITY_REVIEWS = {
   s1: [
@@ -317,7 +317,6 @@ function StarRating({ rating, count, size="sm" }) {
         ))}
       </div>
       <span style={{fontSize:lg?"1.1rem":"0.78rem",fontWeight:600,color:BRAND.text}}>{rating}</span>
-      {count!==undefined && <span style={{fontSize:lg?"0.85rem":"0.68rem",color:BRAND.textLight}}>({count} review{count!==1?"s":""})</span>}
     </div>
   );
 }
@@ -490,13 +489,13 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 function HomePage({ navigate, searchAndGo }) {
   const [heroSearch,setHeroSearch] = useState("");
   const topPicks = STUDIOS.filter(s=>s.rating>=4.8).slice(0,3);
-  const QUICK = ["Pilates in West Hollywood","Megaformer near me","Yoga in Silver Lake","Sculpt in Culver City","Reformer in Santa Monica","Rowing in Venice"];
+  const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
 
   return <div>
     {/* Hero */}
     <section style={{padding:"clamp(56px,12vw,120px) clamp(16px,4vw,48px) clamp(48px,8vw,80px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
       <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={48} /></div>
-      <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(2.2rem,6vw,3.6rem)",fontWeight:400,letterSpacing:"-0.03em",lineHeight:1.08,marginBottom:20}}>
+      <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:20}}>
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
       <p style={{fontSize:"clamp(0.95rem,2vw,1.1rem)",color:BRAND.textMid,lineHeight:1.7,maxWidth:520,margin:"0 auto 36px",fontWeight:300}}>
@@ -505,7 +504,7 @@ function HomePage({ navigate, searchAndGo }) {
       {/* Search bar */}
       <div style={{maxWidth:520,margin:"0 auto 24px",position:"relative"}}>
         <input type="text" value={heroSearch} onChange={e=>setHeroSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&heroSearch.trim())searchAndGo(heroSearch.trim());}}
-          placeholder='Search "reformer in Brentwood" or "90069"'
+          placeholder='Search'
           style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.1)",borderRadius:100,padding:"16px 56px 16px 24px",fontSize:"0.95rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxShadow:"0 2px 16px rgba(44,37,34,0.04)"}} />
         <button onClick={()=>{if(heroSearch.trim())searchAndGo(heroSearch.trim());}} style={{position:"absolute",right:6,top:"50%",transform:"translateY(-50%)",background:BRAND.red,color:"#FFF",border:"none",borderRadius:"50%",width:40,height:40,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1rem"}}>↗</button>
       </div>
@@ -522,10 +521,10 @@ function HomePage({ navigate, searchAndGo }) {
     {/* bookd picks */}
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-        <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em",textTransform:"uppercase"}}>✦ bookd picks</span>
+        <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>✦ bookd picks</span>
       </div>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.4rem,3vw,1.9rem)",fontWeight:400,marginBottom:6}}>Studios we love right now</h2>
-      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:28,fontWeight:300}}>The ones we keep going back to. — S & S</p>
+      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.4rem,3vw,1.9rem)",fontWeight:400,marginBottom:6}}>our current favorites</h2>
+      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:28,fontWeight:300}}>Discover the studios we are loving.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
         {topPicks.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} featured />)}
       </div>
@@ -563,27 +562,18 @@ function HomePage({ navigate, searchAndGo }) {
 
     {/* Meet your reviewers */}
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <div style={{background:BRAND.butterLight,borderRadius:20,padding:"clamp(28px,4vw,40px)",display:"flex",alignItems:"center",gap:"clamp(20px,4vw,40px)",flexWrap:"wrap"}}>
-        <div style={{display:"flex",gap:12,flexShrink:0}}>
-          <div style={{width:52,height:52,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.95rem",fontWeight:600}}>S</div>
-          <div style={{width:52,height:52,borderRadius:"50%",background:BRAND.butter,border:`2px solid ${BRAND.red}`,display:"flex",alignItems:"center",justifyContent:"center",color:BRAND.red,fontSize:"0.95rem",fontWeight:600,marginLeft:-20}}>S</div>
+      <div style={{background:BRAND.butterLight,borderRadius:20,padding:0,display:"flex",alignItems:"stretch",flexWrap:"wrap",overflow:"hidden"}}>
+        <div style={{flexShrink:0,width:"clamp(120px,20vw,180px)"}}>
+          <img src="/syd-sam.jpg" alt="Sydney and Sam" style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:180}} onError={(e)=>{e.target.parentElement.style.display="none";}} />
         </div>
-        <div style={{flex:1,minWidth:200}}>
+        <div style={{flex:1,minWidth:200,padding:"clamp(24px,3vw,36px)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
           <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.4rem)",fontWeight:400,marginBottom:4}}>We're Sydney & Sam.</div>
-          <p style={{fontSize:"0.85rem",color:BRAND.textMid,lineHeight:1.6,fontWeight:300,marginBottom:12}}>Two best friends who turned their studio obsession into a guide. We take the classes, form the opinions, and tell you exactly what we think — the vibe, the instructor, the playlist, and whether the parking situation is acceptable.</p>
+          <p style={{fontSize:"0.85rem",color:BRAND.textMid,lineHeight:1.6,fontWeight:300,marginBottom:12}}>We turned our boutique fitness obsession into a guide. We actually take the classes, form the opinions, and tell you exactly what we think. The aesthetic, the playlist, and even the parking situation is on our radar.</p>
           <span onClick={()=>navigate("about")} style={{fontSize:"0.82rem",color:BRAND.red,cursor:"pointer",fontWeight:500}}>Read our story →</span>
         </div>
       </div>
     </section>
 
-    {/* All studios */}
-    <section style={{padding:"0 clamp(16px,4vw,48px) 80px",maxWidth:1100,margin:"0 auto"}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>All reviewed studios</h2>
-      <p style={{fontSize:"0.88rem",color:"rgba(44,37,34,0.45)",marginBottom:28,fontWeight:300}}>{STUDIOS.length} studios reviewed and counting.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
-        {STUDIOS.sort((a,b)=>b.rating-a.rating).map(s => <StudioCard key={s.id} studio={s} navigate={navigate} />)}
-      </div>
-    </section>
   </div>;
 }
 
@@ -596,7 +586,7 @@ function StudioCard({ studio, navigate, featured=false }) {
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
       {/* Color header */}
       <div style={{height:8,background:BRAND.red}} />
-      {featured && s.rating>=4.8 && <div style={{position:"absolute",top:18,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em",textTransform:"uppercase"}}>bookd pick</div>}
+      {featured && s.rating>=4.8 && <div style={{position:"absolute",top:18,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
       <div style={{padding:"20px 22px 22px"}}>
         {/* Name + neighborhood */}
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
@@ -834,7 +824,6 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       {[
         { key: "space", title: "The Space", icon: "◻" },
         { key: "classExperience", title: "The Class", icon: "◎" },
-        { key: "instructors", title: "The Instructors", icon: "◇" },
         { key: "vibe", title: "The Vibe", icon: "∿" },
         { key: "knowBeforeYouGo", title: "Know Before You Go", icon: "→" },
       ].map(sec => (
@@ -879,35 +868,26 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
 // ─── COMMUNITY REVIEWS SECTION ───────────────────────────────
 function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, addReview }) {
   const [showForm, setShowForm] = useState(false);
-  const [sortBy, setSortBy] = useState("recent"); // "recent" | "highest" | "lowest"
-  const [formData, setFormData] = useState({ name:"", rating:0, text:"", classType:"", instructor:"" });
+  const [formData, setFormData] = useState({ name:"", text:"", classType:"", instructor:"" });
   const [submitted, setSubmitted] = useState(false);
-  const [hoverStar, setHoverStar] = useState(0);
 
   const sorted = useMemo(() => {
-    const r = [...reviews];
-    if (sortBy==="highest") r.sort((a,b)=>b.rating-a.rating);
-    else if (sortBy==="lowest") r.sort((a,b)=>a.rating-b.rating);
-    else r.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    return r;
-  }, [reviews, sortBy]);
-
-  const avgRating = reviews.length > 0 ? (reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1) : null;
+    return [...reviews].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  }, [reviews]);
 
   function handleSubmit() {
-    if (!formData.name||!formData.rating||!formData.text) return;
+    if (!formData.name||!formData.text) return;
     addReview(studioId, {
       id: "cr"+Date.now(),
       name: formData.name,
       date: new Date().toISOString().slice(0,10),
-      rating: formData.rating,
       text: formData.text,
       classType: formData.classType,
       instructor: formData.instructor,
     });
     setSubmitted(true);
     setShowForm(false);
-    setFormData({ name:"", rating:0, text:"", classType:"", instructor:"" });
+    setFormData({ name:"", text:"", classType:"", instructor:"" });
     setTimeout(()=>setSubmitted(false), 4000);
   }
 
@@ -918,62 +898,28 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
       {/* Header */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:12,marginBottom:20}}>
         <div>
-          <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:6}}>Community Reviews</div>
-          <div style={{display:"flex",alignItems:"center",gap:12}}>
-            <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.3rem",fontWeight:400}}>{reviews.length} review{reviews.length!==1?"s":""}</span>
-            {avgRating && <div style={{display:"flex",alignItems:"center",gap:4}}>
-              <span style={{color:"#8C2D32",fontSize:"0.8rem"}}>{"★".repeat(Math.round(parseFloat(avgRating)))}</span>
-              <span style={{fontSize:"0.85rem",fontWeight:600}}>{avgRating}</span>
-              <span style={{fontSize:"0.75rem",color:"rgba(44,37,34,0.4)"}}>community avg</span>
-            </div>}
-          </div>
+          <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:6}}>Community Comments</div>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.3rem",fontWeight:400}}>{reviews.length} comment{reviews.length!==1?"s":""}</span>
         </div>
-        <div style={{display:"flex",gap:8,alignItems:"center"}}>
-          {/* Sort */}
-          <select value={sortBy} onChange={e=>setSortBy(e.target.value)} style={{background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.08)",borderRadius:100,padding:"7px 30px 7px 12px",fontSize:"0.76rem",color:"#2C2522",outline:"none",fontFamily:"inherit",cursor:"pointer",appearance:"none",WebkitAppearance:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%232C2825' stroke-opacity='0.3' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,backgroundRepeat:"no-repeat",backgroundPosition:"right 10px center"}}>
-            <option value="recent">Most Recent</option>
-            <option value="highest">Highest Rated</option>
-            <option value="lowest">Lowest Rated</option>
-          </select>
-          <button onClick={()=>setShowForm(!showForm)} style={{background:showForm?"rgba(44,37,34,0.06)":"#2C2522",color:showForm?"#2C2522":"#FEEBAB",border:"none",borderRadius:100,padding:"8px 18px",fontSize:"0.8rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",transition:"all 0.2s"}}>
-            {showForm ? "Cancel" : "+ Leave a Review"}
-          </button>
-        </div>
+        <button onClick={()=>setShowForm(!showForm)} style={{background:showForm?"rgba(44,37,34,0.06)":BRAND.red,color:showForm?"#2C2522":"#fff",border:"none",borderRadius:100,padding:"8px 18px",fontSize:"0.8rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",transition:"all 0.2s"}}>
+          {showForm ? "Cancel" : "+ Leave a Comment"}
+        </button>
       </div>
 
       {/* Submitted toast */}
       {submitted && (
         <div style={{background:"rgba(138,159,112,0.1)",border:"1px solid rgba(138,159,112,0.25)",borderRadius:14,padding:"14px 20px",marginBottom:16,display:"flex",alignItems:"center",gap:10,fontSize:"0.86rem",color:"#6B8A55",animation:"fadeUp 0.3s ease"}}>
-          <span>✓</span> Your review has been posted. Thanks for sharing your experience!
+          <span>✓</span> Your comment has been posted. Thanks for sharing your experience!
         </div>
       )}
 
-      {/* Review form */}
+      {/* Comment form */}
       {showForm && (
         <div style={{background:"#fff",borderRadius:18,border:"1px solid rgba(44,37,34,0.06)",padding:"24px 26px",marginBottom:20,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:4}}>Share your experience at {studioName}</div>
-          <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.45)",marginBottom:20,fontWeight:300}}>Your review helps others find the right studio.</div>
+          <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.45)",marginBottom:20,fontWeight:300}}>Your comment helps others find the right studio.</div>
 
           <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            {/* Star rating selector */}
-            <div>
-              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Your Rating</div>
-              <div style={{display:"flex",gap:4}}>
-                {[1,2,3,4,5].map(star => (
-                  <span key={star}
-                    onMouseEnter={()=>setHoverStar(star)}
-                    onMouseLeave={()=>setHoverStar(0)}
-                    onClick={()=>setFormData({...formData,rating:star})}
-                    style={{fontSize:"1.6rem",cursor:"pointer",color:(hoverStar||formData.rating)>=star?"#8C2D32":"rgba(44,37,34,0.12)",transition:"color 0.15s,transform 0.15s",transform:(hoverStar||formData.rating)>=star?"scale(1.1)":"scale(1)"}}>
-                    ★
-                  </span>
-                ))}
-                {formData.rating > 0 && <span style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",alignSelf:"center",marginLeft:8}}>
-                  {["","Not for me","It was okay","Solid studio","Really great","Obsessed"][formData.rating]}
-                </span>}
-              </div>
-            </div>
-
             {/* Name */}
             <div>
               <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Your Name</div>
@@ -995,27 +941,27 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
               </div>
             </div>
 
-            {/* Review text */}
+            {/* Comment text */}
             <div>
-              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Your Review</div>
+              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Your Comment</div>
               <textarea style={{...iS,minHeight:100,resize:"vertical",borderRadius:12,lineHeight:1.6}} placeholder="What was the class like? Would you go back? Any tips for first-timers?" value={formData.text} onChange={e=>setFormData({...formData,text:e.target.value})} />
             </div>
 
-            <button onClick={handleSubmit} disabled={!formData.name||!formData.rating||!formData.text} style={{
-              background:(formData.name&&formData.rating&&formData.text)?"#2C2522":"rgba(44,37,34,0.1)",
-              color:(formData.name&&formData.rating&&formData.text)?"#FEEBAB":"rgba(44,37,34,0.3)",
-              border:"none",borderRadius:100,padding:"13px 0",fontSize:"0.88rem",fontWeight:500,cursor:(formData.name&&formData.rating&&formData.text)?"pointer":"default",
+            <button onClick={handleSubmit} disabled={!formData.name||!formData.text} style={{
+              background:(formData.name&&formData.text)?BRAND.red:"rgba(44,37,34,0.1)",
+              color:(formData.name&&formData.text)?"#fff":"rgba(44,37,34,0.3)",
+              border:"none",borderRadius:100,padding:"13px 0",fontSize:"0.88rem",fontWeight:500,cursor:(formData.name&&formData.text)?"pointer":"default",
               fontFamily:"inherit",width:"100%",transition:"all 0.2s",
-            }}>Post Review</button>
+            }}>Post Comment</button>
           </div>
         </div>
       )}
 
-      {/* Review list */}
+      {/* Comment list */}
       {sorted.length === 0 ? (
         <div style={{background:"#fff",borderRadius:16,border:"1px solid rgba(44,37,34,0.05)",padding:"48px 20px",textAlign:"center"}}>
-          <div style={{fontSize:"1.5rem",marginBottom:10,opacity:0.25}}>♡</div>
-          <div style={{fontSize:"0.9rem",color:"rgba(44,37,34,0.45)",marginBottom:6}}>No community reviews yet.</div>
+          <div style={{fontSize:"1.5rem",marginBottom:10,opacity:0.25}}>💬</div>
+          <div style={{fontSize:"0.9rem",color:"rgba(44,37,34,0.45)",marginBottom:6}}>No community comments yet.</div>
           <div style={{fontSize:"0.8rem",color:"rgba(44,37,34,0.3)",fontWeight:300}}>Be the first to share your experience!</div>
         </div>
       ) : (
@@ -1024,7 +970,6 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
             <div key={r.id} style={{background:"#fff",borderRadius:16,border:"1px solid rgba(44,37,34,0.05)",padding:"20px 24px",animation:`fadeUp 0.3s ease ${idx*0.04}s both`}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10,flexWrap:"wrap",gap:6}}>
                 <div style={{display:"flex",alignItems:"center",gap:10}}>
-                  {/* Avatar */}
                   <div style={{width:32,height:32,borderRadius:"50%",background:`hsl(${r.name.charCodeAt(0)*7},25%,72%)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.6rem",fontWeight:700,flexShrink:0}}>
                     {r.name.split(" ").map(w=>w[0]).join("")}
                   </div>
@@ -1037,12 +982,7 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
                     </div>
                   </div>
                 </div>
-                <div style={{display:"flex",alignItems:"center",gap:8}}>
-                  <div style={{display:"flex",gap:0.5}}>
-                    {[1,2,3,4,5].map(i=><span key={i} style={{fontSize:"0.65rem",color:i<=r.rating?"#8C2D32":"rgba(44,37,34,0.12)"}}>★</span>)}
-                  </div>
-                  <span style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.35)"}}>{new Date(r.date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
-                </div>
+                <span style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.35)"}}>{new Date(r.date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
               </div>
               <p style={{fontSize:"0.86rem",lineHeight:1.7,color:"rgba(44,37,34,0.65)",fontWeight:300}}>{r.text}</p>
             </div>
@@ -1132,7 +1072,7 @@ function GlossaryPage({ navigate }) {
           How we rate
         </div>
         <p style={{fontSize:"0.95rem",color:"rgba(44,37,34,0.55)",lineHeight:1.7,maxWidth:520,margin:"0 auto",fontWeight:300}}>
-          Every studio on bookd is reviewed in person by our team. We take the class, use the locker room, fight for parking, and tell you exactly what we found. No sponsored reviews. No paid placements. Just honest takes.
+          Every studio on bookd is reviewed in person by our team. We take the class, use the locker room, fight for parking, and tell you exactly what we found.
         </p>
       </div>
 
@@ -1181,9 +1121,9 @@ function GlossaryPage({ navigate }) {
 
       {/* Bottom note */}
       <div style={{textAlign:"center",marginTop:40,padding:"32px 20px",background:"rgba(44,37,34,0.02)",borderRadius:16}}>
-        <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.2rem",fontWeight:400,marginBottom:8}}>That's the system.</div>
+        <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.2rem",fontWeight:400,marginBottom:8}}>that's our bookd system.</div>
         <p style={{fontSize:"0.85rem",color:BRAND.textMid,maxWidth:440,margin:"0 auto 20px",fontWeight:300,lineHeight:1.6}}>
-          We pay for our own classes, drive our own cars to find parking, and write our own reviews. No studio can pay to change their score. What you see is what we actually think. — Sydney & Sam
+          We take the classes and write our own reviews. What you see is what we actually think. Love, Sydney & Sam
         </p>
         <button onClick={()=>navigate("home")} style={{background:BRAND.red,color:"#FFF",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Find a Studio</button>
       </div>
@@ -1194,7 +1134,7 @@ function GlossaryPage({ navigate }) {
 // ─── ABOUT / OUR STORY ──────────────────────────────────────
 function AboutPage({ navigate, searchAndGo }) {
   return (
-    <div style={{maxWidth:680,margin:"0 auto",padding:"40px clamp(16px,4vw,48px) 80px"}}>
+    <div style={{maxWidth:900,margin:"0 auto",padding:"40px clamp(16px,4vw,48px) 80px"}}>
       {/* Header */}
       <div style={{textAlign:"center",marginBottom:48}}>
         <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.8rem,5vw,2.6rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15}}>
@@ -1202,10 +1142,15 @@ function AboutPage({ navigate, searchAndGo }) {
         </div>
       </div>
 
-      {/* So that's what bookd is */}
-      <div style={{background:"#fff",borderRadius:20,padding:"clamp(28px,5vw,44px)",border:"1px solid rgba(44,37,34,0.05)",marginBottom:40}}>
-        <div style={{background:BRAND.butterLight,borderRadius:16,padding:"28px 28px",textAlign:"center"}}>
-          <p style={{fontSize:"0.92rem",lineHeight:1.8,color:"rgba(44,37,34,0.65)",fontWeight:300,maxWidth:520,margin:"0 auto"}}>
+      {/* Split screen — photo + copy */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))",gap:0,marginBottom:40,borderRadius:20,overflow:"hidden",border:"1px solid rgba(44,37,34,0.05)"}}>
+        {/* Photo side */}
+        <div style={{background:"#E8DDD0",minHeight:360}}>
+          <img src="/syd-sam.jpg" alt="Sydney and Sam" style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:360}} onError={(e)=>{e.target.style.display="none";e.target.parentElement.style.display="flex";e.target.parentElement.style.alignItems="center";e.target.parentElement.style.justifyContent="center";e.target.parentElement.innerHTML='<div style="text-align:center;padding:40px;color:rgba(44,37,34,0.3)"><div style="font-size:2rem;margin-bottom:8px">S + S</div><div style="font-size:0.8rem">Sydney & Sam</div></div>';}} />
+        </div>
+        {/* Copy side */}
+        <div style={{background:BRAND.butterLight,padding:"clamp(28px,4vw,44px)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
+          <p style={{fontSize:"0.92rem",lineHeight:1.8,color:"rgba(44,37,34,0.65)",fontWeight:300}}>
             It's a love letter to boutique fitness. It's a studio guide written by two people who are actually in the classes, actually forming the opinions, actually coming back (or not). It's a place where we talk about the vibe and the instructor and the playlist and whether the parking situation is acceptable. It's honest. It's specific. And it's written the way we'd tell a friend, because that's exactly what it is.
           </p>
         </div>
@@ -1218,14 +1163,14 @@ function AboutPage({ navigate, searchAndGo }) {
           <div style={{fontWeight:600,fontSize:"1rem",marginBottom:2}}>Sydney</div>
           <div style={{fontSize:"0.78rem",color:BRAND.textLight,marginBottom:10}}>Co-Founder, bookd with us</div>
           <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>A digital marketing expert by trade with a deep obsession with Pilates and boutique fitness that turned into very strong opinions. Sydney built bookd to give those opinions a home — and to make finding the right studio as easy as asking a friend who's been to all of them.</p>
-          <div style={{marginTop:12,fontSize:"0.78rem",color:BRAND.red,fontWeight:500}}>@bookdwithus</div>
+          <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",marginTop:12,fontSize:"0.78rem",color:BRAND.red,fontWeight:500,textDecoration:"none"}}>@bookdwithus</a>
         </div>
         <div style={{background:"#fff",borderRadius:16,padding:"24px 24px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
           <div style={{width:64,height:64,borderRadius:"50%",background:BRAND.butter,display:"flex",alignItems:"center",justifyContent:"center",color:BRAND.red,fontSize:"1.1rem",fontWeight:600,margin:"0 auto 14px"}}>S</div>
           <div style={{fontWeight:600,fontSize:"1rem",marginBottom:2}}>Sam</div>
           <div style={{fontSize:"0.78rem",color:BRAND.textLight,marginBottom:10}}>Co-Founder, bookd with us</div>
           <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>Founder of Hype Girl Club and Mason Market(ing), Sam has spent years curating wellness events and building community for women across LA. She brought the event expertise, the network, and the conviction that honest reviews could actually help people find their studio.</p>
-          <div style={{marginTop:12,fontSize:"0.78rem",color:BRAND.red,fontWeight:500}}>@bookdwithus</div>
+          <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",marginTop:12,fontSize:"0.78rem",color:BRAND.red,fontWeight:500,textDecoration:"none"}}>@bookdwithus</a>
         </div>
       </div>
 
