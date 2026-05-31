@@ -28,281 +28,214 @@ function BookdLogo({ height = 28, color = BRAND.red }) {
 // ─── STUDIO DATA ─────────────────────────────────────────────
 const STUDIOS = [
   {
-    id: "s1", name: "Spear Pilates", neighborhood: "West Hollywood", address: "8740 Santa Monica Blvd, West Hollywood",
-    zip: "90069", classTypes: ["Reformer", "Mat", "Tower"], priceRange: "$38–55/class",
-    bookingUrl: "#", instagram: "@spearpilates",
-    tags: { level: "Intermediate+", parking: "Street Parking" },
-    goodToKnow: ["Grip socks required", "No showers", "Book ahead — small classes fill fast", "Ask for Sarah or James your first time"],
-    bestFor: "Experienced reformers who want technical precision in a no-BS studio with killer instructors.",
-    rating: 4.8, ratings: { aesthetic: 4.2, music: 4.5, cleanliness: 4.8, difficulty: 4.9, price: 4.0, parking: 3.5 },
-    reviewCount: 12,
-    gallery: [
-      { color: "#D4C4B0", label: "Reformer room" },
-      { color: "#C4B8A0", label: "Front desk" },
-      { color: "#BCA898", label: "Equipment detail" },
-      { color: "#D0C0B0", label: "Class in session" },
-      { color: "#C8B8A8", label: "Street view" },
-    ],
-    heroReview: "This is not cute Pilates. This is real, precision-focused reformer work and I am obsessed. The instructors here actually correct your form — which is rare in LA. The studio is small and no-frills but that's part of the appeal.",
+    id: "s1", name: "Speir Pilates", neighborhood: "West Hollywood", address: "8356 Santa Monica Blvd, West Hollywood, CA",
+    zip: "90069", classTypes: ["Reformer", "Power Reformer"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $30",
+    bookingUrl: "https://speirpilates.com/studio-classes", instagram: "@speirpilates",
+    tags: { level: "All Levels" }, parkingType: "Metered Parking", parkingEase: "Moderate",
+    goodToKnow: ["Everyone is so nice - front desk, instructors, great sense of community", "Music is always good - solid volume, great playlists"],
+    bestFor: "Anyone who wants a challenging but not brutal reformer class with genuinely great energy and instructors who actually care.",
+    rating: 4.3, ratings: { aesthetic: 3.5, music: 4.5, cleanliness: 5, difficulty: 4 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "This is one of my favorite studios in LA. You leave feeling refreshed - you got a good workout but you didn't kill yourself. The people there are what make it. The girls at the front desk, the instructors, everyone is just so nice. It's a vibe.",
     sections: {
-      space: "Intimate, no-frills reformer studio. Clean and well-maintained but don't expect the Instagram-bait aesthetic. The focus here is the work, not the wallpaper. Fits about 10 reformers — you'll never feel lost in a crowd.",
-      classExperience: "Technical and precise. Instructors cue with anatomical language and actually walk the room correcting form. Classes build progressively and you'll feel muscles you didn't know existed. Not beginner-unfriendly, but definitely not a vibes-only class.",
-      instructors: "Some of the best-trained in LA. Multiple instructors have 10+ years of classical Pilates training. They remember your name and your injuries. Ask for Sarah or James if it's your first time.",
-      vibe: "Serious but warm. The clientele is a mix of dancers, athletes, and Pilates devotees who've tried every studio in the city and landed here. No one's checking their phone between sets.",
-      knowBeforeYouGo: "Bring grip socks. Street parking on Santa Monica Blvd can be tricky — try the side streets. Book the 7 AM if you want the best instructors. They don't have showers."
+      space: "Clean, minimal studio with a nice plant wall that gives it a fresh, oxygenated feel. Nothing flashy or Instagram-bait, but well-maintained and the equipment is in great shape. It's a studio that puts the work first.",
+      classExperience: "We took the Power Reformer and it was the right amount of challenging - a four on our difficulty scale. You get a really great workout but also a really nice stretch at the end. You leave feeling worked but not destroyed.",
+      vibe: "The standout here is genuinely the people. The girls at the front desk, the instructors - everyone is just so nice. There's a real sense of community that you feel the second you walk in. It's warm without trying too hard.",
+      knowBeforeYouGo: "Single class is $45 which is on the higher end, but they do offer a new client special for $30. The music is always good - solid volume, good playlists. It's a vibe in there."
     },
-    videoId: null, color: "#C4A88B",
+    videoId: null, color: "#C4A08A",
   },
   {
-    id: "s2", name: "Summer Pilates", neighborhood: "Santa Monica", address: "2901 Ocean Park Blvd, Santa Monica",
-    zip: "90405", classTypes: ["Reformer", "Sculpt Reformer", "Stretch"], priceRange: "$35–45/class",
-    bookingUrl: "#", instagram: "@summerpilates",
-    tags: { level: "All Levels", parking: "Parking Lot" },
-    goodToKnow: ["Great intro offer — 3 classes discounted", "Mats and equipment provided", "5-minute walk to the beach", "Bring a sweatshirt for after class"],
-    bestFor: "Beginners or anyone who wants a bright, welcoming studio with ocean-breeze energy five minutes from the beach.",
-    rating: 4.6, ratings: { aesthetic: 4.9, music: 4.3, cleanliness: 4.8, difficulty: 3.8, price: 4.2, parking: 4.5 },
-    reviewCount: 9,
-    gallery: [
-      { color: "#B8D0D8", label: "Studio interior" },
-      { color: "#C8D8E0", label: "Reformer lineup" },
-      { color: "#A8C0C8", label: "Window light" },
-      { color: "#D0E0E8", label: "Lobby" },
-    ],
-    heroReview: "Summer Pilates is the studio I recommend to every friend who's new to reformer. It's light, airy, the instructors are encouraging without being patronizing, and you leave feeling like a better version of yourself. The post-class walk to the beach is just *muah*.",
+    id: "s2", name: "Pilates Boutique", neighborhood: "West Hollywood", address: "470 N Doheny Dr, West Hollywood, CA",
+    zip: "90048", classTypes: ["Cadillac Reformer", "Chair"],
+    dropInPrice: "$59", priceTier: "$$$", introOffer: "Single class for $39",
+    bookingUrl: "https://www.pilatesboutique.com/", instagram: "@studiopilatesboutique",
+    tags: { level: "All Levels" }, parkingType: "Street Parking", parkingEase: "Moderate",
+    goodToKnow: ["Cadillac reformers - unique moves you won't get at a classic reformer studio", "Difficulty varies a lot depending on your instructor", "Music is on the quieter side - more background than playlist"],
+    bestFor: "Anyone curious about Cadillac reformers and looking for a good stretch with unique moves you won't find at a standard reformer studio.",
+    rating: 3.4, ratings: { aesthetic: 3.5, music: 2.5, cleanliness: 5, difficulty: 2.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "The Cadillac reformers are genuinely stunning and you'll do moves here you won't do anywhere else. But the studio itself is pretty bare bones, the music is quiet, and the difficulty really depends on your instructor. It's a nice stretch but don't expect to be challenged.",
     sections: {
-      space: "Gorgeous. Floor-to-ceiling windows, natural light everywhere, white oak floors, and that Santa Monica breeze. The reformers are Balanced Body and well-maintained. Aesthetically, this is one of the most beautiful studios in LA.",
-      classExperience: "Approachable and well-paced. Classes are challenging but never intimidating. The sculpt reformer format adds light weights and is a great total-body option. Modifications are always offered without making you feel singled out.",
-      instructors: "Warm, attentive, genuinely encouraging. They check in before class about injuries and actually remember you. The energy is supportive without being over-the-top.",
-      vibe: "Beach-town wellness at its best. The clientele skews younger (late 20s–30s) and the energy is positive without being performative. You'll see people chatting after class in the lobby. It feels like a community.",
-      knowBeforeYouGo: "They have a great intro offer — 3 classes for a reduced rate. Parking lot behind the building. Bring a sweatshirt for after class, the ocean breeze hits different post-workout."
+      space: "Pretty bare bones studio - they really just have the Cadillac reformers, chairs, mirrors, and maybe a little set of dumbbells. The equipment itself is really stunning though. Clean and functional, but nothing about the space specifically stands out.",
+      classExperience: "Because it's a Cadillac reformer, you do some pretty unique moves that you might not do at a classic reformer studio. It's a really nice stretch. Difficulty is a 2.5 - it depends a lot on the instructor you get.",
+      vibe: "Quiet and understated. The music is fairly low and doesn't always seem like there's an intentional playlist - more background noise. It's a calm space but it doesn't have that energy you get at some other studios.",
+      knowBeforeYouGo: "This is one of the most expensive studios we've been to - drop-in rate is $59. They do have an intro offer for $39. Expect a stretch-focused class rather than an intense workout."
     },
-    videoId: null, color: "#9BB5C4",
+    videoId: null, color: "#B8A090",
   },
   {
-    id: "s3", name: "YJOH (Yogi John's Open House)", neighborhood: "Silver Lake", address: "3217 Glendale Blvd, Silver Lake",
-    zip: "90039", classTypes: ["Vinyasa", "Power Yoga", "Meditation", "Sound Bath"], priceRange: "$25–35/class",
-    bookingUrl: "#", instagram: "@yjoh.la",
-    tags: { level: "All Levels", parking: "Street Parking" },
-    goodToKnow: ["Donation-based class options", "Bring your own mat for donation classes", "Friday 7 PM sound bath books out early", "One of the most inclusive studios in LA"],
-    bestFor: "Anyone who wants yoga that feels like a real community, not a performance. Silver Lake locals, this is your studio.",
-    rating: 4.9, ratings: { aesthetic: 4.0, music: 4.6, cleanliness: 4.3, difficulty: 4.2, price: 5.0, parking: 3.8 },
-    reviewCount: 18,
-    gallery: [
-      { color: "#B8C8B8", label: "Main room" },
-      { color: "#A8B8A0", label: "Sound bath setup" },
-      { color: "#C0D0B8", label: "Street entrance" },
-      { color: "#B0C0A8", label: "Community board" },
-    ],
-    heroReview: "YJOH is the reason I still do yoga. It's unpretentious, deeply community-oriented, and the instructors genuinely care about your practice — not your outfit. The donation-based classes make it accessible and the sound baths are transcendent.",
+    id: "s3", name: "Silver Springs", neighborhood: "West Hollywood", address: "8710 Melrose Ave, West Hollywood, CA",
+    zip: "90069", classTypes: ["Heated HIIT Pilates", "Hot Yoga", "Sculpt"],
+    dropInPrice: "$35", priceTier: "$$", introOffer: "2 classes for $40",
+    bookingUrl: "https://silverspringsla.com/pages/schedule", instagram: "@silverspringsmelrose",
+    tags: { level: "All Levels" }, parkingType: "Parking Lot", parkingEase: "Moderate",
+    goodToKnow: ["They give you a mat, towel, and face towel - all free", "They have their own parking lot which never happens in LA", "They clean everything up for you after class", "Palo Santo at the end of class - so calming"],
+    bestFor: "Anyone who wants a studio that goes above and beyond on the details. The sound system, the amenities, the parking lot - everything is thought through.",
+    rating: 4.9, ratings: { aesthetic: 5, music: 5, cleanliness: 5, difficulty: 4.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "The sound system is incredible - speakers mounted on the wall, mic is super crisp and clear. This is the first time I've been motivated by the music in a class in a really long time. It was almost like a spiritual experience. And they have their own parking lot. In LA. I'm sold.",
     sections: {
-      space: "Cozy, lived-in, real. It's not the fanciest studio in LA and that's exactly the point. Exposed brick, warm lighting, wooden floors that creak a little. It feels like someone's beautiful living room, not a corporate wellness box.",
-      classExperience: "Thoughtful sequencing with a focus on breath and intention over aesthetics. Power classes are legitimately challenging. The meditation and sound bath offerings are some of the best in the city — don't sleep on the Friday evening sound bath.",
-      instructors: "Exceptional. John himself teaches regularly and his classes are worth rearranging your schedule for. Every instructor here seems hand-picked for their ability to hold space without ego.",
-      vibe: "This is the anti-Equinox. Inclusive, warm, zero pretension. You'll see people of all ages, body types, and experience levels. The community here is real — people actually know each other's names.",
-      knowBeforeYouGo: "Some classes are donation-based, which is incredible. Bring your own mat for those. Street parking on Glendale Blvd. The Friday 7 PM sound bath books out — get on it early."
+      space: "Everything about this studio feels intentional. The sound system alone sets it apart - speakers mounted on the wall, crystal clear audio. The aesthetic is on point and the space is spotless. They even have their own parking lot, which in LA is basically a miracle.",
+      classExperience: "We took the heated HIIT Pilates and it was a 4.5 on difficulty. Challenging and sweat-inducing but the music makes you want to push harder. The combination of heat and high-intensity reformer work is addictive.",
+      vibe: "This was almost a spiritual experience. The music, the heat, the energy in the room - it all comes together. And the little touches matter: they give you a mat, towel, and face towel all for free. They clean everything up for you. They bring in Palo Santo at the end. It's the details.",
+      knowBeforeYouGo: "Drop-in is $35 which is very fair for what you get. They have a great intro deal - 2 classes for $40. They provide mat, towel, and face towel. They have a parking lot. Honestly the perks here are unmatched."
     },
-    videoId: null, color: "#A8BFB2",
+    videoId: null, color: "#A0B8B8",
   },
   {
-    id: "s4", name: "Coco House", neighborhood: "West Hollywood", address: "640 N Robertson Blvd, West Hollywood",
-    zip: "90069", classTypes: ["LaGree", "Megaformer"], priceRange: "$35–42/class",
-    bookingUrl: "#", instagram: "@cocohousela",
-    tags: { level: "Intermediate", parking: "Metered Parking" },
-    goodToKnow: ["Grip socks required (they sell them)", "Great new client intro rate", "Content-friendly lighting", "Hydrate before — you will sweat"],
-    bestFor: "LaGree lovers who want a serious sweat in a space that's actually cute. If you want to shake on the megaformer and look good doing it.",
-    rating: 4.7, ratings: { aesthetic: 5.0, music: 4.8, cleanliness: 4.9, difficulty: 4.7, price: 3.8, parking: 3.5 },
-    reviewCount: 14,
-    gallery: [
-      { color: "#E0C8C0", label: "Studio interior" },
-      { color: "#D0B8B0", label: "Megaformers" },
-      { color: "#D8C0B8", label: "Detail shot" },
-      { color: "#E8D0C8", label: "Entrance" },
-      { color: "#D4BCB4", label: "Locker area" },
-    ],
-    heroReview: "Coco House is where I go when I want to feel like I've actually done something. The megaformer classes are brutal in the best way and the studio itself is stunning — all warm neutrals and perfect lighting. My legs were shaking for two days after my first class.",
+    id: "s4", name: "Karen Lord Pilates", neighborhood: "Santa Monica", address: "1427 7th St, Santa Monica, CA",
+    zip: "90401", classTypes: ["Modern Reformer"],
+    dropInPrice: "$43", priceTier: "$$", introOffer: "Single class for $25",
+    bookingUrl: "https://www.karenlordpilatesmovement.com/book-a-class", instagram: "@karenlordpilates",
+    tags: { level: "Beginner-Friendly" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    goodToKnow: ["The bathroom is stunning - beautiful stone sink, incredible details and decor", "They have really cute merch", "Class leans beginner - not the most challenging if you're experienced", "Free 2-hour parking on 7th St right in front of the studio"],
+    bestFor: "Beginners or anyone who wants a beautiful, crystal-filled studio with a calming energy - just don't expect to be pushed hard.",
+    rating: 3.7, ratings: { aesthetic: 5, music: 2.5, cleanliness: 5, difficulty: 2.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "The aesthetic is a five, easy. The lights, the huge crystals, the attention to detail - it's white, bright, and beautiful. But the class itself was not very challenging and the music was too quiet. It's gorgeous in there but the workout didn't match the space.",
     sections: {
-      space: "Beautiful. Warm terracotta tones, arched doorways, perfectly curated down to the water bottles. This is the studio you'll want to post about — and the workout backs it up. Clean, modern megaformers in a space that feels more boutique hotel than gym.",
-      classExperience: "Intense. LaGree on the megaformer is slow, controlled, and absolutely brutal on the muscles. Classes are 50 minutes and you'll feel every second. The slow tempo means you can't fake it — your muscles have nowhere to hide.",
-      instructors: "Solid across the board. Energetic, clear cueing, good music. A few standouts who really push you. Could be slightly more attentive to form correction in larger classes.",
-      vibe: "Trendy, aesthetically-driven, predominantly female clientele in their 20s–30s. The energy is focused and sweaty. Not a social studio — people come to work.",
-      knowBeforeYouGo: "Wear grippy socks (they sell them too). Hydrate beforehand — you will sweat. The evening classes tend to be the most packed. They have a solid new client intro rate."
+      space: "Five for aesthetic, no question. Beautiful lighting, huge crystals throughout, really thoughtful details everywhere. White and bright with a calming energy. The bathroom alone is worth mentioning - stunning stone sink with incredible decor. They also have really cute branded merch.",
+      classExperience: "We took the Modern Reformer which was listed for beginners and intermediate. Personally, it didn't feel very challenging - I'd give it a 2.5 on difficulty. The moves were nice but if you're looking for intensity, this isn't it.",
+      vibe: "Calm, beautiful, serene. The space does all the talking. It feels luxurious and intentional. But the energy could use a boost - the music was really quiet and it could have been more of a vibe if they just turned up the volume.",
+      knowBeforeYouGo: "Drop-in is $43 which is pretty high for LA, especially given the difficulty level. They do have a new client special for $25 which is a great deal to try it out. Free 2-hour parking on 7th St right in front of the studio."
     },
-    videoId: null, color: "#D4A59A",
+    videoId: null, color: "#D4B8A0",
   },
   {
-    id: "s5", name: "P.volve", neighborhood: "West Hollywood", address: "8500 Melrose Ave, West Hollywood",
-    zip: "90069", classTypes: ["P.volve Method", "Sculpt", "Stretch & Recovery"], priceRange: "$35–48/class",
-    bookingUrl: "#", instagram: "@pvolve",
-    tags: { level: "Beginner-Friendly", parking: "Parking Structure" },
-    goodToKnow: ["Showers available", "All props provided", "Great digital membership if you want to try at home first", "Give it 3–4 classes — the method has a learning curve"],
-    bestFor: "Anyone recovering from injury, dealing with joint issues, or who wants a smart, functional approach to strength. Also great if you're burned out on high-intensity everything.",
-    rating: 4.5, ratings: { aesthetic: 4.7, music: 3.8, cleanliness: 5.0, difficulty: 3.5, price: 3.5, parking: 4.2 },
-    reviewCount: 11,
-    gallery: [
-      { color: "#C8D4B8", label: "Main studio" },
-      { color: "#B8C4A8", label: "Equipment wall" },
-      { color: "#D0DCC0", label: "Stretch area" },
-    ],
-    heroReview: "P.volve changed how I think about working out. After years of high-intensity everything, my body was breaking down. Their functional method actually fixed my hip pain AND made me stronger. It doesn't look hard but you will be sore. Trust the process.",
+    id: "s5", name: "The Pilates Cave", neighborhood: "West LA", address: "11824 W Pico Blvd, Los Angeles, CA",
+    zip: "90064", classTypes: ["Reformer", "Mat"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $35",
+    bookingUrl: "https://thepilatescave.com/schedule-pilates-cave/", instagram: "@thepilatescave",
+    tags: { level: "Beginner-Friendly" }, parkingType: "Metered Parking", parkingEase: "Moderate",
+    goodToKnow: ["They have a sauna in the studio", "Multiple locations - reformer and mat are separate", "Class leans beginner - great energy but not intense"],
+    bestFor: "Anyone who wants a beautiful studio with great energy, a sauna, and a class that feels good on your body without pushing you to the limit.",
+    rating: 4, ratings: { aesthetic: 5, music: 4, cleanliness: 5, difficulty: 2 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "I instantly gained ten points of serotonin as I entered. The energy and aesthetic are incredible but I have to be honest - the class leaned beginner and the intensity was minimal. I'll definitely be back to try the mat studio though. And they have a sauna. A sauna!",
     sections: {
-      space: "Sleek and clinical in the best way. The WeHo flagship feels like a high-end physical therapy clinic crossed with a boutique studio. Bright, clean, well-organized equipment stations. The props (P.ball, P.band, etc.) are unique to the method.",
-      classExperience: "Unlike anything else in LA. The P.volve method focuses on functional movement patterns — rotational work, hip stabilization, ankle mobility. It looks gentle but targets deep stabilizers you've been ignoring. Classes range from sculpt (more intense) to stretch & recovery.",
-      instructors: "Knowledgeable about anatomy and movement science. Less 'hype' energy and more clinical precision. They'll explain why you're doing each movement, which is refreshing.",
-      vibe: "Calm, intentional, almost meditative. The clientele includes post-injury recovery people, former athletes, and wellness-forward women who've graduated from the 'go hard or go home' mentality. Not a party.",
-      knowBeforeYouGo: "Start with the intro assessment if they offer one. The method has a learning curve — give it 3–4 classes before judging. Their digital membership is actually great if you want to try at home first."
+      space: "The second you walk in you feel it - the energy, the aesthetic, everything. It's one of those studios where the space itself elevates the experience. They have multiple locations with separate reformer and mat studios. And yes, they have a sauna.",
+      classExperience: "Class felt good for the body but leaned beginner. If you're looking for a challenge, this probably isn't your spot. But if you want something that feels restorative and leaves you feeling good without destroying you, it delivers.",
+      vibe: "Incredible energy. The kind of studio where you walk in and immediately feel better. The aesthetic carries a lot of the experience. Loved it - but the workout intensity was minimal.",
+      knowBeforeYouGo: "Price is on the higher end but they have great intro offers - definitely take advantage. They have multiple locations so make sure you're going to the right one. And don't skip the sauna."
     },
-    videoId: null, color: "#B8C4A0",
+    videoId: null, color: "#B0C0A8",
   },
   {
-    id: "s6", name: "Oblix Fitness", neighborhood: "Culver City", address: "9500 Culver Blvd, Culver City",
-    zip: "90232", classTypes: ["Sculpt", "HIIT", "Full Body", "Abs & Booty"], priceRange: "$30–38/class",
-    bookingUrl: "#", instagram: "@oblixfitness",
-    tags: { level: "All Levels", parking: "Parking Structure" },
-    goodToKnow: ["Bring a towel — you will drip", "Great new member deals", "6 PM classes have the best energy", "Playlists are genuinely incredible"],
-    bestFor: "The person who wants a full-body sculpt workout with great music and high energy. If you miss the energy of a group fitness class with a DJ-level playlist.",
-    rating: 4.6, ratings: { aesthetic: 4.3, music: 5.0, cleanliness: 4.4, difficulty: 4.5, price: 4.6, parking: 4.5 },
-    reviewCount: 16,
-    gallery: [
-      { color: "#C0B0D0", label: "Main floor" },
-      { color: "#B0A0C0", label: "Weight station" },
-      { color: "#D0C0E0", label: "Entrance" },
-      { color: "#C8B8D8", label: "Class energy" },
-    ],
-    heroReview: "Oblix is the workout I never want to skip. The playlists alone are worth showing up for, and the sculpt format hits everything without destroying your joints. It's intense but fun — you forget you're suffering because the energy is so good.",
+    id: "s6", name: "Oblix Studio", neighborhood: "Beverly Hills", address: "243 N Robertson Blvd, Beverly Hills, CA",
+    zip: "90211", classTypes: ["Lagree", "Megaformer"],
+    dropInPrice: "$42", priceTier: "$$", introOffer: "Buy one, get one for $42",
+    bookingUrl: "https://www.oblixstudio.com/schedule", instagram: "@oblixstudio",
+    tags: { level: "Intermediate" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    goodToKnow: ["Incredible intro offers - check their site", "Music is loud and fun - mostly hip hop and rap", "Be ready to be humbled - this class is no joke"],
+    bestFor: "Anyone who wants a seriously challenging Lagree class in a beautiful studio with great music. Come humble.",
+    rating: 4.5, ratings: { aesthetic: 4.5, music: 4, cleanliness: 5, difficulty: 4.7 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "This was humbling. A 4.7 on difficulty - one of the most challenging classes I've taken. The megaformers are beautiful, the backlighting is amazing, and the music is loud and fun. They have some really incredible intro offers if you want to try it.",
     sections: {
-      space: "Industrial-chic with moody lighting. Dark walls, good speakers, the kind of studio that feels like a workout even when you walk in. Not the most spacious but the lighting and sound design create an immersive vibe.",
-      classExperience: "Music-driven sculpt that combines light weights, resistance bands, bodyweight, and targeted core work. Fast transitions keep your heart rate up. The full body format is their signature — 50 minutes, no muscle group left behind.",
-      instructors: "High energy, motivational, great music taste. They bring the party while still keeping you honest on form. The best instructors here have a cult following for a reason.",
-      vibe: "Social, sweaty, communal suffering in the best way. People high-five after class. The post-workout glow in the lobby is real. This is fitness as a group experience.",
-      knowBeforeYouGo: "Bring a towel — you will drip. The 6 PM classes are the most electric. They run deals for new members regularly. Parking at Platform LA is easy."
+      space: "Beautiful studio with amazing backlighting. The megaformers themselves are stunning. It's a space that looks as good as the workout feels - which is saying something because this workout will humble you.",
+      classExperience: "4.7 on difficulty. This is not a gentle Lagree class. You will shake. Every class has been heavy on the hip hop and rap which adds to the energy. If you're looking to be challenged, this is your studio.",
+      vibe: "High energy, loud music, serious workout. The kind of studio where you walk out feeling like you accomplished something. Not pretentious - just intense.",
+      knowBeforeYouGo: "Single class is $42. They have some really incredible intro offers - definitely check their site. Be prepared to be humbled, especially if it's your first Lagree class."
     },
-    videoId: null, color: "#C9A8D2",
+    videoId: null, color: "#C0A8C0",
   },
   {
-    id: "s7", name: "Drenched Fitness", neighborhood: "Venice", address: "1041 Abbot Kinney Blvd, Venice",
-    zip: "90291", classTypes: ["Rowing + Sculpt", "Full Body", "Cardio Sculpt"], priceRange: "$32–40/class",
-    bookingUrl: "#", instagram: "@drenchedfitness",
-    tags: { level: "All Levels", parking: "Metered Parking" },
-    goodToKnow: ["First-timer friendly — they'll teach you rowing form", "Bluestone Lane coffee next door", "Bike or walk if you can — Abbot Kinney parking is chaos", "Watch a rowing form video before your first class"],
-    bestFor: "Anyone bored of the same formats. If you've never tried rowing-based fitness, this is the place to start. The Abbot Kinney location is a bonus.",
-    rating: 4.7, ratings: { aesthetic: 4.5, music: 4.4, cleanliness: 4.6, difficulty: 4.3, price: 4.3, parking: 3.2 },
-    reviewCount: 13,
-    gallery: [
-      { color: "#D8D0C0", label: "Rower lineup" },
-      { color: "#C8C0B0", label: "Floor station" },
-      { color: "#E0D8C8", label: "Abbot Kinney entrance" },
-      { color: "#D0C8B8", label: "Post-class" },
-    ],
-    heroReview: "I had never touched a rowing machine before Drenched and now I'm obsessed. The format alternates between rowing intervals and floor sculpt work, so you get cardio AND toning without it feeling like a slog. Plus — Abbot Kinney coffee after? Come on.",
+    id: "s7", name: "Be Kind Studios", neighborhood: "Malibu", address: "23465 Civic Center Way, Suite #830, Malibu, CA",
+    zip: "90265", classTypes: ["Reformer"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $35",
+    bookingUrl: "https://bekindstudios.com/locations#/", instagram: "@bekindstudios",
+    tags: { level: "Intermediate" }, parkingType: "Parking Lot", parkingEase: "Easy",
+    goodToKnow: ["They have an infamous coffee and matcha machine - actually so good", "One of their newest locations - attention to detail in the design is insane", "Every class is going to be challenging", "Instructors are super nice and knowledgeable"],
+    bestFor: "Anyone willing to make the drive to Malibu for a stunning studio with consistently challenging classes, amazing instructors, and honestly the best studio coffee machine in LA.",
+    rating: 4.7, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4.3 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "We were SO obsessed. The attention to detail in the design of this studio is next level and the vibes are 10 out of 10. Every class is going to be challenging and the instructors are so nice and knowledgeable. And you have to try the coffee and matcha machine. It's actually so good.",
     sections: {
-      space: "Clean, bright, Venice-appropriate. Water Rowers line one side, floor stations on the other. The Abbot Kinney location means you're steps from the best post-workout coffee and matcha in the city. Natural light, good energy.",
-      classExperience: "The rowing + sculpt split is genius. You alternate between timed rowing intervals (great low-impact cardio) and floor work with weights and bands. It's total body without being repetitive. The format keeps you engaged the whole time.",
-      instructors: "Encouraging and clear. They'll teach you proper rowing form if you're new — don't be intimidated. Good energy without being over-the-top.",
-      vibe: "Venice casual. The clientele is a mix of fitness regulars and people discovering rowing for the first time. Friendly, laid-back, no attitude. The kind of studio where you feel comfortable showing up alone.",
-      knowBeforeYouGo: "The rowers have a learning curve — watch a quick form video before your first class or arrive 5 minutes early. Metered parking on Abbot Kinney, free on side streets. Post-class, hit Bluestone Lane next door."
+      space: "Absolutely stunning. This is one of their newest locations and you can tell - the attention to detail in the design is insane. Everything feels intentional and elevated. It's the kind of studio you want to take a photo in.",
+      classExperience: "Every class here is going to challenge you - 4.3 on difficulty. The instructors are knowledgeable and genuinely nice, which makes the hard parts feel supported rather than punishing.",
+      vibe: "10 out of 10. The energy, the design, the instructors, the little touches like the coffee and matcha machine - everything comes together. If you're in Malibu, this is a must-try.",
+      knowBeforeYouGo: "Single class is $45. The drive to Malibu is the only barrier - once you're there, everything is worth it. Try the coffee and matcha machine, seriously."
     },
-    videoId: null, color: "#D4C1A1",
+    videoId: null, color: "#A8C0D0",
   },
   {
-    id: "s8", name: "The Pilates Cave", neighborhood: "Brentwood", address: "11740 San Vicente Blvd, Brentwood",
-    zip: "90049", classTypes: ["Reformer", "Private Sessions", "Duets"], priceRange: "$45–65/class",
-    bookingUrl: "#", instagram: "@thepilatescave",
-    tags: { level: "Intermediate+", parking: "Street Parking" },
-    goodToKnow: ["Max 6 people per class — book well in advance", "Grip socks required", "No showers", "Worth every penny — closest thing to a private session"],
-    bestFor: "The person who wants the closest thing to a private Pilates session in a group setting. If you're willing to pay more for fewer people and better attention.",
-    rating: 4.9, ratings: { aesthetic: 4.3, music: 4.0, cleanliness: 4.8, difficulty: 4.8, price: 3.2, parking: 4.0 },
-    reviewCount: 8,
-    gallery: [
-      { color: "#D0C4A8", label: "Studio interior" },
-      { color: "#C0B498", label: "Reformers" },
-      { color: "#D8CCB0", label: "Detail" },
-    ],
-    heroReview: "The Pilates Cave is my secret and I almost don't want to share it. Max 6 people per class, instructors who trained under master teachers, and the kind of attention you'd normally pay private-session prices for. Worth every penny.",
+    id: "s8", name: "Sculpt Club", neighborhood: "Studio City", address: "12348 Ventura Blvd, Suite C, Studio City, CA",
+    zip: "91604", classTypes: ["Booty & Abs", "Full Body Sculpt", "Pilates", "Mat & Tower Pilates"],
+    dropInPrice: "$38", priceTier: "$$", introOffer: "3 classes for $70",
+    bookingUrl: "https://www.sculptclubco.com/schedule", instagram: "@sculptclubla",
+    tags: { level: "Beginner-Friendly" }, parkingType: "Street Parking", parkingEase: "Moderate",
+    goodToKnow: ["Branded merch, free samples, coffee, and chlorophyll drops for your water", "The space feels like somewhere you'd want to hang out before or after class", "Super beginner friendly - great for first-timers"],
+    bestFor: "Beginners or anyone who wants a bright, welcoming studio with a great hang-out-before-and-after energy. Don't expect to be destroyed but expect a solid burn.",
+    rating: 4, ratings: { aesthetic: 5, music: 3, cleanliness: 5, difficulty: 3 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "The studio is stunning - bright, airy, and has such a clean, welcoming energy. We took the Booty and Abs class which was all about slow, controlled movements. I would have loved a bit more intensity but it was still a great burn and super beginner friendly. And they have chlorophyll drops for your water in the back. We love a detail.",
     sections: {
-      space: "Small, intentional, cave-like in the coziest way. Warm lighting, max 6 reformers. It feels private even in a group class. Not flashy or Instagram-ready — just a beautiful, focused space to do the work.",
-      classExperience: "The closest thing to private Pilates you'll get in a group format. With only 6 people, the instructor is essentially coaching you individually. Classes are technically demanding and deeply satisfying. You'll learn more about your body in one class here than a month elsewhere.",
-      instructors: "Master-level. Multiple instructors trained under Romana Kryzanowska lineage. They see everything, correct everything, and elevate your practice immediately. This is where LA's serious Pilates people go.",
-      vibe: "Quiet, focused, almost reverent. The small class size creates an intimacy that changes the experience. People here are committed to their practice. Zero performative energy.",
-      knowBeforeYouGo: "Book well in advance — with only 6 spots, classes fill fast. The pricing reflects the quality and attention. Street parking on San Vicente. If you've only done big-studio reformer, this will redefine Pilates for you."
+      space: "Bright, airy, and stunning. It's got such a clean, welcoming energy. The studio feels like a space you'd want to hang out in before or after class. They have branded merch, free samples, coffee, and even chlorophyll drops for your water. The details matter and they know it.",
+      classExperience: "We took the Booty and Abs class - all about slow, controlled movements and really engaging those smaller stabilizing muscles in your core and glutes. Personally, I would have loved a bit more intensity, but it was still a great burn and super beginner friendly.",
+      vibe: "Welcoming and approachable. This isn't a studio that's trying to intimidate you. It's the kind of place you'd bring a friend who's never done Pilates. The energy is warm and the extras (merch, coffee, chlorophyll drops) make it feel like a little community.",
+      knowBeforeYouGo: "$35 for a single class which is moderate for LA. Super beginner friendly so if you're experienced and want intensity, maybe try their Full Body Sculpt instead of Booty and Abs."
     },
-    videoId: null, color: "#C4B08B",
+    videoId: null, color: "#D0C0A0",
   },
   {
-    id: "s9", name: "Mighty Pilates", neighborhood: "Venice", address: "1716 Pacific Ave, Venice",
-    zip: "90291", classTypes: ["Lagree", "Megaformer", "Stretch"], priceRange: "$30–40/class",
-    bookingUrl: "#", instagram: "@mightypilates",
-    tags: { level: "All Levels", parking: "Bike/Walk Recommended" },
-    goodToKnow: ["Best value megaformer in LA", "Great class pack pricing", "Grip socks required", "Morning classes are less crowded"],
-    bestFor: "Venice locals who want a solid megaformer class without the pretension or the price tag. Great for Lagree beginners.",
-    rating: 4.5, ratings: { aesthetic: 3.8, music: 4.2, cleanliness: 4.2, difficulty: 4.4, price: 5.0, parking: 3.0 },
-    reviewCount: 15,
-    gallery: [
-      { color: "#B8D0D0", label: "Main room" },
-      { color: "#A8C0C0", label: "Megaformers" },
-      { color: "#C8D8D8", label: "Exterior" },
-    ],
-    heroReview: "Mighty Pilates is the best value megaformer in LA, full stop. The classes are tough, the vibe is chill, and it's priced like a normal human can actually go regularly. Venice energy, no attitude, real results.",
+    id: "s9", name: "The Heated Room", neighborhood: "Santa Monica", address: "315 Wilshire Blvd, Santa Monica, CA",
+    zip: "90401", classTypes: ["Power Pilates", "Semi-Private Reformer"],
+    dropInPrice: "$40-$55", priceTier: "$$-$$$", introOffer: "Mat: 2 classes for $40, Reformer: Single class for $45",
+    bookingUrl: "https://www.heatedroom.com/schedule?_mt=%2Fschedule%2Fdaily%3FactiveCategoryId%3D0", instagram: "@heatedroom",
+    tags: { level: "Intermediate" }, parkingType: "Metered Parking", parkingEase: "Moderate",
+    goodToKnow: ["From the outside you'd never guess how stunning it is inside", "Feels like a luxurious cave - the lighting is next level", "Music is LOUD - bring your energy", "Mats, towels, and face towels all provided"],
+    bestFor: "Anyone who wants fast-paced, form-focused Pilates with an incredible playlist in a space that feels like a luxurious hidden cave.",
+    rating: 4.9, ratings: { aesthetic: 5, music: 5, cleanliness: 5, difficulty: 4.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "From the outside you'd never guess how truly stunning this place is. It feels like you've been transported into a luxurious cave. The lighting, the setup, the amenities - everything is next level. And the music is so loud your core is literally shaking. If you like fast-paced, form-focused Pilates with an incredible playlist, you need this studio in your life.",
     sections: {
-      space: "Casual, beachy, unpretentious. It's not the most polished studio on this list but it's clean, well-equipped, and the Venice location gives it character. Megaformers are well-maintained.",
-      classExperience: "Solid Lagree method on megaformers. Classes are challenging and effective. Good variety between full body, lower body focus, and stretch recovery options. Instructors offer modifications and progressions.",
-      instructors: "Friendly and knowledgeable. Not the most hands-on correction but they demo well and keep the class moving. The regulars have their favorite instructors — ask around.",
-      vibe: "Venice casual to the core. Flip-flop-to-megaformer pipeline. The clientele is local, unpretentious, and consistent. People say hi, nobody judges. It's fitness without the performance.",
-      knowBeforeYouGo: "Best value in LA for megaformer — their class packs are very reasonable. Parking can be Venice-level annoying, so bike or walk if you can. The morning classes are less crowded."
+      space: "From the outside you'd never guess it. But inside? It feels like you've been transported into a luxurious cave. The lighting is next level, the setup is incredible, and the amenities are thoughtful. It's one of those spaces that makes you feel like you're somewhere special.",
+      classExperience: "Power Pilates combines classical core work with high-intensity movement and added resistance. You're building strength and endurance at the same time. It's fast-paced and form-focused - and with the music that loud, your core is literally shaking.",
+      vibe: "Intense, immersive, and elevated. The music is loud, the energy is high, and the space makes you feel like you're in on a secret. This is not a gentle Pilates class. It's an experience.",
+      knowBeforeYouGo: "Price is on the higher end - check their site for current rates and intro offers. They also offer semi-private reformer sessions. Mats, towels, and face towels are all provided. Come ready to work."
     },
-    videoId: null, color: "#B0C4C4",
+    videoId: null, color: "#B8C4B8",
+  },
+  {
+    id: "s10", name: "Coco House Pilates", neighborhood: "Beverly Hills", address: "350 N Canon Dr, Beverly Hills, CA",
+    zip: "90210", classTypes: ["Heated Mat Pilates", "Reformer", "Tower"],
+    dropInPrice: "$45-$65", priceTier: "$$$", introOffer: "Mat: Single class for $25, Reformer: Single class for $30\"",
+    bookingUrl: "https://www.cocohousepilates.com/book-a-class", instagram: "@cocohousepilates",
+    tags: { level: "All Levels" }, parkingType: "Metered Parking, Parking Garage free for 2 hours", parkingEase: "Easy",
+    goodToKnow: ["Heated class - come hydrated", "Dark, moody mat pilates room - very different from typical studio", "Grip socks mandatory for both rooms", "Plenty of free parking around the studio"],
+    bestFor: "Intermediate to advanced studio goers who want to be pushed. The combinations are unmatched and you will leave feeling like it is the hardest pilates class you have ever taken.",
+    rating: 4.8, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4.7 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "The newest Pilates studio in Beverly Hills. We took their Carve class which is heated mat Pilates inside this super vibey, dark, moody room that feels so different from your typical studio. We used everything - circles, hand weights, blocks. It's a full experience.",
+    sections: {
+      space: "Super vibey, dark, moody room that feels completely different from your typical bright-and-white Pilates studio. It's heated, which adds another layer to the experience. The newest studio in Beverly Hills and it shows - everything feels fresh and intentional.",
+      classExperience: "The Carb class is heated mat Pilates and they use everything - circles, hand weights, blocks. It's a full-body, full-equipment class. Expect to sweat.",
+      vibe: "This studio feels intentional in a way most studios don't. It's not just a pretty space with nice lighting - every detail is engineered. The infrared heat, the red light therapy in the ceilings, the humidity-controlled climate system - it's all designed to make your body perform better, not just sweat more. It's cozy but elevated. Welcoming but serious. The kind of studio where you walk in and immediately think 'ok, they thought about this.' And the little touches seal it - alkaline filtered water from marble sinks, a eucalyptus steam reset at the end of class from a sauna heater built into a Himalayan salt wall. It's giving wellness experience, not just workout.",
+      knowBeforeYouGo: "The heated room uses infrared panels, not traditional heat, so it warms your body from within rather than just blasting hot air - it's a different kind of sweat. Come hydrated. They have alkaline filtered water stations built into these gorgeous marble sinks under the logo. And don't rush out after class - they activate a eucalyptus steam from the Himalayan salt wall at the end that is genuinely grounding."
+    },
+    videoId: null, color: "#C8B0A0",
   },
 ];
 
-const NEIGHBORHOODS = ["Studio City","Venice","West Hollywood","Culver City","Beverly Hills","Malibu","Hollywood"];
+// Auto-populate neighborhoods from studio data
+const NEIGHBORHOODS = [...new Set(STUDIOS.map(s => s.neighborhood))].sort();
 
-const CLASS_TYPES = ["Reformer Pilates","Mat Pilates","Lagree","Sculpt","Barre","HIIT","Meditation"];
+// Auto-populate class types from studio data
+const CLASS_TYPES = [...new Set(STUDIOS.flatMap(s => s.classTypes))].sort();
 
-const COMMUNITY_REVIEWS = {
-  s1: [
-    { id:"cr1", name:"Sophie L.", date:"2026-03-15", rating:5, text:"Alexa's 7AM reformer is the only class I will wake up early for. She remembers everyone's name and injuries. The studio is small which I love — nowhere to hide but also very personal.", classType:"Reformer", instructor:"Alexa" },
-    { id:"cr2", name:"Maya P.", date:"2026-03-10", rating:5, text:"I've done Pilates in NYC, London, and LA. Spear is in my top 3 globally. Classical training, real corrections, and you walk out taller. Not the prettiest studio but who cares.", classType:"Reformer", instructor:"James" },
-    { id:"cr3", name:"Ava C.", date:"2026-03-02", rating:4, text:"Really solid reformer work. Instructors are clearly well-trained. My only gripe is parking — I was 5 min late because I circled the block three times. Worth it though.", classType:"Reformer", instructor:"Sarah" },
-    { id:"cr4", name:"Priya D.", date:"2026-02-28", rating:5, text:"Just did my 50th class here and it's still challenging me. The tower classes are underrated — try one if you haven't.", classType:"Tower", instructor:"James" },
-  ],
-  s2: [
-    { id:"cr5", name:"Tessa C.", date:"2026-03-14", rating:5, text:"This studio is SO pretty. The natural light alone is worth the drive. Great for beginners — I brought my mom and she loved it.", classType:"Reformer", instructor:"Carly" },
-    { id:"cr6", name:"Nina J.", date:"2026-03-08", rating:4, text:"Beautiful space, nice instructors, good workout. Not the most challenging if you're advanced but perfect for a mellow Saturday morning.", classType:"Sculpt Reformer", instructor:"Jen" },
-    { id:"cr7", name:"Zara O.", date:"2026-02-20", rating:4, text:"The post-class beach walk is truly the move. Studio is gorgeous. Would love slightly harder class options for experienced people.", classType:"Reformer", instructor:"Carly" },
-  ],
-  s3: [
-    { id:"cr8", name:"Camille D.", date:"2026-03-16", rating:5, text:"I've been coming to YJOH for two years and it genuinely changed my relationship with yoga. John's classes are a spiritual experience. The donation-based model makes it accessible which matters.", classType:"Vinyasa", instructor:"John" },
-    { id:"cr9", name:"Bella R.", date:"2026-03-12", rating:5, text:"The Friday sound bath is the best thing I do for myself all week. Bring a blanket, close your eyes, and let go. This place is magic.", classType:"Sound Bath", instructor:"Luna" },
-    { id:"cr10", name:"Kira V.", date:"2026-03-05", rating:5, text:"Most inclusive yoga studio I've ever been to. All ages, all body types, zero judgment. The community here is real.", classType:"Vinyasa", instructor:"John" },
-    { id:"cr11", name:"Isla T.", date:"2026-02-25", rating:4, text:"Love the vibe and the teachers but the space is pretty small. Can feel crowded in popular classes. Get there early for a good spot.", classType:"Power Yoga", instructor:"Mika" },
-  ],
-  s4: [
-    { id:"cr12", name:"Luna R.", date:"2026-03-13", rating:5, text:"My legs are still shaking from Wednesday's class. Coco House is no joke. The studio is gorgeous and the megaformer workout is the most effective sculpting format I've tried.", classType:"Megaformer", instructor:"Ana" },
-    { id:"cr13", name:"Jade N.", date:"2026-03-06", rating:4, text:"Beautiful studio, great workout, but it's pricey. I go once a week as a treat. The lighting and aesthetic are A+.", classType:"Megaformer", instructor:"Taylor" },
-    { id:"cr14", name:"Elise M.", date:"2026-02-22", rating:5, text:"Best megaformer in WeHo, don't @ me. Ana's evening class is chef's kiss. Grippy socks are a MUST.", classType:"Megaformer", instructor:"Ana" },
-  ],
-  s5: [
-    { id:"cr15", name:"Noa F.", date:"2026-03-11", rating:4, text:"P.volve fixed my hip flexor issue that two PTs couldn't figure out. The method is unique — give it at least 3 classes before judging. It looks easy, it is not.", classType:"P.volve Method", instructor:"Alex" },
-    { id:"cr16", name:"Freya A.", date:"2026-03-01", rating:4, text:"Really different from anything else in LA. More rehab-meets-fitness than traditional workout. I appreciate the science behind it. Music could be better though.", classType:"Sculpt", instructor:"Jordan" },
-  ],
-  s6: [
-    { id:"cr17", name:"Dani M.", date:"2026-03-15", rating:5, text:"The playlist at Oblix is unmatched. I literally added 6 songs to my Spotify after class. Oh and the workout is great too lol", classType:"Full Body", instructor:"Marcus" },
-    { id:"cr18", name:"Carmen D.", date:"2026-03-09", rating:4, text:"High energy, great music, solid total body workout. Not the fanciest studio but the vibe more than makes up for it. Evening classes are electric.", classType:"Sculpt", instructor:"Bri" },
-    { id:"cr19", name:"Yuki T.", date:"2026-02-27", rating:5, text:"Brought 4 friends last weekend and they're all hooked now. Oblix is the most fun you can have working out. People actually high-five after class and it's not weird.", classType:"HIIT", instructor:"Marcus" },
-  ],
-  s7: [
-    { id:"cr20", name:"Mila S.", date:"2026-03-14", rating:5, text:"Never tried rowing before Drenched and now I'm 3x a week. The format keeps you engaged and the Abbot Kinney location is unbeatable. Bluestone Lane cold brew after = the routine.", classType:"Rowing + Sculpt", instructor:"Sam" },
-    { id:"cr21", name:"Sienna R.", date:"2026-03-07", rating:4, text:"Great concept, great location. Rowing is surprisingly low impact on joints while being high effort. My only note is parking on Abbot Kinney is chaos — bike if you can.", classType:"Rowing + Sculpt", instructor:"Kai" },
-  ],
-  s8: [
-    { id:"cr22", name:"Bianca R.", date:"2026-03-12", rating:5, text:"The Pilates Cave is the IYKYK studio. 6 person classes, master-level instructors, and you will learn more about your body in one class here than a month at a big studio. Worth every dollar.", classType:"Reformer", instructor:"Maria" },
-    { id:"cr23", name:"Emi S.", date:"2026-03-03", rating:5, text:"I drove from the Valley for this class and would do it again. The small group size means you basically get a private session. Maria is a genius.", classType:"Reformer", instructor:"Maria" },
-  ],
-  s9: [
-    { id:"cr24", name:"Riley B.", date:"2026-03-13", rating:4, text:"Best bang for your buck megaformer in LA. Not the fanciest but who cares when the class is solid and the price is right. Venice vibes, zero attitude.", classType:"Megaformer", instructor:"Tony" },
-    { id:"cr25", name:"Harper Q.", date:"2026-03-04", rating:5, text:"I can actually afford to go to Mighty 3x a week which has made all the difference. The results from consistent megaformer work are insane. Love this place.", classType:"Lagree", instructor:"Amy" },
-    { id:"cr26", name:"Aisha O.", date:"2026-02-19", rating:4, text:"Solid no-frills megaformer studio. Instructors are friendly, classes are challenging. Just wish they had a parking lot — Venice street parking is always a gamble.", classType:"Megaformer", instructor:"Tony" },
-  ],
-};
+const COMMUNITY_REVIEWS = {};
 
 // ─── HELPERS ─────────────────────────────────────────────────
 function StarRating({ rating, count, size="sm" }) {
@@ -392,7 +325,7 @@ function smartStudioSearch(query, studios) {
   }
   if (matchedVibes.length > 0) {
     results = results.filter(s => {
-      const allText = [s.tags.level, s.tags.parking, ...(s.goodToKnow||[]), s.bestFor].join(" ").toLowerCase();
+      const allText = [s.tags.level, s.parkingType, s.parkingEase, ...(s.goodToKnow||[]), s.bestFor].join(" ").toLowerCase();
       return matchedVibes.some(v => allText.includes(v));
     });
   }
@@ -400,7 +333,7 @@ function smartStudioSearch(query, studios) {
   // Fallback text search if no smart matches
   if (results.length === 0 || (!matchedHood && matchedTypes.length === 0 && !zipMatch && matchedVibes.length === 0 && !isNearMe)) {
     results = studios.filter(s => {
-      const allText = [s.tags.level, s.tags.parking, s.name, s.neighborhood, ...(s.goodToKnow||[]), s.bestFor, ...s.classTypes].join(" ").toLowerCase();
+      const allText = [s.tags.level, s.parkingType, s.parkingEase, s.name, s.neighborhood, ...(s.goodToKnow||[]), s.bestFor, ...s.classTypes].join(" ").toLowerCase();
       return allText.includes(q);
     });
   }
@@ -502,7 +435,7 @@ function HomePage({ navigate, searchAndGo }) {
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
       <p style={{fontSize:"clamp(0.95rem,2vw,1.1rem)",color:BRAND.textMid,lineHeight:1.7,maxWidth:520,margin:"0 auto 36px",fontWeight:300}}>
-        Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you — all in one place.
+        Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
       </p>
       {/* Search bar */}
       <div style={{maxWidth:520,margin:"0 auto 24px",position:"relative"}}>
@@ -593,14 +526,14 @@ function StudioCard({ studio, navigate, featured=false }) {
       <div style={{padding:"20px 22px 22px"}}>
         {/* Name + neighborhood */}
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
-        <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.45)",marginBottom:10}}>{s.neighborhood} · {s.priceRange}</div>
+        <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.45)",marginBottom:10}}>{s.neighborhood} · {s.priceTier}</div>
         {/* Rating */}
         <div style={{marginBottom:12}}><StarRating rating={s.rating} count={s.reviewCount} /></div>
         {/* Tags */}
         <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:14}}>
           <span style={{background:"rgba(140,45,50,0.1)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:"#8C2D32",fontWeight:500}}>{s.tags.level}</span>
           <span style={{background:"rgba(44,37,34,0.04)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:"rgba(44,37,34,0.5)",display:"flex",alignItems:"center",gap:4}}>
-            <span style={{fontSize:"0.6rem",opacity:0.5}}>P</span> {s.tags.parking}
+            <span style={{fontSize:"0.6rem",opacity:0.5}}>P</span> {s.parkingType} · {s.parkingEase}
           </span>
         </div>
         {/* Review snippet */}
@@ -751,14 +684,16 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
         <span style={{background:"rgba(140,45,50,0.12)",borderRadius:100,padding:"6px 16px",fontSize:"0.8rem",color:"#8C2D32",fontWeight:500}}>{s.tags.level}</span>
         <span style={{background:"rgba(44,37,34,0.04)",borderRadius:100,padding:"6px 16px",fontSize:"0.8rem",color:"rgba(44,37,34,0.55)",display:"flex",alignItems:"center",gap:5}}>
-          <span style={{fontSize:"0.7rem",opacity:0.45}}>P</span> {s.tags.parking}
+          <span style={{fontSize:"0.7rem",opacity:0.45}}>P</span> {s.parkingType} · {s.parkingEase}
         </span>
       </div>
 
       {/* Quick info bar */}
       <div style={{display:"flex",flexWrap:"wrap",gap:20,fontSize:"0.82rem",color:"rgba(44,37,34,0.55)",padding:"16px 20px",background:"#fff",borderRadius:14,border:"1px solid rgba(44,37,34,0.05)"}}>
         <div><span style={{fontWeight:500,color:"#2C2522"}}>Classes:</span> {s.classTypes.join(", ")}</div>
-        <div><span style={{fontWeight:500,color:"#2C2522"}}>Price:</span> {s.priceRange}</div>
+        <div><span style={{fontWeight:500,color:"#2C2522"}}>Drop-in:</span> {s.dropInPrice} <span style={{color:BRAND.textLight}}>({s.priceTier})</span></div>
+        {s.introOffer && <div><span style={{fontWeight:500,color:BRAND.red}}>Intro:</span> {s.introOffer}</div>}
+        <div><span style={{fontWeight:500,color:"#2C2522"}}>Parking:</span> {s.parkingType} · {s.parkingEase}</div>
         <div><span style={{fontWeight:500,color:"#2C2522"}}>IG:</span> {s.instagram}</div>
       </div>
     </div>
@@ -776,7 +711,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     <div style={{background:"rgba(44,37,34,0.04)",borderRadius:16,padding:"48px 20px",textAlign:"center",marginBottom:28,border:"1px solid rgba(44,37,34,0.06)"}}>
       <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(44,37,34,0.08)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:"1.2rem",color:"rgba(44,37,34,0.3)"}}>▶</div>
       <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>Watch Our Review</div>
-      <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",fontWeight:300}}>See the space, the class, the vibe — our full video walkthrough</div>
+      <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",fontWeight:300}}>See the space, the class, the vibe - our full video walkthrough</div>
     </div>
 
     {/* Good to Know */}
@@ -818,8 +753,6 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       <SubRating label="Music" value={s.ratings.music} icon="♫" />
       <SubRating label="Cleanliness" value={s.ratings.cleanliness} icon="✦" />
       <SubRating label="Difficulty" value={s.ratings.difficulty} icon="◇" />
-      <SubRating label="Price" value={s.ratings.price} icon="$" />
-      <SubRating label="Parking" value={s.ratings.parking} icon="P" />
     </div>
 
     {/* Detailed written review sections */}
@@ -847,7 +780,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     <div style={{background:BRAND.red,borderRadius:16,padding:"28px 28px",color:"#FFF",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,marginBottom:40}}>
       <div>
         <div style={{fontSize:"1rem",fontWeight:500,marginBottom:4}}>Ready to try {s.name}?</div>
-        <div style={{fontSize:"0.82rem",opacity:0.5,fontWeight:300}}>{s.priceRange} · {s.neighborhood}</div>
+        <div style={{fontSize:"0.82rem",opacity:0.5,fontWeight:300}}>{s.priceTier} · {s.neighborhood}</div>
       </div>
       <div style={{display:"flex",gap:10}}>
         <button style={{background:"#FEEBAB",color:"#2C2522",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Book a Class</button>
@@ -1034,35 +967,13 @@ function GlossaryPage({ navigate }) {
     },
     {
       key: "difficulty", icon: "◇", label: "Difficulty", color: "#C4A88B",
-      description: "How challenging the class actually is. This isn't a judgment — a 2 isn't bad and a 5 isn't better. It's a guide so you know what you're walking into. We rate based on the hardest class format they offer, and we'll note if they have beginner-friendly options.",
+      description: "How challenging the class actually is. This isn't a judgment - a 2 isn't bad and a 5 isn't better. It's a guide so you know what you're walking into. We rate based on the hardest class format they offer, and we'll note if they have beginner-friendly options.",
       scale: [
         { stars: 5, text: "Elite. You will be humbled. Previous fitness experience strongly recommended." },
         { stars: 4, text: "Challenging. You'll feel it for two days. Solid baseline fitness helpful." },
         { stars: 3, text: "Moderate. A good workout for most people. Accessible with effort." },
         { stars: 2, text: "Approachable. Great for beginners or low-impact days. You'll work but won't suffer." },
         { stars: 1, text: "Gentle. Restorative, meditative, stretch-focused. The goal isn't intensity." },
-      ]
-    },
-    {
-      key: "price", icon: "$", label: "Price", color: "#B8C4A0",
-      description: "Value relative to what you get. We're not just rating how cheap it is — we're rating whether the experience justifies the cost. A $60 class that delivers a private-session-level experience can score higher than a $25 class that feels like a YouTube video in a room.",
-      scale: [
-        { stars: 5, text: "Incredible value. You're getting way more than you're paying for." },
-        { stars: 4, text: "Good value. Fair pricing for the quality. You don't feel ripped off." },
-        { stars: 3, text: "Standard LA pricing. It's what you'd expect — not a deal, not a scam." },
-        { stars: 2, text: "Pricey. The experience is good but you feel the cost." },
-        { stars: 1, text: "Ouch. Hard to justify unless money is truly no object." },
-      ]
-    },
-    {
-      key: "parking", icon: "P", label: "Parking", color: "#9BB5C4",
-      description: "It's LA. Parking can make or break the experience. We're rating how easy it is to park, whether there's a lot or structure, how far you have to walk, and whether you'll spend 15 minutes circling the block. We also note if biking, walking, or transit is a better option.",
-      scale: [
-        { stars: 5, text: "Free lot or structure right there. Park and walk in. No stress." },
-        { stars: 4, text: "Dedicated parking or easy street parking. Might take a minute but no drama." },
-        { stars: 3, text: "Manageable. Metered or residential nearby. Give yourself an extra 5 minutes." },
-        { stars: 2, text: "Annoying. Limited, competitive, or expensive. Plan ahead." },
-        { stars: 1, text: "Nightmare. You'll be late to class because you're circling the block. Consider biking." },
       ]
     },
   ];
@@ -1089,11 +1000,11 @@ function GlossaryPage({ navigate }) {
           </div>
         </div>
         <p style={{fontSize:"0.88rem",lineHeight:1.75,color:"rgba(44,37,34,0.65)",fontWeight:300}}>
-          The overall bookd score is our holistic take on the studio — not a simple average of the six categories below. It's how we'd answer the question "should I go here?" It factors in the vibe, the instructors, the experience as a whole, and whether we'd genuinely go back. A studio can score lower in individual categories but still earn a high overall score if the total experience is exceptional.
+          The overall bookd score is our holistic take on the studio - not a simple average of the four categories below. It's how we'd answer the question "should I go here?" It factors in the vibe, the instructors, the experience as a whole, and whether we'd genuinely go back. A studio can score lower in individual categories but still earn a high overall score if the total experience is exceptional.
         </p>
       </div>
 
-      {/* The six categories */}
+      {/* The four rating categories */}
       <div style={{display:"flex",flexDirection:"column",gap:16}}>
         {categories.map((cat, idx) => (
           <div key={cat.key} style={{background:"#fff",borderRadius:18,border:"1px solid rgba(44,37,34,0.05)",overflow:"hidden",animation:`fadeUp 0.4s ease ${idx*0.06}s both`}}>
@@ -1122,6 +1033,63 @@ function GlossaryPage({ navigate }) {
         ))}
       </div>
 
+      {/* Price & Parking - not rated, shown as info */}
+      <div style={{marginTop:32,display:"flex",flexDirection:"column",gap:16}}>
+        <div style={{background:"#fff",borderRadius:18,border:"1px solid rgba(44,37,34,0.05)",overflow:"hidden"}}>
+          <div style={{padding:"24px 28px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+              <div style={{width:36,height:36,borderRadius:10,background:"#B8C4A0",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.85rem",fontWeight:600}}>$</div>
+              <div style={{fontSize:"1.05rem",fontWeight:600}}>Price</div>
+            </div>
+            <p style={{fontSize:"0.88rem",lineHeight:1.75,color:"rgba(44,37,34,0.6)",fontWeight:300,marginBottom:16}}>
+              We don't rate price - we just show you what it costs. Every studio page lists the drop-in price and the intro offer so you know exactly what you're walking into.
+            </p>
+          </div>
+          <div style={{background:"rgba(44,37,34,0.015)",borderTop:"1px solid rgba(44,37,34,0.04)",padding:"16px 28px 20px"}}>
+            {[
+              { tier: "$", desc: "Under $30/class" },
+              { tier: "$$", desc: "$30-45/class" },
+              { tier: "$$$", desc: "$45-60/class" },
+              { tier: "$$$$", desc: "$60+/class" },
+            ].map((p,i) => (
+              <div key={i} style={{display:"flex",gap:14,padding:"8px 0",borderBottom:i<3?"1px solid rgba(44,37,34,0.04)":"none",alignItems:"center"}}>
+                <span style={{fontWeight:600,fontSize:"0.9rem",minWidth:48,color:BRAND.red}}>{p.tier}</span>
+                <span style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.6)",fontWeight:300}}>{p.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{background:"#fff",borderRadius:18,border:"1px solid rgba(44,37,34,0.05)",overflow:"hidden"}}>
+          <div style={{padding:"24px 28px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+              <div style={{width:36,height:36,borderRadius:10,background:"#9BB5C4",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.85rem",fontWeight:600}}>P</div>
+              <div style={{fontSize:"1.05rem",fontWeight:600}}>Parking</div>
+            </div>
+            <p style={{fontSize:"0.88rem",lineHeight:1.75,color:"rgba(44,37,34,0.6)",fontWeight:300,marginBottom:16}}>
+              It's LA - parking matters. We don't score it, we just tell you the situation. Every studio shows the parking type and how easy (or not) it is to deal with.
+            </p>
+          </div>
+          <div style={{background:"rgba(44,37,34,0.015)",borderTop:"1px solid rgba(44,37,34,0.04)",padding:"16px 28px 20px"}}>
+            <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:10}}>Type</div>
+            {["Street Parking","Metered Parking","Parking Lot","Parking Structure"].map((t,i) => (
+              <div key={i} style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.6)",padding:"4px 0",fontWeight:300}}>{t}</div>
+            ))}
+            <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginTop:14,marginBottom:10}}>Ease</div>
+            {[
+              { ease: "Easy", desc: "Park and walk in, no stress" },
+              { ease: "Moderate", desc: "Give yourself an extra 5 minutes" },
+              { ease: "Tricky", desc: "Plan ahead or consider biking" },
+            ].map((p,i) => (
+              <div key={i} style={{display:"flex",gap:14,padding:"6px 0",borderBottom:i<2?"1px solid rgba(44,37,34,0.04)":"none",alignItems:"center"}}>
+                <span style={{fontWeight:500,fontSize:"0.85rem",minWidth:80}}>{p.ease}</span>
+                <span style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.6)",fontWeight:300}}>{p.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Bottom note */}
       <div style={{textAlign:"center",marginTop:40,padding:"32px 20px",background:"rgba(44,37,34,0.02)",borderRadius:16}}>
         <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.2rem",fontWeight:400,marginBottom:8}}>that's our bookd system.</div>
@@ -1145,7 +1113,7 @@ function AboutPage({ navigate, searchAndGo }) {
         </div>
       </div>
 
-      {/* Split screen — photo + copy */}
+      {/* Split screen - photo + copy */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))",gap:0,marginBottom:40,borderRadius:20,overflow:"hidden",border:"1px solid rgba(44,37,34,0.05)"}}>
         {/* Photo side */}
         <div style={{background:"#E8DDD0",minHeight:360}}>
@@ -1165,7 +1133,7 @@ function AboutPage({ navigate, searchAndGo }) {
           <div style={{width:64,height:64,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"1.1rem",fontWeight:600,margin:"0 auto 14px"}}>S</div>
           <div style={{fontWeight:600,fontSize:"1rem",marginBottom:2}}>Sydney</div>
           <div style={{fontSize:"0.78rem",color:BRAND.textLight,marginBottom:10}}>Co-Founder, bookd with us</div>
-          <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>A digital marketing expert by trade with a deep obsession with Pilates and boutique fitness that turned into very strong opinions. Sydney built bookd to give those opinions a home — and to make finding the right studio as easy as asking a friend who's been to all of them.</p>
+          <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>A digital marketing expert by trade with a deep obsession with Pilates and boutique fitness that turned into very strong opinions. Sydney built bookd to give those opinions a home - and to make finding the right studio as easy as asking a friend who's been to all of them.</p>
           <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",marginTop:12,fontSize:"0.78rem",color:BRAND.red,fontWeight:500,textDecoration:"none"}}>@bookdwithus</a>
         </div>
         <div style={{background:"#fff",borderRadius:16,padding:"24px 24px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
@@ -1218,7 +1186,7 @@ function PartnerPage({ navigate }) {
       });
       setFormSent(true);
     } catch (e) {
-      alert("Something went wrong — please email us directly at bookdwithus@gmail.com");
+      alert("Something went wrong - please email us directly at bookdwithus@gmail.com");
     }
     setSending(false);
   }
@@ -1231,7 +1199,7 @@ function PartnerPage({ navigate }) {
           partner with bookd
         </div>
         <p style={{fontSize:"0.95rem",color:BRAND.textMid,lineHeight:1.7,maxWidth:480,margin:"0 auto",fontWeight:300}}>
-          We're building the go-to destination for boutique fitness discovery in LA. If you're a studio, a wellness brand, or someone who wants to reach our community — we'd love to hear from you.
+          We're building the go-to destination for boutique fitness discovery in LA. If you're a studio, a wellness brand, or someone who wants to reach our community - we'd love to hear from you.
         </p>
       </div>
 
