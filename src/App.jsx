@@ -432,6 +432,7 @@ export default function App() {
         {page==="studio" && <StudioPage studioId={pageArg} navigate={navigate} communityReviews={communityReviews} addReview={addReview} />}
         {page==="glossary" && <GlossaryPage navigate={navigate} />}
         {page==="about" && <AboutPage navigate={navigate} searchAndGo={searchAndGo} />}
+        {page==="partner" && <PartnerPage navigate={navigate} />}
       </main>
       <footer style={{borderTop:"1px solid rgba(44,37,34,0.06)",padding:"40px clamp(16px,4vw,48px) 28px",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16,fontSize:"0.78rem",color:"rgba(44,37,34,0.4)"}}>
         <div>
@@ -439,7 +440,7 @@ export default function App() {
           <div>Honest wellness reviews for LA.</div>
           <div style={{marginTop:6}}><a href="mailto:bookdwithus@gmail.com" style={{color:BRAND.red,textDecoration:"none"}}>bookdwithus@gmail.com</a></div>
         </div>
-        <div style={{display:"flex",gap:20}}><span style={{cursor:"pointer"}} onClick={()=>navigate("home")}>Home</span><span style={{cursor:"pointer"}} onClick={()=>navigate("about")}>Our Story</span><span style={{cursor:"pointer"}} onClick={()=>navigate("glossary")}>How We Rate</span><a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>Instagram</a><a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>TikTok</a></div>
+        <div style={{display:"flex",gap:20}}><span style={{cursor:"pointer"}} onClick={()=>navigate("home")}>Home</span><span style={{cursor:"pointer"}} onClick={()=>navigate("about")}>Our Story</span><span style={{cursor:"pointer"}} onClick={()=>navigate("glossary")}>How We Rate</span><span style={{cursor:"pointer"}} onClick={()=>navigate("partner")}>Partner With Us</span><a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>Instagram</a><a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>TikTok</a></div>
       </footer>
       <style>{`
         ::selection { background: rgba(196,168,139,0.25); }
@@ -470,6 +471,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
         <span onClick={()=>searchAndGo("")} style={{cursor:"pointer",opacity:currentPage==="search"?1:0.55}}>All Studios</span>
         <span onClick={()=>navigate("glossary")} style={{cursor:"pointer",opacity:currentPage==="glossary"?1:0.55}}>How We Rate</span>
         <span onClick={()=>navigate("about")} style={{cursor:"pointer",opacity:currentPage==="about"?1:0.55}}>Our Story</span>
+        <span onClick={()=>navigate("partner")} style={{cursor:"pointer",opacity:currentPage==="partner"?1:0.55}}>Partner With Us</span>
       </div>
       <div className="nm" onClick={()=>setMobileMenu(!mobileMenu)} style={{cursor:"pointer",padding:8,display:"none",flexDirection:"column",gap:4}}>
         <div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:14,height:2,background:BRAND.red,borderRadius:1}} />
@@ -479,6 +481,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
         <span onClick={()=>{searchAndGo("");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>All Studios</span>
         <span onClick={()=>{navigate("glossary");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>How We Rate</span>
         <span onClick={()=>{navigate("about");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Our Story</span>
+        <span onClick={()=>{navigate("partner");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Partner With Us</span>
       </div>}
       <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}}`}</style>
     </nav>
@@ -1186,6 +1189,82 @@ function AboutPage({ navigate, searchAndGo }) {
         <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.4rem",fontWeight:400,marginBottom:8}}>ready to find your studio?</div>
         <p style={{fontSize:"0.85rem",opacity:0.7,maxWidth:360,margin:"0 auto 20px",fontWeight:300,lineHeight:1.6}}>We've reviewed every studio we've been to. Search by class type, neighborhood, or just tell us what you're in the mood for.</p>
         <button onClick={()=>searchAndGo("")} style={{background:"#fff",color:BRAND.red,border:"none",borderRadius:100,padding:"12px 32px",fontSize:"0.88rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Explore Studios</button>
+      </div>
+    </div>
+  );
+}
+
+// ─── PARTNER WITH US ─────────────────────────────────────────
+function PartnerPage({ navigate }) {
+  const [formSent, setFormSent] = useState(false);
+
+  const iS = {width:"100%",background:"rgba(44,37,34,0.02)",border:"1px solid rgba(44,37,34,0.1)",borderRadius:12,padding:"12px 16px",fontSize:"0.88rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxSizing:"border-box"};
+
+  return (
+    <div style={{maxWidth:640,margin:"0 auto",padding:"40px clamp(16px,4vw,48px) 80px"}}>
+      {/* Header */}
+      <div style={{textAlign:"center",marginBottom:48}}>
+        <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.8rem,5vw,2.6rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:14}}>
+          partner with bookd
+        </div>
+        <p style={{fontSize:"0.95rem",color:BRAND.textMid,lineHeight:1.7,maxWidth:480,margin:"0 auto",fontWeight:300}}>
+          We're building the go-to destination for boutique fitness discovery in LA. If you're a studio, a wellness brand, or someone who wants to reach our community — we'd love to hear from you.
+        </p>
+      </div>
+
+      {/* We work with */}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:40}}>
+        <div style={{background:"#fff",borderRadius:16,padding:"24px 22px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
+          <div style={{width:40,height:40,borderRadius:10,background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.85rem",fontWeight:600,margin:"0 auto 12px"}}>◎</div>
+          <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:4}}>Studios</div>
+          <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>Featured reviews, listings, and promotion to our audience of wellness-minded women in LA.</p>
+        </div>
+        <div style={{background:"#fff",borderRadius:16,padding:"24px 22px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
+          <div style={{width:40,height:40,borderRadius:10,background:BRAND.butter,display:"flex",alignItems:"center",justifyContent:"center",color:BRAND.red,fontSize:"0.85rem",fontWeight:600,margin:"0 auto 12px"}}>✦</div>
+          <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:4}}>Brands</div>
+          <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>Content partnerships, event collaborations, and authentic integration with our editorial platform.</p>
+        </div>
+      </div>
+
+      {/* Contact form */}
+      <div style={{background:"#fff",borderRadius:20,padding:"clamp(28px,4vw,40px)",border:"1px solid rgba(44,37,34,0.05)"}}>
+        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.2rem",fontWeight:400,marginBottom:6}}>get in touch</h2>
+        <p style={{fontSize:"0.85rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>Tell us a bit about what you're looking for and we'll get back to you.</p>
+
+        {formSent ? (
+          <div style={{textAlign:"center",padding:"40px 20px"}}>
+            <div style={{fontSize:"1.5rem",marginBottom:12}}>✦</div>
+            <div style={{fontSize:"1rem",fontWeight:500,marginBottom:6}}>Thanks for reaching out!</div>
+            <p style={{fontSize:"0.85rem",color:BRAND.textMid,fontWeight:300}}>We'll be in touch soon.</p>
+          </div>
+        ) : (
+          <div style={{display:"flex",flexDirection:"column",gap:16}}>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              <div>
+                <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Name</div>
+                <input style={iS} placeholder="Your name" />
+              </div>
+              <div>
+                <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Email</div>
+                <input style={iS} placeholder="email@example.com" type="email" />
+              </div>
+            </div>
+            <div>
+              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Studio or Brand</div>
+              <input style={iS} placeholder="Your studio or brand name" />
+            </div>
+            <div>
+              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Tell us more</div>
+              <textarea style={{...iS,minHeight:100,resize:"vertical",borderRadius:12,lineHeight:1.6}} placeholder="What are you interested in? Any details that would help us understand the opportunity." />
+            </div>
+            <button onClick={()=>setFormSent(true)} style={{background:BRAND.red,color:"#fff",border:"none",borderRadius:100,padding:"14px 0",fontSize:"0.9rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",width:"100%"}}>
+              Send Inquiry
+            </button>
+            <p style={{fontSize:"0.75rem",color:BRAND.textLight,textAlign:"center",fontWeight:300}}>
+              Or email us directly at <a href="mailto:bookdwithus@gmail.com" style={{color:BRAND.red,textDecoration:"none"}}>bookdwithus@gmail.com</a>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
