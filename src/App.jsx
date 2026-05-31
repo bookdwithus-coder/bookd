@@ -1197,8 +1197,31 @@ function AboutPage({ navigate, searchAndGo }) {
 // ─── PARTNER WITH US ─────────────────────────────────────────
 function PartnerPage({ navigate }) {
   const [formSent, setFormSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({ name:"", email:"", company:"", message:"" });
 
   const iS = {width:"100%",background:"rgba(44,37,34,0.02)",border:"1px solid rgba(44,37,34,0.1)",borderRadius:12,padding:"12px 16px",fontSize:"0.88rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxSizing:"border-box"};
+
+  async function handleSubmit() {
+    if (!formData.name || !formData.email || !formData.message) return;
+    setSending(true);
+    try {
+      await fetch("https://formspree.io/f/mvzynjga", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          "studio_or_brand": formData.company,
+          message: formData.message,
+        }),
+      });
+      setFormSent(true);
+    } catch (e) {
+      alert("Something went wrong — please email us directly at bookdwithus@gmail.com");
+    }
+    setSending(false);
+  }
 
   return (
     <div style={{maxWidth:640,margin:"0 auto",padding:"40px clamp(16px,4vw,48px) 80px"}}>
@@ -1242,23 +1265,23 @@ function PartnerPage({ navigate }) {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <div>
                 <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Name</div>
-                <input style={iS} placeholder="Your name" />
+                <input style={iS} placeholder="Your name" value={formData.name} onChange={e=>setFormData({...formData,name:e.target.value})} />
               </div>
               <div>
                 <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Email</div>
-                <input style={iS} placeholder="email@example.com" type="email" />
+                <input style={iS} placeholder="email@example.com" type="email" value={formData.email} onChange={e=>setFormData({...formData,email:e.target.value})} />
               </div>
             </div>
             <div>
               <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Studio or Brand</div>
-              <input style={iS} placeholder="Your studio or brand name" />
+              <input style={iS} placeholder="Your studio or brand name" value={formData.company} onChange={e=>setFormData({...formData,company:e.target.value})} />
             </div>
             <div>
               <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Tell us more</div>
-              <textarea style={{...iS,minHeight:100,resize:"vertical",borderRadius:12,lineHeight:1.6}} placeholder="What are you interested in? Any details that would help us understand the opportunity." />
+              <textarea style={{...iS,minHeight:100,resize:"vertical",borderRadius:12,lineHeight:1.6}} placeholder="What are you interested in? Any details that would help us understand the opportunity." value={formData.message} onChange={e=>setFormData({...formData,message:e.target.value})} />
             </div>
-            <button onClick={()=>setFormSent(true)} style={{background:BRAND.red,color:"#fff",border:"none",borderRadius:100,padding:"14px 0",fontSize:"0.9rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",width:"100%"}}>
-              Send Inquiry
+            <button onClick={handleSubmit} disabled={sending||!formData.name||!formData.email||!formData.message} style={{background:(formData.name&&formData.email&&formData.message&&!sending)?BRAND.red:"rgba(44,37,34,0.12)",color:(formData.name&&formData.email&&formData.message&&!sending)?"#fff":"rgba(44,37,34,0.3)",border:"none",borderRadius:100,padding:"14px 0",fontSize:"0.9rem",fontWeight:500,cursor:(formData.name&&formData.email&&formData.message&&!sending)?"pointer":"default",fontFamily:"inherit",width:"100%"}}>
+              {sending ? "Sending..." : "Send Inquiry"}
             </button>
             <p style={{fontSize:"0.75rem",color:BRAND.textLight,textAlign:"center",fontWeight:300}}>
               Or email us directly at <a href="mailto:bookdwithus@gmail.com" style={{color:BRAND.red,textDecoration:"none"}}>bookdwithus@gmail.com</a>
