@@ -783,8 +783,8 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
         <div style={{fontSize:"0.82rem",opacity:0.5,fontWeight:300}}>{s.priceTier} · {s.neighborhood}</div>
       </div>
       <div style={{display:"flex",gap:10}}>
-        <button style={{background:"#FEEBAB",color:"#2C2522",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Book a Class</button>
-        <button style={{background:"transparent",color:"#FFF",border:"1px solid rgba(250,248,245,0.25)",borderRadius:100,padding:"12px 20px",fontSize:"0.86rem",cursor:"pointer",fontFamily:"inherit",fontWeight:400}}>Follow {s.instagram}</button>
+        <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{background:"#FEEBAB",color:"#2C2522",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",textDecoration:"none",display:"inline-block"}}>Book a Class</a>
+        <a href={`https://instagram.com/${s.instagram.replace("@","")}`} target="_blank" rel="noopener noreferrer" style={{background:"transparent",color:"#FFF",border:"1px solid rgba(250,248,245,0.25)",borderRadius:100,padding:"12px 20px",fontSize:"0.86rem",cursor:"pointer",fontFamily:"inherit",fontWeight:400,textDecoration:"none",display:"inline-block"}}>Follow {s.instagram}</a>
       </div>
     </div>
 
