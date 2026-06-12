@@ -73,6 +73,7 @@ const STUDIOS = [
     dropInPrice: "$35", priceTier: "$$", introOffer: "2 classes for $40",
     bookingUrl: "https://silverspringsla.com/pages/schedule", instagram: "@silverspringsmelrose",
     tags: { level: "All Levels" }, parkingType: "Parking Lot", parkingEase: "Moderate",
+    isFavorite: true, favoriteNote: "The sound system alone changed how I feel about studio music. And they have a parking lot. In LA.",
     goodToKnow: ["They give you a mat, towel, and face towel - all free", "They have their own parking lot which never happens in LA", "They clean everything up for you after class", "Palo Santo at the end of class - so calming"],
     bestFor: "Anyone who wants a studio that goes above and beyond on the details. The sound system, the amenities, the parking lot - everything is thought through.",
     rating: 4.9, ratings: { aesthetic: 5, music: 5, cleanliness: 5, difficulty: 4.5 },
@@ -153,6 +154,7 @@ const STUDIOS = [
     dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $35",
     bookingUrl: "https://bekindstudios.com/locations#/", instagram: "@bekindstudios",
     tags: { level: "Intermediate" }, parkingType: "Parking Lot", parkingEase: "Easy",
+    isFavorite: true, favoriteNote: "Worth the drive to Malibu. The coffee and matcha machine alone is worth mentioning.",
     goodToKnow: ["They have an infamous coffee and matcha machine - actually so good", "One of their newest locations - attention to detail in the design is insane", "Every class is going to be challenging", "Instructors are super nice and knowledgeable"],
     bestFor: "Anyone willing to make the drive to Malibu for a stunning studio with consistently challenging classes, amazing instructors, and honestly the best studio coffee machine in LA.",
     rating: 4.7, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4.3 },
@@ -193,6 +195,7 @@ const STUDIOS = [
     dropInPrice: "$40-$55", priceTier: "$$-$$$", introOffer: "Mat: 2 classes for $40, Reformer: Single class for $45",
     bookingUrl: "https://www.heatedroom.com/schedule?_mt=%2Fschedule%2Fdaily%3FactiveCategoryId%3D0", instagram: "@heatedroom",
     tags: { level: "Intermediate" }, parkingType: "Metered Parking", parkingEase: "Moderate",
+    isFavorite: true, favoriteNote: "A luxurious cave with the best playlist in LA. You'll feel this one for days.",
     goodToKnow: ["From the outside you'd never guess how stunning it is inside", "Feels like a luxurious cave - the lighting is next level", "Music is LOUD - bring your energy", "Mats, towels, and face towels all provided"],
     bestFor: "Anyone who wants fast-paced, form-focused Pilates with an incredible playlist in a space that feels like a luxurious hidden cave.",
     rating: 4.9, ratings: { aesthetic: 5, music: 5, cleanliness: 5, difficulty: 4.5 },
@@ -227,13 +230,43 @@ const STUDIOS = [
     },
     videoId: null, color: "#C8B0A0",
   },
+  {
+    id: "s11", name: "Briiomare", neighborhood: "Beverly Hills", address: "236 1/2 S Robertson Blvd, Beverly Hills, CA",
+    zip: "90211", classTypes: ["Heated Mat Pilates", "Non-Heated Mat Pilates"],
+    dropInPrice: "$35", priceTier: "$$", introOffer: "2 classes for $35",
+    bookingUrl: "https://www.briiomare.com/book-a-class", instagram: "@briiomare",
+    tags: { level: "All Levels" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    goodToKnow: ["Tucked away off the street in a standalone house-style building", "Smells incredible when you walk in", "Started as a Pilates sock brand before opening the studio", "No reformers - heated and non-heated mat classes only"],
+    bestFor: "Anyone who appreciates thoughtful design and wants a cozy, French-inspired mat Pilates experience in a space that feels like a hidden gem off Robertson.",
+    rating: 4.5, ratings: { aesthetic: 4.5, music: 5, cleanliness: 5, difficulty: 3.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "This French-inspired, cozy new studio is tucked away in a standalone building off Robertson and the attention to detail is unreal. Exposed brick, embossed logo on the Pilates ball and ring, even the pricing card was beautifully designed. We took Ashley's class and she used the Pilates ball in such a fun and challenging way. Even though it was non-heated, we were working up a sweat.",
+    sections: {
+      space: "Tucked away off the street in a house-style standalone building that you could easily walk past if you didn't know it was there. The French-inspired design is so well done - exposed brick, embossed branding on the equipment, and the attention to detail throughout everything is next level. Even the pricing card was beautifully thought out. And it smelled incredible when we walked in. This is a studio that clearly cares about every touchpoint.",
+      classExperience: "We took Ashley's non-heated class and she used the Pilates ball in such a fun and challenging way. Even without the heat, we were working up a sweat. They offer both heated and non-heated mat classes - no reformers here, it's all mat work. The class was accessible but still had moments that pushed you. Ashley was engaging and creative with the props.",
+      vibe: "Cozy, welcoming, and elevated without being pretentious. Briiomare started as a Pilates sock brand rooted in community, and you can feel that origin story in the studio. It's built with warmth and purpose. The standalone building gives it a private, intimate feel - like you're going to someone's really well-designed home studio rather than a commercial space.",
+      knowBeforeYouGo: "Drop-in is $35 and the intro offer is 2 classes for $35, which is one of the best intro deals we've seen. Easy metered parking on the street. No reformers - they only do heated and non-heated mat classes. The studio is tucked away off Robertson in a standalone building so look for the address carefully. Definitely check them out if you're in Beverly Hills."
+    },
+    videoId: null, color: "#D4C0B0",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
 const NEIGHBORHOODS = [...new Set(STUDIOS.map(s => s.neighborhood))].sort();
 
-// Auto-populate class types from studio data
-const CLASS_TYPES = [...new Set(STUDIOS.flatMap(s => s.classTypes))].sort();
+// Curated class type categories for browsing
+const CLASS_TYPES = ["Reformer Pilates", "Mat Pilates", "Heated Pilates", "Lagree", "Sculpt", "Hot Yoga"];
+
+// Map browse categories to actual studio class types for search
+const CLASS_TYPE_MAP = {
+  "Reformer Pilates": ["Reformer", "Power Reformer", "Cadillac Reformer", "Modern Reformer", "Semi-Private Reformer"],
+  "Mat Pilates": ["Mat", "Non-Heated Mat Pilates", "Pilates", "Mat & Tower Pilates"],
+  "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates"],
+  "Lagree": ["Lagree", "Megaformer"],
+  "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs"],
+  "Hot Yoga": ["Hot Yoga"],
+};
 
 const COMMUNITY_REVIEWS = {};
 
@@ -284,15 +317,22 @@ function smartStudioSearch(query, studios) {
     megaformer:["megaformer","lagree","mega"],
     pilates:["pilates","mat pilates"],
     sculpt:["sculpt","toning","strength","sculpting"],
-    yoga:["yoga","vinyasa","power yoga"],
+    yoga:["yoga","vinyasa","power yoga","hot yoga"],
     hiit:["hiit","high intensity","cardio"],
-    rowing:["rowing","row","rower"],
-    "sound bath":["sound bath","sound healing"],
-    meditation:["meditation","meditate","breathwork"],
+    heated:["heated","heat","hot","infrared"],
+    sculpt:["sculpt","sculpting","full body sculpt","booty"],
+    lagree:["lagree","megaformer"],
   };
   let matchedTypes = [];
   for (const [type,kws] of Object.entries(catMap)) {
     if (kws.some(k=>q.includes(k))) matchedTypes.push(type);
+  }
+
+  // Also check if query matches a browse category name
+  for (const [category, mappedTypes] of Object.entries(CLASS_TYPE_MAP)) {
+    if (q.includes(category.toLowerCase())) {
+      matchedTypes.push(...mappedTypes.map(t=>t.toLowerCase()));
+    }
   }
 
   // Neighborhood detection
@@ -319,7 +359,7 @@ function smartStudioSearch(query, studios) {
   }
   if (matchedTypes.length > 0) {
     results = results.filter(s => {
-      const sTypes = s.classTypes.map(t=>t.toLowerCase()).join(" ") + " " + s.tags.join(" ");
+      const sTypes = s.classTypes.map(t=>t.toLowerCase()).join(" ");
       return matchedTypes.some(mt => sTypes.includes(mt));
     });
   }
@@ -424,7 +464,8 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 // ─── HOME PAGE ───────────────────────────────────────────────
 function HomePage({ navigate, searchAndGo }) {
   const [heroSearch,setHeroSearch] = useState("");
-  const topPicks = STUDIOS.filter(s=>s.rating>=4.8).slice(0,3);
+  const topPicks = STUDIOS.filter(s=>s.isFavorite);
+  const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers").sort((a,b)=>parseFloat(a.dropInPrice.replace(/[^0-9.]/g,""))-parseFloat(b.dropInPrice.replace(/[^0-9.]/g,""))).slice(0,4);
   const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
 
   return <div>
@@ -466,6 +507,30 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
+    {/* Best intro deals */}
+    {bestDeals.length > 0 && (
+    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>best intro deals right now</h2>
+      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>First time? These studios have offers worth trying.</p>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,240px),1fr))",gap:14}}>
+        {bestDeals.map(s => (
+          <div key={s.id} onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:16,padding:"20px 22px",border:`1px solid ${BRAND.butter}`,cursor:"pointer",transition:"transform 0.2s",position:"relative",overflow:"hidden"}}
+            onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";}}
+            onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";}}>
+            <div style={{position:"absolute",top:0,left:0,right:0,height:4,background:BRAND.butter}} />
+            <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:2}}>{s.name}</div>
+            <div style={{fontSize:"0.72rem",color:BRAND.textLight,marginBottom:10}}>{s.neighborhood} · {s.priceTier}</div>
+            <div style={{background:BRAND.butterLight,borderRadius:12,padding:"12px 14px",marginBottom:10}}>
+              <div style={{fontSize:"0.7rem",textTransform:"uppercase",letterSpacing:"0.06em",color:BRAND.red,fontWeight:600,marginBottom:4}}>Intro Offer</div>
+              <div style={{fontSize:"0.92rem",fontWeight:500,color:BRAND.text}}>{s.introOffer}</div>
+            </div>
+            <div style={{fontSize:"0.72rem",color:BRAND.textLight}}>Drop-in: {s.dropInPrice}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+    )}
+
     {/* Browse by neighborhood */}
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Browse by neighborhood</h2>
@@ -488,11 +553,15 @@ function HomePage({ navigate, searchAndGo }) {
       <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Search by class type</h2>
       <p style={{fontSize:"0.88rem",color:"rgba(44,37,34,0.45)",marginBottom:24,fontWeight:300}}>Find exactly what you're looking for.</p>
       <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-        {CLASS_TYPES.map(t => (
-          <button key={t} onClick={()=>searchAndGo(t)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.08)",borderRadius:100,padding:"10px 20px",fontSize:"0.84rem",cursor:"pointer",fontFamily:"inherit",color:"#2C2522",transition:"all 0.15s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";}}>{t}</button>
-        ))}
+        {CLASS_TYPES.map(t => {
+          const mapped = CLASS_TYPE_MAP[t] || [t];
+          const count = STUDIOS.filter(s => s.classTypes.some(ct => mapped.some(m => ct.toLowerCase().includes(m.toLowerCase())))).length;
+          return (
+            <button key={t} onClick={()=>searchAndGo(t)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.08)",borderRadius:100,padding:"10px 20px",fontSize:"0.84rem",cursor:"pointer",fontFamily:"inherit",color:"#2C2522",transition:"all 0.15s"}}
+              onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";}}
+              onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";}}>{t} <span style={{opacity:0.4,fontSize:"0.75rem"}}>({count})</span></button>
+          );
+        })}
       </div>
     </section>
 
@@ -522,7 +591,7 @@ function StudioCard({ studio, navigate, featured=false }) {
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
       {/* Color header */}
       <div style={{height:8,background:BRAND.red}} />
-      {featured && s.rating>=4.8 && <div style={{position:"absolute",top:18,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
+      {featured && s.isFavorite && <div style={{position:"absolute",top:18,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
       <div style={{padding:"20px 22px 22px"}}>
         {/* Name + neighborhood */}
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
@@ -535,7 +604,14 @@ function StudioCard({ studio, navigate, featured=false }) {
           <span style={{background:"rgba(44,37,34,0.04)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:"rgba(44,37,34,0.5)",display:"flex",alignItems:"center",gap:4}}>
             <span style={{fontSize:"0.6rem",opacity:0.5}}>P</span> {s.parkingType} · {s.parkingEase}
           </span>
+          {s.introOffer && s.introOffer !== "Check website for intro offers" && (
+            <span style={{background:"rgba(140,45,50,0.06)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:BRAND.red,fontWeight:500}}>Intro: {s.introOffer}</span>
+          )}
         </div>
+        {/* Favorite note (only in featured mode) */}
+        {featured && s.favoriteNote && (
+          <div style={{fontSize:"0.78rem",color:BRAND.red,fontStyle:"italic",lineHeight:1.5,fontWeight:400,marginBottom:12,padding:"8px 12px",background:"rgba(140,45,50,0.04)",borderRadius:10}}>"{s.favoriteNote}"</div>
+        )}
         {/* Review snippet */}
         <div style={{fontSize:"0.8rem",color:"rgba(44,37,34,0.55)",fontStyle:"italic",lineHeight:1.6,fontWeight:300,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden",marginBottom:14}}>
           "{s.heroReview}"
@@ -677,7 +753,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       {/* Rating + tags row */}
       <div style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap",marginBottom:16}}>
         <StarRating rating={s.rating} count={s.reviewCount} size="lg" />
-        {s.rating>=4.8 && <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.68rem",fontWeight:600,letterSpacing:"0.04em"}}>✦ bookd pick</span>}
+        {s.isFavorite && <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.68rem",fontWeight:600,letterSpacing:"0.04em"}}>✦ bookd pick</span>}
       </div>
 
       {/* Tags */}
@@ -697,6 +773,17 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
         <div><span style={{fontWeight:500,color:"#2C2522"}}>IG:</span> {s.instagram}</div>
       </div>
     </div>
+
+    {/* Intro offer callout */}
+    {s.introOffer && s.introOffer !== "Check website for intro offers" && (
+      <div style={{background:BRAND.butterLight,borderRadius:16,padding:"18px 24px",marginBottom:20,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12,border:`1px solid ${BRAND.butter}`}}>
+        <div>
+          <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:4}}>New here?</div>
+          <div style={{fontSize:"1rem",fontWeight:600,color:BRAND.text}}>{s.introOffer}</div>
+        </div>
+        <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#fff",borderRadius:100,padding:"10px 22px",fontSize:"0.82rem",fontWeight:500,textDecoration:"none",display:"inline-block",flexShrink:0}}>Try It</a>
+      </div>
+    )}
 
     {/* Best For callout */}
     <div style={{background:"rgba(140,45,50,0.06)",border:"1px solid rgba(140,45,50,0.15)",borderRadius:16,padding:"20px 24px",marginBottom:28}}>
