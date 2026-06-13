@@ -429,17 +429,18 @@ export default function App() {
 function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) {
   const [q,setQ] = useState("");
   return (
-    <nav style={{position:"fixed",top:0,left:0,right:0,height:72,background:"rgba(255,255,255,0.95)",backdropFilter:"blur(16px)",borderBottom:"1px solid rgba(44,37,34,0.06)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 clamp(16px,4vw,48px)",gap:16}}>
+    <nav style={{position:"fixed",top:0,left:0,right:0,height:72,background:"rgba(255,255,255,0.95)",backdropFilter:"blur(16px)",borderBottom:"1px solid rgba(44,37,34,0.06)",zIndex:1000,display:"flex",alignItems:"center",padding:"0 clamp(16px,4vw,48px)",gap:16}}>
       <div onClick={()=>navigate("home")} style={{cursor:"pointer",flexShrink:0}}>
         <BookdLogo height={24} />
       </div>
-      {/* Search bar in nav */}
-      <div style={{flex:"1 1 300px",maxWidth:480,position:"relative"}} className="nav-search">
+      {/* Search bar - left-leaning */}
+      <div style={{flex:"1 1 300px",maxWidth:400,position:"relative"}} className="nav-search">
         <input type="text" value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&q.trim()){searchAndGo(q.trim());setQ("");}}}
-          placeholder='Try "pilates in West Hollywood"'
+          placeholder='Search'
           style={{width:"100%",background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.06)",borderRadius:100,padding:"10px 16px 10px 38px",fontSize:"0.84rem",color:"#2C2522",outline:"none",fontFamily:"inherit"}} />
         <span style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",opacity:0.25,fontSize:"0.9rem",pointerEvents:"none"}}>⌕</span>
       </div>
+      <div style={{flex:1}} />
       <div style={{display:"flex",alignItems:"center",gap:20,fontSize:"0.84rem",fontWeight:600,flexShrink:0,color:BRAND.red}} className="nd">
         <span onClick={()=>navigate("home")} style={{cursor:"pointer",opacity:currentPage==="home"?1:0.55}}>Home</span>
         <span onClick={()=>searchAndGo("")} style={{cursor:"pointer",opacity:currentPage==="search"?1:0.55}}>All Studios</span>
