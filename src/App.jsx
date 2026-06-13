@@ -520,7 +520,7 @@ function HomePage({ navigate, searchAndGo }) {
         <input type="text" value={heroSearch} onChange={e=>setHeroSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&heroSearch.trim())searchAndGo(heroSearch.trim());}}
           placeholder='Search'
           style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.1)",borderRadius:100,padding:"16px 56px 16px 24px",fontSize:"0.95rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxShadow:"0 2px 16px rgba(44,37,34,0.04)"}} />
-        <button onClick={()=>{if(heroSearch.trim())searchAndGo(heroSearch.trim());}} style={{position:"absolute",right:6,top:"50%",transform:"translateY(-50%)",background:BRAND.red,color:"#FFF",border:"none",borderRadius:"50%",width:40,height:40,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1rem"}}>↗</button>
+        <button onClick={()=>{if(heroSearch.trim())searchAndGo(heroSearch.trim());}} style={{position:"absolute",right:6,top:"50%",transform:"translateY(-50%)",background:BRAND.red,color:"#FEEBAB",border:"none",borderRadius:"50%",width:40,height:40,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1rem"}}>↗</button>
       </div>
       {/* Quick searches */}
       <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
@@ -560,9 +560,9 @@ function HomePage({ navigate, searchAndGo }) {
     <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
         <div style={{display:"flex",gap:24,whiteSpace:"nowrap"}}>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
         </div>
       </div>
     <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
@@ -640,8 +640,8 @@ function HomePage({ navigate, searchAndGo }) {
       {/* Background text treatment */}
       <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
         <div style={{display:"flex",gap:20,whiteSpace:"nowrap"}}>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>where should we go next?</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>where should we go next?</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
         </div>
       </div>
     <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
@@ -962,7 +962,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
           <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:4}}>New here?</div>
           <div style={{fontSize:"1rem",fontWeight:600,color:BRAND.text}}>{s.introOffer}</div>
         </div>
-        <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#fff",borderRadius:100,padding:"10px 22px",fontSize:"0.82rem",fontWeight:500,textDecoration:"none",display:"inline-block",flexShrink:0}}>Try It</a>
+        <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#FEEBAB",borderRadius:100,padding:"10px 22px",fontSize:"0.82rem",fontWeight:500,textDecoration:"none",display:"inline-block",flexShrink:0}}>Try It</a>
       </div>
     )}
 
@@ -1007,7 +1007,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
         "{s.heroReview}"
       </div>
       <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <div style={{width:28,height:28,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.55rem",color:"#FFF",fontWeight:700}}>b</div>
+        <div style={{width:28,height:28,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.55rem",color:"#FEEBAB",fontWeight:700}}>b</div>
         <span style={{fontSize:"0.82rem",fontWeight:500}}>Sydney & Sam</span>
         <span style={{fontSize:"0.72rem",color:BRAND.textLight}}>bookd review</span>
       </div>
@@ -1045,14 +1045,14 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     <CommunityReviewsSection studioId={s.id} studioName={s.name} classTypes={s.classTypes} reviews={communityReviews[s.id]||[]} addReview={addReview} />
 
     {/* Booking CTA */}
-    <div style={{background:BRAND.red,borderRadius:16,padding:"28px 28px",color:"#FFF",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,marginBottom:40}}>
+    <div style={{background:BRAND.red,borderRadius:16,padding:"28px 28px",color:"#FEEBAB",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,marginBottom:40}}>
       <div>
         <div style={{fontSize:"1rem",fontWeight:500,marginBottom:4}}>Ready to try {s.name}?</div>
         <div style={{fontSize:"0.82rem",opacity:0.5,fontWeight:300}}>{s.priceTier} · {s.neighborhood}</div>
       </div>
       <div style={{display:"flex",gap:10}}>
         <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{background:"#FEEBAB",color:"#2C2522",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",textDecoration:"none",display:"inline-block"}}>Book a Class</a>
-        <a href={`https://instagram.com/${s.instagram.replace("@","")}`} target="_blank" rel="noopener noreferrer" style={{background:"transparent",color:"#FFF",border:"1px solid rgba(250,248,245,0.25)",borderRadius:100,padding:"12px 20px",fontSize:"0.86rem",cursor:"pointer",fontFamily:"inherit",fontWeight:400,textDecoration:"none",display:"inline-block"}}>Follow {s.instagram}</a>
+        <a href={`https://instagram.com/${s.instagram.replace("@","")}`} target="_blank" rel="noopener noreferrer" style={{background:"transparent",color:"#FEEBAB",border:"1px solid rgba(254,235,171,0.25)",borderRadius:100,padding:"12px 20px",fontSize:"0.86rem",cursor:"pointer",fontFamily:"inherit",fontWeight:400,textDecoration:"none",display:"inline-block"}}>Follow {s.instagram}</a>
       </div>
     </div>
 
@@ -1261,7 +1261,7 @@ function GlossaryPage({ navigate }) {
       {/* Overall score explanation */}
       <div style={{background:"#fff",borderRadius:18,padding:"28px 30px",border:"1px solid rgba(44,37,34,0.05)",marginBottom:20}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
-          <div style={{width:36,height:36,borderRadius:10,background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#FFF",fontSize:"0.7rem",fontWeight:700}}>B</div>
+          <div style={{width:36,height:36,borderRadius:10,background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#FEEBAB",fontSize:"0.7rem",fontWeight:700}}>B</div>
           <div>
             <div style={{fontWeight:600,fontSize:"0.95rem"}}>The bookd score</div>
             <div style={{fontSize:"0.76rem",color:"rgba(44,37,34,0.45)"}}>Our overall rating out of 5</div>
@@ -1364,7 +1364,7 @@ function GlossaryPage({ navigate }) {
         <p style={{fontSize:"0.85rem",color:BRAND.textMid,maxWidth:440,margin:"0 auto 20px",fontWeight:300,lineHeight:1.6}}>
           We take the classes and write our own reviews. What you see is what we actually think. Love, Sydney & Sam
         </p>
-        <button onClick={()=>navigate("home")} style={{background:BRAND.red,color:"#FFF",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Find a Studio</button>
+        <button onClick={()=>navigate("home")} style={{background:BRAND.red,color:"#FEEBAB",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.86rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Find a Studio</button>
       </div>
     </div>
   );
@@ -1398,7 +1398,7 @@ function AboutPage({ navigate, searchAndGo }) {
       {/* Sydney & Sam cards */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 260px), 1fr))",gap:16,marginBottom:40}}>
         <div style={{background:"#fff",borderRadius:16,padding:"24px 24px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
-          <div style={{width:64,height:64,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"1.1rem",fontWeight:600,margin:"0 auto 14px"}}>S</div>
+          <div style={{width:64,height:64,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#FEEBAB",fontSize:"1.1rem",fontWeight:600,margin:"0 auto 14px"}}>S</div>
           <div style={{fontWeight:600,fontSize:"1rem",marginBottom:2}}>Sydney</div>
           <div style={{fontSize:"0.78rem",color:BRAND.textLight,marginBottom:10}}>Co-Founder, bookd with us</div>
           <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>A digital marketing expert by trade with a deep obsession with Pilates and boutique fitness that turned into very strong opinions. Sydney built bookd to give those opinions a home - and to make finding the right studio as easy as asking a friend who's been to all of them.</p>
@@ -1421,10 +1421,10 @@ function AboutPage({ navigate, searchAndGo }) {
       </div>
 
       {/* CTA */}
-      <div style={{background:BRAND.red,borderRadius:20,padding:"36px 28px",textAlign:"center",color:"#fff"}}>
+      <div style={{background:BRAND.red,borderRadius:20,padding:"36px 28px",textAlign:"center",color:"#FEEBAB"}}>
         <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.4rem",fontWeight:400,marginBottom:8}}>ready to find your studio?</div>
         <p style={{fontSize:"0.85rem",opacity:0.7,maxWidth:360,margin:"0 auto 20px",fontWeight:300,lineHeight:1.6}}>We've reviewed every studio we've been to. Search by class type, neighborhood, or just tell us what you're in the mood for.</p>
-        <button onClick={()=>searchAndGo("")} style={{background:"#fff",color:BRAND.red,border:"none",borderRadius:100,padding:"12px 32px",fontSize:"0.88rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Explore Studios</button>
+        <button onClick={()=>searchAndGo("")} style={{background:"#FEEBAB",color:BRAND.red,border:"none",borderRadius:100,padding:"12px 32px",fontSize:"0.88rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>Explore Studios</button>
       </div>
     </div>
   );
@@ -1474,7 +1474,7 @@ function PartnerPage({ navigate }) {
       {/* We work with */}
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:40}}>
         <div style={{background:"#fff",borderRadius:16,padding:"24px 22px",border:"1px solid rgba(44,37,34,0.05)",textAlign:"center"}}>
-          <div style={{width:40,height:40,borderRadius:10,background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"0.85rem",fontWeight:600,margin:"0 auto 12px"}}>◎</div>
+          <div style={{width:40,height:40,borderRadius:10,background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",color:"#FEEBAB",fontSize:"0.85rem",fontWeight:600,margin:"0 auto 12px"}}>◎</div>
           <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:4}}>Studios</div>
           <p style={{fontSize:"0.82rem",lineHeight:1.6,color:BRAND.textMid,fontWeight:300}}>Featured reviews, listings, and promotion to our audience of wellness-minded women in LA.</p>
         </div>
