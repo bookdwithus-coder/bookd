@@ -417,6 +417,7 @@ export default function App() {
       </footer>
       <style>{`
         ::selection { background: rgba(196,168,139,0.25); }
+        .dark-input::placeholder { color: rgba(254,235,171,0.35); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
@@ -471,12 +472,12 @@ function HomePage({ navigate, searchAndGo }) {
   return <div>
     {/* Hero */}
     <div style={{background:BRAND.butter}}>
-    <section style={{padding:"clamp(56px,12vw,120px) clamp(16px,4vw,48px) clamp(48px,8vw,80px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
+    <section style={{padding:"clamp(32px,5vw,52px) clamp(16px,4vw,48px) clamp(32px,5vw,52px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
       <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={72} /></div>
       <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:20}}>
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
-      <p style={{fontSize:"clamp(0.95rem,2vw,1.1rem)",color:BRAND.textMid,lineHeight:1.7,maxWidth:520,margin:"0 auto 36px",fontWeight:300}}>
+      <p style={{fontSize:"clamp(0.95rem,2vw,1.1rem)",color:BRAND.textMid,lineHeight:1.7,maxWidth:640,margin:"0 auto 36px",fontWeight:300}}>
         Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
       </p>
       {/* Search bar */}
@@ -652,16 +653,16 @@ function StudioRequestForm({ darkMode = false }) {
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
         <div>
           <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Studio Name</div>
-          <input style={iS} placeholder="e.g. Forma Pilates" value={form.studio} onChange={e=>setForm({...form,studio:e.target.value})} />
+          <input className={darkMode?"dark-input":""} style={iS} placeholder="e.g. Forma Pilates" value={form.studio} onChange={e=>setForm({...form,studio:e.target.value})} />
         </div>
         <div>
           <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Neighborhood</div>
-          <input style={iS} placeholder="e.g. West Hollywood" value={form.neighborhood} onChange={e=>setForm({...form,neighborhood:e.target.value})} />
+          <input className={darkMode?"dark-input":""} style={iS} placeholder="e.g. West Hollywood" value={form.neighborhood} onChange={e=>setForm({...form,neighborhood:e.target.value})} />
         </div>
       </div>
       <div style={{marginBottom:14}}>
         <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Why should we try it? <span style={{fontWeight:300,textTransform:"none",letterSpacing:0}}>(optional)</span></div>
-        <input style={iS} placeholder="My favorite class is... / The vibes are... / You have to try..." value={form.note} onChange={e=>setForm({...form,note:e.target.value})} />
+        <input className={darkMode?"dark-input":""} style={iS} placeholder="My favorite class is... / The vibes are... / You have to try..." value={form.note} onChange={e=>setForm({...form,note:e.target.value})} />
       </div>
       <button onClick={handleSubmit} disabled={!form.studio} style={{
         background:form.studio?BRAND.butter:"rgba(255,255,255,0.1)",
