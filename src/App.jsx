@@ -388,6 +388,13 @@ export default function App() {
   const [searchQuery,setSearchQuery] = useState("");
   const [mobileMenu,setMobileMenu] = useState(false);
   const [communityReviews,setCommunityReviews] = useState(COMMUNITY_REVIEWS);
+  const [showScrollTop,setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 300);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function navigate(p,arg=null) { setPage(p); setPageArg(arg); setMobileMenu(false); window.scrollTo({top:0,behavior:"instant"}); }
   function searchAndGo(q) { setSearchQuery(q); navigate("search",q); }
@@ -407,19 +414,46 @@ export default function App() {
         {page==="about" && <AboutPage navigate={navigate} searchAndGo={searchAndGo} />}
         {page==="partner" && <PartnerPage navigate={navigate} />}
       </main>
-      <footer style={{borderTop:"1px solid rgba(44,37,34,0.06)",padding:"40px clamp(16px,4vw,48px) 28px",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16,fontSize:"0.78rem",color:"rgba(44,37,34,0.4)"}}>
-        <div>
-          <div style={{marginBottom:8}}><BookdLogo height={18} /></div>
-          <div>Honest wellness reviews for LA.</div>
-          <div style={{marginTop:6}}><a href="mailto:bookdwithus@gmail.com" style={{color:BRAND.red,textDecoration:"none"}}>bookdwithus@gmail.com</a></div>
+      <footer style={{background:BRAND.red,padding:"48px clamp(16px,4vw,48px) 32px",color:"#FEEBAB"}}>
+        <div style={{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:32}}>
+          <div>
+            <div style={{marginBottom:12}}><BookdLogo height={28} color="#FEEBAB" /></div>
+            <div style={{fontSize:"0.85rem",opacity:0.6,marginBottom:8}}>Honest wellness reviews for LA.</div>
+            <a href="mailto:bookdwithus@gmail.com" style={{fontSize:"0.82rem",color:"#FEEBAB",textDecoration:"none",opacity:0.8}}>bookdwithus@gmail.com</a>
+          </div>
+          <div style={{display:"flex",gap:32}}>
+            <div style={{display:"flex",flexDirection:"column",gap:10,fontSize:"0.82rem"}}>
+              <span style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",opacity:0.4,marginBottom:4}}>Navigate</span>
+              <span style={{cursor:"pointer",opacity:0.7}} onClick={()=>navigate("home")}>Home</span>
+              <span style={{cursor:"pointer",opacity:0.7}} onClick={()=>searchAndGo("")}>All Studios</span>
+              <span style={{cursor:"pointer",opacity:0.7}} onClick={()=>navigate("glossary")}>How We Rate</span>
+              <span style={{cursor:"pointer",opacity:0.7}} onClick={()=>navigate("about")}>Our Story</span>
+              <span style={{cursor:"pointer",opacity:0.7}} onClick={()=>navigate("partner")}>Partner With Us</span>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:10,fontSize:"0.82rem"}}>
+              <span style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",opacity:0.4,marginBottom:4}}>Follow</span>
+              <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"#FEEBAB",textDecoration:"none",opacity:0.7}}>Instagram</a>
+              <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"#FEEBAB",textDecoration:"none",opacity:0.7}}>TikTok</a>
+              <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" style={{color:"#FEEBAB",textDecoration:"none",opacity:0.7}}>Substack</a>
+            </div>
+          </div>
         </div>
-        <div style={{display:"flex",gap:20}}><span style={{cursor:"pointer"}} onClick={()=>navigate("home")}>Home</span><span style={{cursor:"pointer"}} onClick={()=>navigate("about")}>Our Story</span><span style={{cursor:"pointer"}} onClick={()=>navigate("glossary")}>How We Rate</span><span style={{cursor:"pointer"}} onClick={()=>navigate("partner")}>Partner With Us</span><a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>Instagram</a><a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{color:"inherit",textDecoration:"none"}}>TikTok</a></div>
+        <div style={{maxWidth:1100,margin:"24px auto 0",paddingTop:20,borderTop:"1px solid rgba(254,235,171,0.15)",fontSize:"0.72rem",opacity:0.35}}>
+          © 2026 bookd with us. All rights reserved.
+        </div>
       </footer>
+      {/* Scroll to top */}
+      {showScrollTop && (
+        <div onClick={()=>window.scrollTo({top:0,behavior:"smooth"})} style={{position:"fixed",bottom:28,right:28,width:44,height:44,borderRadius:"50%",background:BRAND.red,color:"#FEEBAB",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1.1rem",boxShadow:"0 4px 16px rgba(140,45,50,0.25)",zIndex:999,transition:"opacity 0.3s,transform 0.3s",animation:"fadeUp 0.3s ease"}}>↑</div>
+      )}
       <style>{`
         ::selection { background: rgba(196,168,139,0.25); }
         .dark-input::placeholder { color: rgba(254,235,171,0.35); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes pillFadeIn { from { opacity:0; transform:translateY(8px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+        footer span:hover, footer a:hover { opacity: 1 !important; text-decoration: underline; text-underline-offset: 3px; }
       `}</style>
     </div>
   );
@@ -491,10 +525,20 @@ function HomePage({ navigate, searchAndGo }) {
       {/* Quick searches */}
       <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
         {QUICK.map((q,i) => (
-          <button key={i} onClick={()=>searchAndGo(q)} style={{background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.06)",borderRadius:100,padding:"8px 16px",fontSize:"0.78rem",cursor:"pointer",fontFamily:"inherit",color:"rgba(44,37,34,0.6)",transition:"all 0.15s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";e.currentTarget.style.borderColor="#2C2522";}}
+          <button key={i} onClick={()=>searchAndGo(q)} style={{background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.06)",borderRadius:100,padding:"8px 16px",fontSize:"0.78rem",cursor:"pointer",fontFamily:"inherit",color:"rgba(44,37,34,0.6)",transition:"all 0.15s",opacity:0,animation:`pillFadeIn 0.4s ease ${0.1+i*0.08}s forwards`}}
+            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";e.currentTarget.style.borderColor=BRAND.red;}}
             onMouseLeave={e=>{e.currentTarget.style.background="rgba(44,37,34,0.04)";e.currentTarget.style.color="rgba(44,37,34,0.6)";e.currentTarget.style.borderColor="rgba(44,37,34,0.06)";}}>{q}</button>
         ))}
+      </div>
+      {/* Studio marquee */}
+      <div style={{overflow:"hidden",marginTop:32,opacity:0.2}}>
+        <div style={{display:"flex",gap:32,whiteSpace:"nowrap",animation:"marqueeScroll 25s linear infinite"}}>
+          {[...STUDIOS,...STUDIOS].map((s,i) => (
+            <span key={i} style={{fontSize:"0.78rem",fontFamily:"'Libre Baskerville',Georgia,serif",fontStyle:"italic",color:"#2C2522",display:"flex",alignItems:"center",gap:8}}>
+              <span style={{fontSize:"0.5rem",color:BRAND.red}}>✦</span> {s.name}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
     </div>
@@ -551,11 +595,11 @@ function HomePage({ navigate, searchAndGo }) {
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,160px),1fr))",gap:10}}>
         {NEIGHBORHOODS.map(n => {
           const count = STUDIOS.filter(s=>s.neighborhood===n).length;
-          return <div key={n} onClick={()=>searchAndGo(n)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.06)",borderRadius:14,padding:"18px 16px",cursor:"pointer",transition:"all 0.2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";}}>
+          return <div key={n} onClick={()=>searchAndGo(n)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.06)",borderLeft:`3px solid ${BRAND.red}`,borderRadius:14,padding:"18px 16px",cursor:"pointer",transition:"all 0.2s"}}
+            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";e.currentTarget.style.borderLeftColor="#FEEBAB";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";e.currentTarget.style.borderLeftColor=BRAND.red;}}>
             <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>{n}</div>
-            <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""} reviewed</div>
+            <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""}</div>
           </div>;
         })}
       </div>
@@ -575,6 +619,18 @@ function HomePage({ navigate, searchAndGo }) {
               onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";}}>{t} <span style={{opacity:0.4,fontSize:"0.75rem"}}>({count})</span></button>
           );
         })}
+      </div>
+    </section>
+
+    {/* Email capture */}
+    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+      <div style={{background:BRAND.butterLight,borderRadius:20,padding:"36px clamp(20px,4vw,40px)",textAlign:"center"}}>
+        <div style={{fontSize:"0.65rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:8}}>Stay in the loop</div>
+        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.5rem)",fontWeight:400,marginBottom:6}}>never miss a new review</h2>
+        <p style={{fontSize:"0.85rem",color:BRAND.textMid,fontWeight:300,marginBottom:20,maxWidth:420,margin:"0 auto 20px"}}>We drop new studio reviews every week. Subscribe to get them first.</p>
+        <div style={{display:"flex",gap:8,maxWidth:400,margin:"0 auto",justifyContent:"center"}}>
+          <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#FEEBAB",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.84rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",textDecoration:"none",display:"inline-block"}}>Subscribe on Substack</a>
+        </div>
       </div>
     </section>
 
@@ -680,7 +736,7 @@ function StudioCard({ studio, navigate, featured=false }) {
   const s = studio;
   return (
     <div onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:18,overflow:"hidden",cursor:"pointer",transition:"transform 0.2s,box-shadow 0.2s",boxShadow:"0 1px 3px rgba(44,37,34,0.03)",border:featured?"1px solid rgba(140,45,50,0.2)":"1px solid rgba(44,37,34,0.05)",position:"relative",animation:"fadeUp 0.4s ease both"}}
-      onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px rgba(44,37,34,0.08)";}}
+      onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px rgba(140,45,50,0.12)";}}
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
       {/* Color header */}
       <div style={{height:8,background:BRAND.red}} />
@@ -721,17 +777,48 @@ function StudioCard({ studio, navigate, featured=false }) {
 // ─── SEARCH PAGE ─────────────────────────────────────────────
 function SearchPage({ query, navigate, searchAndGo }) {
   const [localQ,setLocalQ] = useState(query||"");
-  const results = useMemo(() => smartStudioSearch(localQ, STUDIOS), [localQ]);
+  const [filters,setFilters] = useState({ neighborhood: "", priceTier: "", parkingEase: "", level: "" });
+  const baseResults = useMemo(() => smartStudioSearch(localQ, STUDIOS), [localQ]);
+  const results = useMemo(() => {
+    return baseResults.filter(s => {
+      if (filters.neighborhood && s.neighborhood !== filters.neighborhood) return false;
+      if (filters.priceTier && !s.priceTier.includes(filters.priceTier)) return false;
+      if (filters.parkingEase && s.parkingEase !== filters.parkingEase) return false;
+      if (filters.level && s.tags.level !== filters.level) return false;
+      return true;
+    });
+  }, [baseResults, filters]);
+  const hasFilters = Object.values(filters).some(v => v);
 
   useEffect(() => { setLocalQ(query||""); }, [query]);
 
+  const filterBtn = (label, value, filterKey) => (
+    <button onClick={()=>setFilters({...filters,[filterKey]:filters[filterKey]===value?"":value})} style={{
+      background:filters[filterKey]===value?BRAND.red:"#fff",
+      color:filters[filterKey]===value?"#FEEBAB":"rgba(44,37,34,0.6)",
+      border:`1px solid ${filters[filterKey]===value?BRAND.red:"rgba(44,37,34,0.08)"}`,
+      borderRadius:100,padding:"6px 14px",fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit",transition:"all 0.15s"
+    }}>{label}</button>
+  );
+
   return <div style={{padding:"32px clamp(16px,4vw,48px) 80px",maxWidth:1100,margin:"0 auto"}}>
     {/* Search bar */}
-    <div style={{maxWidth:560,marginBottom:32,position:"relative"}}>
+    <div style={{maxWidth:560,marginBottom:20,position:"relative"}}>
       <input type="text" value={localQ} onChange={e=>{setLocalQ(e.target.value);}} onKeyDown={e=>{if(e.key==="Enter")searchAndGo(localQ);}}
         placeholder='Search by studio, class type, neighborhood, or zip code...'
         style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.1)",borderRadius:100,padding:"14px 20px 14px 42px",fontSize:"0.9rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxShadow:"0 1px 8px rgba(44,37,34,0.03)"}} />
       <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",opacity:0.25,fontSize:"0.95rem"}}>⌕</span>
+    </div>
+
+    {/* Filter bar */}
+    <div style={{marginBottom:24,display:"flex",flexWrap:"wrap",gap:6,alignItems:"center"}}>
+      <span style={{fontSize:"0.72rem",color:BRAND.textLight,fontWeight:500,marginRight:4}}>Filter:</span>
+      {NEIGHBORHOODS.map(n => filterBtn(n, n, "neighborhood"))}
+      <span style={{width:1,height:16,background:"rgba(44,37,34,0.1)",margin:"0 4px"}} />
+      {["$","$$","$$$","$$$$"].map(p => filterBtn(p, p, "priceTier"))}
+      <span style={{width:1,height:16,background:"rgba(44,37,34,0.1)",margin:"0 4px"}} />
+      {["Easy","Moderate","Tricky"].map(e => filterBtn(`Parking: ${e}`, e, "parkingEase"))}
+      {hasFilters && <button onClick={()=>setFilters({neighborhood:"",priceTier:"",parkingEase:"",level:""})} style={{background:"none",border:"none",color:BRAND.red,fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit",fontWeight:500,padding:"6px 8px"}}>Clear all</button>}
     </div>
 
     {/* Results header */}
@@ -831,7 +918,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     <span onClick={()=>navigate("search","")} style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.45)",cursor:"pointer",marginBottom:24,display:"inline-block"}}>← Back to studios</span>
 
     {/* Header */}
-    <div style={{marginBottom:32}}>
+    <div style={{marginBottom:32,animation:"fadeUp 0.5s ease"}}>
       <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:12,flexWrap:"wrap"}}>
         {/* Color dot */}
         <div style={{width:48,height:48,borderRadius:14,background:s.color,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:"0.85rem",flexShrink:0}}>
