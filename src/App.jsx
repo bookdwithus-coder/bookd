@@ -622,14 +622,15 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
-    {/* Email capture */}
+    {/* Follow us */}
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{background:BRAND.butterLight,borderRadius:20,padding:"36px clamp(20px,4vw,40px)",textAlign:"center"}}>
         <div style={{fontSize:"0.65rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:8}}>Stay in the loop</div>
         <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.5rem)",fontWeight:400,marginBottom:6}}>never miss a new review</h2>
-        <p style={{fontSize:"0.85rem",color:BRAND.textMid,fontWeight:300,marginBottom:20,maxWidth:420,margin:"0 auto 20px"}}>We drop new studio reviews every week. Subscribe to get them first.</p>
-        <div style={{display:"flex",gap:8,maxWidth:400,margin:"0 auto",justifyContent:"center"}}>
-          <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#FEEBAB",border:"none",borderRadius:100,padding:"12px 28px",fontSize:"0.84rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",textDecoration:"none",display:"inline-block"}}>Subscribe on Substack</a>
+        <p style={{fontSize:"0.85rem",color:BRAND.textMid,fontWeight:300,maxWidth:420,margin:"0 auto 20px"}}>We drop new studio reviews every week. Follow along so you don't miss one.</p>
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+          <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#FEEBAB",borderRadius:100,padding:"12px 24px",fontSize:"0.84rem",fontWeight:500,textDecoration:"none",display:"inline-block"}}>Follow on Instagram</a>
+          <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{background:"transparent",color:BRAND.red,border:`1px solid ${BRAND.red}`,borderRadius:100,padding:"12px 24px",fontSize:"0.84rem",fontWeight:500,textDecoration:"none",display:"inline-block"}}>Follow on TikTok</a>
         </div>
       </div>
     </section>
