@@ -473,8 +473,8 @@ function HomePage({ navigate, searchAndGo }) {
   return <div>
     {/* Hero */}
     <div style={{background:BRAND.butter}}>
-    <section style={{padding:"clamp(32px,5vw,52px) clamp(16px,4vw,48px) clamp(32px,5vw,52px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
-      <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={72} /></div>
+    <section style={{padding:"clamp(44px,7vw,64px) clamp(16px,4vw,48px) clamp(32px,5vw,52px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
+      <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={66} /></div>
       <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:20}}>
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
