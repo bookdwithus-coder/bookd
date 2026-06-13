@@ -428,7 +428,7 @@ export default function App() {
 function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) {
   const [q,setQ] = useState("");
   return (
-    <nav style={{position:"fixed",top:0,left:0,right:0,height:72,background:"rgba(254,235,171,0.95)",backdropFilter:"blur(16px)",borderBottom:"1px solid rgba(140,45,50,0.08)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 clamp(16px,4vw,48px)",gap:16}}>
+    <nav style={{position:"fixed",top:0,left:0,right:0,height:72,background:"rgba(255,255,255,0.95)",backdropFilter:"blur(16px)",borderBottom:"1px solid rgba(44,37,34,0.06)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 clamp(16px,4vw,48px)",gap:16}}>
       <div onClick={()=>navigate("home")} style={{cursor:"pointer",flexShrink:0}}>
         <BookdLogo height={24} />
       </div>
@@ -449,7 +449,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
       <div className="nm" onClick={()=>setMobileMenu(!mobileMenu)} style={{cursor:"pointer",padding:8,display:"none",flexDirection:"column",gap:4}}>
         <div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:14,height:2,background:BRAND.red,borderRadius:1}} />
       </div>
-      {mobileMenu && <div style={{position:"absolute",top:72,left:0,right:0,background:"rgba(254,235,171,0.98)",backdropFilter:"blur(16px)",padding:"16px clamp(16px,4vw,48px) 20px",display:"flex",flexDirection:"column",gap:14,fontSize:"0.95rem",fontWeight:600,borderBottom:"1px solid rgba(140,45,50,0.08)",color:BRAND.red}}>
+      {mobileMenu && <div style={{position:"absolute",top:72,left:0,right:0,background:"rgba(255,255,255,0.98)",backdropFilter:"blur(16px)",padding:"16px clamp(16px,4vw,48px) 20px",display:"flex",flexDirection:"column",gap:14,fontSize:"0.95rem",fontWeight:600,borderBottom:"1px solid rgba(44,37,34,0.06)",color:BRAND.red}}>
         <span onClick={()=>{navigate("home");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Home</span>
         <span onClick={()=>{searchAndGo("");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>All Studios</span>
         <span onClick={()=>{navigate("glossary");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>How We Rate</span>
@@ -470,8 +470,9 @@ function HomePage({ navigate, searchAndGo }) {
 
   return <div>
     {/* Hero */}
+    <div style={{background:BRAND.butter}}>
     <section style={{padding:"clamp(56px,12vw,120px) clamp(16px,4vw,48px) clamp(48px,8vw,80px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
-      <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={48} /></div>
+      <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={72} /></div>
       <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:20}}>
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
@@ -494,9 +495,10 @@ function HomePage({ navigate, searchAndGo }) {
         ))}
       </div>
     </section>
+    </div>
 
     {/* bookd picks */}
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
         <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>✦ bookd picks</span>
       </div>
@@ -509,12 +511,20 @@ function HomePage({ navigate, searchAndGo }) {
 
     {/* Best intro deals */}
     {bestDeals.length > 0 && (
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>best intro deals right now</h2>
-      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>First time? These studios have offers worth trying.</p>
+    <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
+      <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
+        <div style={{display:"flex",gap:24,whiteSpace:"nowrap"}}>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>intro offers</span>
+        </div>
+      </div>
+    <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6,color:BRAND.butter}}>best intro deals right now</h2>
+      <p style={{fontSize:"0.88rem",color:"rgba(254,235,171,0.6)",marginBottom:24,fontWeight:300}}>First time? These studios have offers worth trying.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,240px),1fr))",gap:14}}>
         {bestDeals.map(s => (
-          <div key={s.id} onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:16,padding:"20px 22px",border:`1px solid ${BRAND.butter}`,cursor:"pointer",transition:"transform 0.2s",position:"relative",overflow:"hidden"}}
+          <div key={s.id} onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:16,padding:"20px 22px",cursor:"pointer",transition:"transform 0.2s",position:"relative",overflow:"hidden"}}
             onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";}}
             onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";}}>
             <div style={{position:"absolute",top:0,left:0,right:0,height:4,background:BRAND.butter}} />
@@ -529,10 +539,11 @@ function HomePage({ navigate, searchAndGo }) {
         ))}
       </div>
     </section>
+    </div>
     )}
 
     {/* Browse by neighborhood */}
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Browse by neighborhood</h2>
       <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>We've been everywhere so you don't have to.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,160px),1fr))",gap:10}}>
@@ -565,8 +576,24 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
+    {/* Where should we go next? */}
+    <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
+      {/* Background text treatment */}
+      <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
+        <div style={{display:"flex",gap:20,whiteSpace:"nowrap"}}>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>where should we go next?</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#fff"}}>where should we go next?</span>
+        </div>
+      </div>
+    <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.2rem,3vw,1.5rem)",fontWeight:400,marginBottom:6,color:BRAND.butter}}>where should we go next?</h2>
+      <p style={{fontSize:"0.85rem",color:"rgba(254,235,171,0.6)",fontWeight:300,lineHeight:1.6,marginBottom:20}}>Know a studio we need to try? Tell us and we'll add it to our list.</p>
+      <StudioRequestForm darkMode />
+    </section>
+    </div>
+
     {/* Meet your reviewers */}
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{background:BRAND.butterLight,borderRadius:20,padding:0,display:"flex",alignItems:"stretch",flexWrap:"wrap",overflow:"hidden"}}>
         <div style={{flexShrink:0,width:"clamp(120px,20vw,180px)"}}>
           <img src="/syd-sam.jpg" alt="Sydney and Sam" style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:180}} onError={(e)=>{e.target.parentElement.style.display="none";}} />
@@ -580,6 +607,70 @@ function HomePage({ navigate, searchAndGo }) {
     </section>
 
   </div>;
+}
+
+// ─── STUDIO REQUEST FORM ─────────────────────────────────────
+function StudioRequestForm({ darkMode = false }) {
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ studio: "", neighborhood: "", note: "" });
+
+  async function handleSubmit() {
+    if (!form.studio) return;
+    try {
+      await fetch("https://formspree.io/f/mvzynjga", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "Studio Request",
+          studio_name: form.studio,
+          neighborhood: form.neighborhood,
+          note: form.note,
+        }),
+      });
+      setSent(true);
+    } catch (e) {
+      alert("Something went wrong. DM us on Instagram instead!");
+    }
+  }
+
+  if (sent) return (
+    <div style={{padding:"32px 0",textAlign:"center"}}>
+      <div style={{fontSize:"1.2rem",marginBottom:8,color:darkMode?BRAND.butter:BRAND.text}}>✦</div>
+      <div style={{fontSize:"0.95rem",fontWeight:500,marginBottom:4,color:darkMode?BRAND.butter:"inherit"}}>Got it!</div>
+      <p style={{fontSize:"0.82rem",color:darkMode?"rgba(254,235,171,0.6)":BRAND.textMid,fontWeight:300}}>We'll add it to our list. Stay tuned for the review.</p>
+    </div>
+  );
+
+  const iS = darkMode
+    ? {width:"100%",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(254,235,171,0.2)",borderRadius:10,padding:"10px 14px",fontSize:"0.85rem",color:"#FEEBAB",outline:"none",fontFamily:"inherit",boxSizing:"border-box"}
+    : {width:"100%",background:"rgba(44,37,34,0.02)",border:"1px solid rgba(44,37,34,0.08)",borderRadius:10,padding:"10px 14px",fontSize:"0.85rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxSizing:"border-box"};
+
+  const labelColor = darkMode ? "rgba(254,235,171,0.5)" : BRAND.textLight;
+
+  return (
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
+        <div>
+          <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Studio Name</div>
+          <input style={iS} placeholder="e.g. Forma Pilates" value={form.studio} onChange={e=>setForm({...form,studio:e.target.value})} />
+        </div>
+        <div>
+          <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Neighborhood</div>
+          <input style={iS} placeholder="e.g. West Hollywood" value={form.neighborhood} onChange={e=>setForm({...form,neighborhood:e.target.value})} />
+        </div>
+      </div>
+      <div style={{marginBottom:14}}>
+        <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.06em",color:labelColor,marginBottom:6,fontWeight:500}}>Why should we try it? <span style={{fontWeight:300,textTransform:"none",letterSpacing:0}}>(optional)</span></div>
+        <input style={iS} placeholder="My favorite class is... / The vibes are... / You have to try..." value={form.note} onChange={e=>setForm({...form,note:e.target.value})} />
+      </div>
+      <button onClick={handleSubmit} disabled={!form.studio} style={{
+        background:form.studio?BRAND.butter:"rgba(255,255,255,0.1)",
+        color:form.studio?BRAND.red:"rgba(254,235,171,0.3)",
+        border:"none",borderRadius:100,padding:"11px 28px",fontSize:"0.84rem",fontWeight:500,
+        cursor:form.studio?"pointer":"default",fontFamily:"inherit",transition:"all 0.2s",width:"100%"
+      }}>Submit Request</button>
+    </div>
+  );
 }
 
 // ─── STUDIO CARD ─────────────────────────────────────────────
