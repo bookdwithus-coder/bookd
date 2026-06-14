@@ -93,7 +93,8 @@ const STUDIOS = [
     zip: "90401", classTypes: ["Modern Reformer"],
     dropInPrice: "$43", priceTier: "$$", introOffer: "Single class for $25",
     bookingUrl: "https://www.karenlordpilatesmovement.com/book-a-class", instagram: "@karenlordpilates",
-    tags: { level: "Beginner-Friendly" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    tags: { level: "Beginner-Friendly" }, parkingType: "Street Parking", parkingEase: "Easy",
+    brand: "Karen Lord Pilates",
     goodToKnow: ["The bathroom is stunning - beautiful stone sink, incredible details and decor", "They have really cute merch", "Class leans beginner - not the most challenging if you're experienced", "Free 2-hour parking on 7th St right in front of the studio"],
     bestFor: "Beginners or anyone who wants a beautiful, crystal-filled studio with a calming energy - just don't expect to be pushed hard.",
     rating: 3.7, ratings: { aesthetic: 5, music: 2.5, cleanliness: 5, difficulty: 2.5 },
@@ -250,6 +251,27 @@ const STUDIOS = [
     },
     videoId: null, color: "#D4C0B0",
   },
+  {
+    id: "s12", name: "Karen Lord Pilates", neighborhood: "West Hollywood", address: "7024 Melrose Ave, Los Angeles, CA",
+    zip: "90038", classTypes: ["Reformer", "Private Reformer", "Tower Reformer"],
+    dropInPrice: "$46", priceTier: "$$$", introOffer: "First class $30",
+    bookingUrl: "https://www.karenlordpilatesmovement.com/melrose", instagram: "@karenlordpilates",
+    tags: { level: "All Levels" }, parkingType: "Valet Parking", parkingEase: "Easy",
+    brand: "Karen Lord Pilates",
+    goodToKnow: ["Complimentary valet parking - enter from the back, not the front", "Private training room with two tower reformers - stunning", "Large reformer room fits a lot of students - corrections may be limited", "Great merch wall and lounge area with a big couch"],
+    bestFor: "Anyone who wants a beautifully designed, larger-format reformer studio with complimentary valet parking and the option for private tower reformer sessions.",
+    rating: 4.25, ratings: { aesthetic: 5, music: 3.5, cleanliness: 5, difficulty: 3.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "I am obsessed with the layout and design of this studio. They have a private training room with tower reformers and such a large space for the main reformer room. The aesthetic is a five - it's not your typical earthy Tulum-vibes studio. It's blacks and grays with a huge crystal in the middle of the room. And they have complimentary valet parking. In LA. That alone is worth mentioning.",
+    sections: {
+      space: "This is not your typical earthy, Tulum-vibes reformer studio. The aesthetic is blacks and grays with a huge crystal in the middle of the room. There's a great merch wall, a large lounge area with a big couch, and lockers. The private training room is separate with two gorgeous tower reformers - that room alone is stunning. The main reformer room is large and fits a lot of students, which means you probably won't have trouble getting into a class but the instructor may not always get to you for corrections.",
+      classExperience: "The class was definitely harder than the Santa Monica location - could be the instructor, but we felt it. A 3.5 on difficulty. The instructor was incredible and the energy was great. If you're looking for more intensity than what the Santa Monica studio offers, this is your spot. They also offer private reformer sessions in that separate tower room which we'll definitely be back to try.",
+      vibe: "The staff was super nice and the space has a real energy to it. It's much larger than the Santa Monica location and feels like a completely different experience even though it's the same brand. The design choices are bold - this isn't a quiet, calming studio. It's making a statement. The lounge area makes you want to hang before and after class.",
+      knowBeforeYouGo: "Drop-in is $46, intro offer is your first class for $30. They also have a 3 classes in 30 days deal for $100. Complimentary valet parking is a huge perk - the entrance is actually from the back through the parking lot, not the front doors on the street. Private sessions are $130 and duets are $190. The reformer room is large so if you want more one-on-one attention, book a private."
+    },
+    videoId: null, color: "#B0A8C0",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
@@ -260,7 +282,7 @@ const CLASS_TYPES = ["Reformer Pilates", "Mat Pilates", "Heated Pilates", "Lagre
 
 // Map browse categories to actual studio class types for search
 const CLASS_TYPE_MAP = {
-  "Reformer Pilates": ["Reformer", "Power Reformer", "Cadillac Reformer", "Modern Reformer", "Semi-Private Reformer"],
+  "Reformer Pilates": ["Reformer", "Power Reformer", "Cadillac Reformer", "Modern Reformer", "Semi-Private Reformer", "Private Reformer", "Tower Reformer"],
   "Mat Pilates": ["Mat", "Non-Heated Mat Pilates", "Pilates", "Mat & Tower Pilates"],
   "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates"],
   "Lagree": ["Lagree", "Megaformer"],
@@ -913,7 +935,8 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
   const studio = STUDIOS.find(s=>s.id===studioId);
   if (!studio) return <div style={{padding:80,textAlign:"center"}}>Studio not found.</div>;
   const s = studio;
-  const similar = STUDIOS.filter(x=>x.id!==s.id&&(x.neighborhood===s.neighborhood||x.classTypes.some(t=>s.classTypes.includes(t)))).slice(0,3);
+  const otherLocations = s.brand ? STUDIOS.filter(x => x.id !== s.id && x.brand === s.brand) : [];
+  const similar = STUDIOS.filter(x => x.id !== s.id && (!s.brand || x.brand !== s.brand) && (x.neighborhood === s.neighborhood || x.classTypes.some(t => s.classTypes.includes(t)))).slice(0,3);
 
   return <div style={{maxWidth:820,margin:"0 auto",padding:"28px clamp(16px,4vw,48px) 80px"}}>
     <span onClick={()=>navigate("search","")} style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.45)",cursor:"pointer",marginBottom:24,display:"inline-block"}}>← Back to studios</span>
@@ -1041,9 +1064,6 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       ))}
     </div>
 
-    {/* ═══ COMMUNITY REVIEWS ═══ */}
-    <CommunityReviewsSection studioId={s.id} studioName={s.name} classTypes={s.classTypes} reviews={communityReviews[s.id]||[]} addReview={addReview} />
-
     {/* Booking CTA */}
     <div style={{background:BRAND.red,borderRadius:16,padding:"28px 28px",color:"#FEEBAB",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16,marginBottom:40}}>
       <div>
@@ -1056,16 +1076,30 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       </div>
     </div>
 
+    {/* Other locations */}
+    {otherLocations.length > 0 && (
+      <div style={{marginBottom:36}}>
+        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.4rem",fontWeight:400,marginBottom:6}}>other {s.brand} locations</h2>
+        <p style={{fontSize:"0.85rem",color:"rgba(44,37,34,0.45)",marginBottom:24,fontWeight:300}}>We've also reviewed {otherLocations.length === 1 ? "this location" : "these locations"}.</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,280px),1fr))",gap:16}}>
+          {otherLocations.map(x => <StudioCard key={x.id} studio={x} navigate={navigate} />)}
+        </div>
+      </div>
+    )}
+
     {/* Similar studios */}
     {similar.length > 0 && (
-      <div>
-        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.4rem",fontWeight:400,marginBottom:6}}>Similar studios we've reviewed</h2>
+      <div style={{marginBottom:36}}>
+        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.4rem",fontWeight:400,marginBottom:6}}>similar studios we've reviewed</h2>
         <p style={{fontSize:"0.85rem",color:"rgba(44,37,34,0.45)",marginBottom:24,fontWeight:300}}>More options nearby or with similar class types.</p>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,280px),1fr))",gap:16}}>
           {similar.map(x => <StudioCard key={x.id} studio={x} navigate={navigate} />)}
         </div>
       </div>
     )}
+
+    {/* ═══ COMMUNITY REVIEWS ═══ */}
+    <CommunityReviewsSection studioId={s.id} studioName={s.name} classTypes={s.classTypes} reviews={communityReviews[s.id]||[]} addReview={addReview} />
   </div>;
 }
 
