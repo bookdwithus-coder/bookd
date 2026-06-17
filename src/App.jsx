@@ -112,9 +112,10 @@ const STUDIOS = [
   {
     id: "s5", name: "The Pilates Cave", neighborhood: "West LA", address: "11824 W Pico Blvd, Los Angeles, CA",
     zip: "90064", classTypes: ["Reformer", "Mat"],
-    dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $35",
+    dropInPrice: "$45", priceTier: "$$", introOffer: "First class $35",
     bookingUrl: "https://thepilatescave.com/schedule-pilates-cave/", instagram: "@thepilatescave",
     tags: { level: "Beginner-Friendly" }, parkingType: "Metered Parking", parkingEase: "Moderate",
+    brand: "The Pilates Cave",
     goodToKnow: ["They have a sauna in the studio", "Multiple locations - reformer and mat are separate", "Class leans beginner - great energy but not intense"],
     bestFor: "Anyone who wants a beautiful studio with great energy, a sauna, and a class that feels good on your body without pushing you to the limit.",
     rating: 4, ratings: { aesthetic: 5, music: 4, cleanliness: 5, difficulty: 2 },
@@ -272,6 +273,27 @@ const STUDIOS = [
     },
     videoId: null, color: "#B0A8C0",
   },
+  {
+    id: "s13", name: "The Pilates Cave", neighborhood: "Santa Monica", address: "3250 Pico Blvd, Santa Monica, CA",
+    zip: "90405", classTypes: ["Reformer", "Mat", "Heated Mat"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "First class $35",
+    bookingUrl: "https://thepilatescave.com/pilates-cave/", instagram: "@thepilatescave",
+    tags: { level: "All Levels" }, parkingType: "Street Parking", parkingEase: "Moderate",
+    brand: "The Pilates Cave",
+    goodToKnow: ["This is their newest and largest location with both mat and reformer caves", "Sauna cave with two large saunas and two large showers", "Bring a towel for heated mat classes - not provided, mats are included", "Memberships work across all three locations"],
+    bestFor: "Anyone who wants the full Pilates Cave experience in one location - reformer cave, mat cave, sauna cave, and incredible lighting throughout. This is their flagship.",
+    rating: 4.6, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "Wow, this space is incredible. You have a full equipment room, a mat cave, and a reformer cave. The lighting in the room is exceptional and everything is so on brand for them. The class was insanely spicy - we used bands pretty much the entire time and I will be sore for days. And then there's the sauna cave with two large saunas and two large showers. I'm so impressed.",
+    sections: {
+      space: "This is The Pilates Cave's newest location and it shows. You have three distinct spaces: the mat cave, the reformer cave, and a full equipment room. The lighting throughout is exceptional - it sets the mood without being gimmicky. Everything is so on brand for them, which I love. And then there's the sauna cave: two large saunas, two large showers, and that same incredible attention to lighting and atmosphere. This is the only location that has both mat and reformer under one roof.",
+      classExperience: "We took the mat class and it was insanely spicy. We used resistance bands pretty much the entire time and I will genuinely be sore for days after this. A 4 on difficulty, which is a big step up from the beginner-leaning classes at their other location. They offer Reformer Signature Sculpt, Reformer Beginner Flow, Mat Method Sculpt, and Heated Mat Method Sculpt. The reformer cave has a completely different vibe from the mat side, which I'm excited to try next.",
+      vibe: "From the moment you walk in, you can feel the investment they've put into this location. The attention to detail in the lighting, the layout, the branding - it all feels intentional and elevated. It's a luxurious, serene environment that somehow also makes you work incredibly hard. The sauna cave at the end is the perfect reset after class.",
+      knowBeforeYouGo: "Drop-in is $45, first class intro is $35. They also have a 3-class intro pack for $95 ($32/class). Bring a towel for heated mat classes - they're not provided, but mats are included. Your membership works across all three Pilates Cave locations, which is a huge perk in LA. The reformer Signature Sculpt class requires Pilates experience or at least 5 beginner flow classes first."
+    },
+    videoId: null, color: "#C0B8A8",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
@@ -284,7 +306,7 @@ const CLASS_TYPES = ["Reformer Pilates", "Mat Pilates", "Heated Pilates", "Lagre
 const CLASS_TYPE_MAP = {
   "Reformer Pilates": ["Reformer", "Power Reformer", "Cadillac Reformer", "Modern Reformer", "Semi-Private Reformer", "Private Reformer", "Tower Reformer"],
   "Mat Pilates": ["Mat", "Non-Heated Mat Pilates", "Pilates", "Mat & Tower Pilates"],
-  "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates"],
+  "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates", "Heated Mat"],
   "Lagree": ["Lagree", "Megaformer"],
   "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs"],
   "Hot Yoga": ["Hot Yoga"],
