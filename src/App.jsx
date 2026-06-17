@@ -550,15 +550,12 @@ function HomePage({ navigate, searchAndGo }) {
 
   return <div>
     {/* Hero */}
-    <div style={{background:BRAND.butter}}>
+    <div style={{background:BRAND.butterLight}}>
     <section style={{padding:"clamp(44px,7vw,64px) clamp(16px,4vw,48px) clamp(32px,5vw,52px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
       <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={66} /></div>
-      <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:20}}>
+      <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:24}}>
         workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
       </div>
-      <p style={{fontSize:"clamp(0.95rem,2vw,1.1rem)",color:BRAND.textMid,lineHeight:1.7,maxWidth:640,margin:"0 auto 36px",fontWeight:300}}>
-        Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
-      </p>
       {/* Search bar */}
       <div style={{maxWidth:520,margin:"0 auto 24px",position:"relative"}}>
         <input type="text" value={heroSearch} onChange={e=>setHeroSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&heroSearch.trim())searchAndGo(heroSearch.trim());}}
@@ -575,16 +572,23 @@ function HomePage({ navigate, searchAndGo }) {
         ))}
       </div>
       {/* Studio marquee */}
-      <div style={{overflow:"hidden",marginTop:32,opacity:0.2}}>
+      <div style={{overflow:"hidden",marginTop:32,opacity:0.35}}>
         <div style={{display:"flex",gap:32,whiteSpace:"nowrap",animation:"marqueeScroll 25s linear infinite"}}>
           {[...STUDIOS,...STUDIOS].map((s,i) => (
-            <span key={i} style={{fontSize:"0.78rem",fontFamily:"'Libre Baskerville',Georgia,serif",fontStyle:"italic",color:"#2C2522",display:"flex",alignItems:"center",gap:8}}>
+            <span key={i} style={{fontSize:"0.78rem",fontFamily:"'Libre Baskerville',Georgia,serif",fontStyle:"italic",color:BRAND.red,display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:"0.5rem",color:BRAND.red}}>✦</span> {s.name}
             </span>
           ))}
         </div>
       </div>
     </section>
+    </div>
+
+    {/* Brand sentiment strip */}
+    <div style={{padding:"32px clamp(16px,4vw,48px) 32px",maxWidth:1100,margin:"0 auto",borderBottom:"1px solid rgba(44,37,34,0.08)"}}>
+      <p style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1rem,2vw,1.3rem)",color:BRAND.text,lineHeight:1.7,maxWidth:480,fontWeight:400}}>
+        Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
+      </p>
     </div>
 
     {/* bookd picks */}
