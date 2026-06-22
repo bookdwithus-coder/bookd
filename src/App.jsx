@@ -585,10 +585,12 @@ function HomePage({ navigate, searchAndGo }) {
     </div>
 
     {/* Brand sentiment strip */}
-    <div style={{padding:"32px clamp(16px,4vw,48px) 32px",maxWidth:1100,margin:"0 auto",borderBottom:"1px solid rgba(44,37,34,0.08)"}}>
-      <p style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1rem,2vw,1.3rem)",color:BRAND.text,lineHeight:1.7,maxWidth:480,fontWeight:400}}>
+    <div style={{background:BRAND.red}}>
+    <div style={{padding:"32px clamp(16px,4vw,48px) 32px",maxWidth:1100,margin:"0 auto"}}>
+      <p style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1rem,2vw,1.3rem)",color:BRAND.butter,lineHeight:1.7,maxWidth:480,fontWeight:400}}>
         Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
       </p>
+    </div>
     </div>
 
     {/* bookd picks */}
