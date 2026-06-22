@@ -786,40 +786,28 @@ function StudioRequestForm({ darkMode = false }) {
 function StudioCard({ studio, navigate, featured=false }) {
   const s = studio;
   return (
-    <div onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:18,overflow:"hidden",cursor:"pointer",transition:"transform 0.2s,box-shadow 0.2s",boxShadow:"0 1px 3px rgba(44,37,34,0.03)",border:featured?"1px solid rgba(140,45,50,0.2)":"1px solid rgba(44,37,34,0.05)",position:"relative",animation:"fadeUp 0.4s ease both"}}
+    <div onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:18,overflow:"hidden",cursor:"pointer",transition:"transform 0.2s,box-shadow 0.2s",boxShadow:"0 1px 3px rgba(44,37,34,0.03)",border:featured?"1px solid rgba(140,45,50,0.15)":"1px solid rgba(44,37,34,0.05)",position:"relative",animation:"fadeUp 0.4s ease both",display:"flex",flexDirection:"column"}}
       onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px rgba(140,45,50,0.12)";}}
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
-      {/* Color header */}
-      <div style={{height:8,background:BRAND.red}} />
-      {featured && s.isFavorite && <div style={{position:"absolute",top:18,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
-      <div style={{padding:"20px 22px 22px"}}>
-        {/* Name + neighborhood */}
+      <div style={{height:6,background:BRAND.red}} />
+      {featured && s.isFavorite && <div style={{position:"absolute",top:16,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
+      <div style={{padding:"22px 22px 18px",flex:1}}>
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
-        <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.45)",marginBottom:10}}>{s.neighborhood} · {s.priceTier}</div>
-        {/* Rating */}
-        <div style={{marginBottom:12}}><StarRating rating={s.rating} count={s.reviewCount} /></div>
-        {/* Tags */}
-        <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:14}}>
+        <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",marginBottom:12}}>{s.neighborhood} · {s.priceTier}</div>
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14,background:"rgba(254,235,171,0.3)",padding:"8px 12px",borderRadius:10}}>
+          <StarRating rating={s.rating} count={s.reviewCount} />
+        </div>
+        <div style={{marginBottom:14}}>
           <span style={{background:"rgba(140,45,50,0.1)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:"#8C2D32",fontWeight:500}}>{s.tags.level}</span>
-          <span style={{background:"rgba(44,37,34,0.04)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:"rgba(44,37,34,0.5)",display:"flex",alignItems:"center",gap:4}}>
-            <span style={{fontSize:"0.6rem",opacity:0.5}}>P</span> {s.parkingType} · {s.parkingEase}
-          </span>
-          {s.introOffer && s.introOffer !== "Check website for intro offers" && (
-            <span style={{background:"rgba(140,45,50,0.06)",borderRadius:100,padding:"3px 10px",fontSize:"0.68rem",color:BRAND.red,fontWeight:500}}>Intro: {s.introOffer}</span>
-          )}
         </div>
-        {/* Favorite note (only in featured mode) */}
-        {featured && s.favoriteNote && (
-          <div style={{fontSize:"0.78rem",color:BRAND.red,fontStyle:"italic",lineHeight:1.5,fontWeight:400,marginBottom:12,padding:"8px 12px",background:"rgba(140,45,50,0.04)",borderRadius:10}}>"{s.favoriteNote}"</div>
+        {featured && s.favoriteNote ? (
+          <div style={{fontSize:"0.82rem",color:BRAND.red,fontStyle:"italic",lineHeight:1.55,fontWeight:400,padding:"10px 14px",background:"rgba(140,45,50,0.04)",borderRadius:10}}>"{s.favoriteNote}"</div>
+        ) : (
+          <div style={{fontSize:"0.82rem",color:"rgba(44,37,34,0.55)",lineHeight:1.65,fontWeight:300,display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"}}>"{s.heroReview}"</div>
         )}
-        {/* Review snippet */}
-        <div style={{fontSize:"0.8rem",color:"rgba(44,37,34,0.55)",fontStyle:"italic",lineHeight:1.6,fontWeight:300,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden",marginBottom:14}}>
-          "{s.heroReview}"
-        </div>
-        {/* Class types */}
-        <div style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.4)",display:"flex",gap:6,flexWrap:"wrap"}}>
-          {s.classTypes.map((t,i) => <span key={i}>{i>0?"·":""} {t}</span>)}
-        </div>
+      </div>
+      <div style={{background:"rgba(254,235,171,0.15)",padding:"12px 22px",fontSize:"0.72rem",color:"rgba(44,37,34,0.4)",display:"flex",gap:6,flexWrap:"wrap"}}>
+        {s.classTypes.map((t,i) => <span key={i}>{i>0?"·":""} {t}</span>)}
       </div>
     </div>
   );
