@@ -1155,7 +1155,7 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
           <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:6}}>Community Comments</div>
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"1.3rem",fontWeight:400}}>{reviews.length} comment{reviews.length!==1?"s":""}</span>
         </div>
-        <button onClick={()=>setShowForm(!showForm)} style={{background:showForm?"rgba(44,37,34,0.06)":BRAND.red,color:showForm?"#2C2522":"#fff",border:"none",borderRadius:100,padding:"8px 18px",fontSize:"0.8rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",transition:"all 0.2s"}}>
+        <button onClick={()=>setShowForm(!showForm)} style={{background:showForm?"rgba(44,37,34,0.06)":BRAND.red,color:showForm?"#2C2522":"#FEEBAB",border:"none",borderRadius:100,padding:"8px 18px",fontSize:"0.8rem",fontWeight:500,cursor:"pointer",fontFamily:"inherit",transition:"all 0.2s"}}>
           {showForm ? "Cancel" : "+ Leave a Comment"}
         </button>
       </div>
@@ -1203,7 +1203,7 @@ function CommunityReviewsSection({ studioId, studioName, classTypes, reviews, ad
 
             <button onClick={handleSubmit} disabled={!formData.name||!formData.text} style={{
               background:(formData.name&&formData.text)?BRAND.red:"rgba(44,37,34,0.1)",
-              color:(formData.name&&formData.text)?"#fff":"rgba(44,37,34,0.3)",
+              color:(formData.name&&formData.text)?"#FEEBAB":"rgba(44,37,34,0.3)",
               border:"none",borderRadius:100,padding:"13px 0",fontSize:"0.88rem",fontWeight:500,cursor:(formData.name&&formData.text)?"pointer":"default",
               fontFamily:"inherit",width:"100%",transition:"all 0.2s",
             }}>Post Comment</button>
@@ -1566,7 +1566,7 @@ function PartnerPage({ navigate }) {
               <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.06em",color:"rgba(44,37,34,0.5)",marginBottom:8,fontWeight:500}}>Tell us more</div>
               <textarea style={{...iS,minHeight:100,resize:"vertical",borderRadius:12,lineHeight:1.6}} placeholder="What are you interested in? Any details that would help us understand the opportunity." value={formData.message} onChange={e=>setFormData({...formData,message:e.target.value})} />
             </div>
-            <button onClick={handleSubmit} disabled={sending||!formData.name||!formData.email||!formData.message} style={{background:(formData.name&&formData.email&&formData.message&&!sending)?BRAND.red:"rgba(44,37,34,0.12)",color:(formData.name&&formData.email&&formData.message&&!sending)?"#fff":"rgba(44,37,34,0.3)",border:"none",borderRadius:100,padding:"14px 0",fontSize:"0.9rem",fontWeight:500,cursor:(formData.name&&formData.email&&formData.message&&!sending)?"pointer":"default",fontFamily:"inherit",width:"100%"}}>
+            <button onClick={handleSubmit} disabled={sending||!formData.name||!formData.email||!formData.message} style={{background:(formData.name&&formData.email&&formData.message&&!sending)?BRAND.red:"rgba(44,37,34,0.12)",color:(formData.name&&formData.email&&formData.message&&!sending)?"#FEEBAB":"rgba(44,37,34,0.3)",border:"none",borderRadius:100,padding:"14px 0",fontSize:"0.9rem",fontWeight:500,cursor:(formData.name&&formData.email&&formData.message&&!sending)?"pointer":"default",fontFamily:"inherit",width:"100%"}}>
               {sending ? "Sending..." : "Send Inquiry"}
             </button>
             <p style={{fontSize:"0.75rem",color:BRAND.textLight,textAlign:"center",fontWeight:300}}>
