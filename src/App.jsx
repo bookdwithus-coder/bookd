@@ -294,6 +294,26 @@ const STUDIOS = [
     },
     videoId: null, color: "#C0B8A8",
   },
+  {
+    id: "s14", name: "Summer Pilates", neighborhood: "Santa Monica", address: "625 Montana Ave, Santa Monica, CA",
+    zip: "90403", classTypes: ["Reformer"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "2 for $65 / 3 for $80",
+    bookingUrl: "https://www.summer-pilates.com/pricing", instagram: "@summerpilates__",
+    tags: { level: "All Levels" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    goodToKnow: ["Intimate class sizes", "Founded by Tes who teaches classes herself", "Walking distance to incredible coffee shops and the beach", "Free neighborhood parking available if you want to skip the meters"],
+    bestFor: "Anyone who wants small reformer classes where the instructor actually gets to you, in a walkable Montana Ave location near coffee and the beach.",
+    rating: 4.0, ratings: { aesthetic: 3.5, music: 3.5, cleanliness: 5, difficulty: 3.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "We are so impressed by the upgrades this studio has made since opening. It's super cozy in here now with a really light, welcoming energy. Our first class felt more beginner-friendly but the second time around was so spicy - we were absolutely shaky. Only 6 reformers means small classes and real attention.",
+    sections: {
+      space: "Summer Pilates is a boutique studio on Montana Ave with just 6 Merrithew reformers, which means small, intimate classes where the instructor can actually get to you. The space is light and airy with a cozy energy that's been getting better every time we visit. It's not the most designed studio in LA, but it has a warmth to it that feels personal rather than produced. Plus you're right on Montana - Primo Coffee is across the street, cute shops everywhere, and you're a few blocks from the beach.",
+      classExperience: "We've taken two classes here and had completely different experiences. The first time felt more beginner-friendly and approachable. The second time was so spicy - we were absolutely shaky and used bands pretty much the entire time. It's genuinely all levels though. We heard nothing but positive reviews from other people in the class, including first-timers. With only 6 reformers, you get real attention and corrections.",
+      vibe: "This is a newer studio that's still evolving, and there's something really cool about that. It feels personal and welcoming - not a polished franchise. The small class size creates a community energy where you actually get to know people. The Montana Ave location adds to it. You're walking distance to great coffee, shops, and the ocean. It's the kind of studio that fits into your whole morning, not just the workout.",
+      knowBeforeYouGo: "Drop-in is $45. Intro offers are 2 for $65 or 3 for $80, which is a great way to try it. Easy parking - metered on Montana or free neighborhood parking that's an easy walk to the studio. Only 6 reformers so classes are small but you probably won't have trouble booking. They also offer private sessions and semi-privates."
+    },
+    videoId: null, color: "#D4C8B0",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
