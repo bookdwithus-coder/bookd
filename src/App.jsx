@@ -298,7 +298,7 @@ const STUDIOS = [
     id: "s14", name: "Summer Pilates", neighborhood: "Santa Monica", address: "625 Montana Ave, Santa Monica, CA",
     zip: "90403", classTypes: ["Reformer"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "2 for $65 / 3 for $80",
-    bookingUrl: "https://www.summer-pilates.com/pricing", instagram: "@summerpilates__",
+    bookingUrl: "https://www.summer-pilates.com/schedule", instagram: "@summerpilates__",
     tags: { level: "All Levels" }, parkingType: "Metered Parking", parkingEase: "Easy",
     goodToKnow: ["Intimate class sizes", "Founded by Tes who teaches classes herself", "Walking distance to incredible coffee shops and the beach", "Free neighborhood parking available if you want to skip the meters"],
     bestFor: "Anyone who wants small reformer classes where the instructor actually gets to you, in a walkable Montana Ave location near coffee and the beach.",
