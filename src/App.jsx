@@ -134,7 +134,7 @@ const STUDIOS = [
     id: "s6", name: "Oblix Studio", neighborhood: "Beverly Hills", address: "243 N Robertson Blvd, Beverly Hills, CA",
     zip: "90211", classTypes: ["Lagree", "Megaformer"],
     dropInPrice: "$42", priceTier: "$$", introOffer: "Buy one, get one for $42",
-    bookingUrl: "https://www.oblixstudio.com/schedule", instagram: "@oblixstudio",
+    bookingUrl: "https://www.oblixstudio.com/schedule", instagram: "@oblixstudios",
     tags: { level: "Intermediate" }, parkingType: "Metered Parking", parkingEase: "Easy",
     goodToKnow: ["Incredible intro offers - check their site", "Music is loud and fun - mostly hip hop and rap", "Be ready to be humbled - this class is no joke"],
     bestFor: "Anyone who wants a seriously challenging Lagree class in a beautiful studio with great music. Come humble.",
@@ -314,6 +314,26 @@ const STUDIOS = [
     },
     videoId: null, color: "#D4C8B0",
   },
+  {
+    id: "s15", name: "LA Sculpt", neighborhood: "Malibu", address: "23410 Civic Center Way Ste E-9, Malibu, CA",
+    zip: "90265", classTypes: ["Mat Pilates", "Pilates Sculpt"],
+    dropInPrice: "$44", priceTier: "$$", introOffer: "First class $30 / 2 weeks unlimited $79",
+    bookingUrl: "https://lasculpt.com/classes", instagram: "@lasculpt_",
+    tags: { level: "All Levels" }, parkingType: "Parking Lot", parkingEase: "Easy",
+    goodToKnow: ["Incredible view of Malibu and the Country Mart from the studio", "Free parking and incredibly walkable", "Exclusive Pepperdine student discount available", "Incredible studio sound system"],
+    bestFor: "Anyone in Malibu who wants a seriously challenging mat-based class with an incredible sound system and free parking in the Country Mart.",
+    rating: 4.25, ratings: { aesthetic: 3.5, music: 5, cleanliness: 5, difficulty: 4.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "We didn't know what to expect walking into the space or the class, but we were blown away by the quality. We were shaking within the first five minutes and the music was bumping - one of the best studio sound systems we've heard in a while. Parking is free right outside the Country Mart, so it's stress-free and easy to get to.",
+    sections: {
+      space: "LA Sculpt is tucked inside the Malibu Country Mart, and the location alone is a draw. The views are incredible and you're surrounded by great shopping and food. The studio itself is cute and light-filled, but the decor doesn't particularly stand out compared to some of the more designed studios in LA. What does stand out is the sound system - it's one of the best we've heard. The music was bumping and it genuinely elevated the entire class experience.",
+      classExperience: "We were shaking within the first five minutes. The class is mat-based and uses light hand weights, ankle weights, Pilates ring, and stability ball. They offer both Mat Pilates (classical, slower, focused on breath and deep core work) and Pilates Sculpt (faster tempo, more dynamic, layered with sculpt elements). Both are designed for all levels but don't let that fool you - the difficulty is real. We were sweating, shaking, and sore the next day.",
+      vibe: "Welcoming and community-driven. The studio is still relatively new and has a personal energy to it. It's in the Country Mart so you're in a great area for grabbing coffee or shopping after class. There's also a Pepperdine student discount which is a fun touch since the founder is a Pepperdine alum. The overall feel is elevated but approachable.",
+      knowBeforeYouGo: "First class is $30, or you can try 3 classes for $81 ($27/class). They also have a 2-week unlimited new client offer for $79 which is a great way to really try it out. Free parking right outside the Malibu Country Mart - no meters, no stress. Class packs run about $44/class for a 5-pack."
+    },
+    videoId: null, color: "#C8B8D0",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
@@ -328,7 +348,7 @@ const CLASS_TYPE_MAP = {
   "Mat Pilates": ["Mat", "Non-Heated Mat Pilates", "Pilates", "Mat & Tower Pilates"],
   "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates", "Heated Mat"],
   "Lagree": ["Lagree", "Megaformer"],
-  "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs"],
+  "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs", "Pilates Sculpt"],
   "Hot Yoga": ["Hot Yoga"],
 };
 
