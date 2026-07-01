@@ -692,6 +692,9 @@ function HomePage({ navigate, searchAndGo }) {
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
         </div>
       </div>
     <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
@@ -769,6 +772,8 @@ function HomePage({ navigate, searchAndGo }) {
       {/* Background text treatment */}
       <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
         <div style={{display:"flex",gap:20,whiteSpace:"nowrap"}}>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
+          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
           <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
         </div>
