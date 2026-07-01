@@ -28,7 +28,7 @@ function BookdLogo({ height = 28, color = BRAND.red }) {
 // ─── STUDIO DATA ─────────────────────────────────────────────
 const STUDIOS = [
   {
-    id: "s1", name: "Speir Pilates", neighborhood: "West Hollywood", address: "8356 Santa Monica Blvd, West Hollywood, CA",
+    id: "s1", introPricePerClass: 30, dateAdded: "2026-06-01", name: "Speir Pilates", neighborhood: "West Hollywood", address: "8356 Santa Monica Blvd, West Hollywood, CA",
     zip: "90069", classTypes: ["Reformer", "Power Reformer"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $30",
     bookingUrl: "https://speirpilates.com/studio-classes", instagram: "@speirpilates",
@@ -48,7 +48,7 @@ const STUDIOS = [
     videoId: null, color: "#C4A08A",
   },
   {
-    id: "s2", name: "Pilates Boutique", neighborhood: "West Hollywood", address: "470 N Doheny Dr, West Hollywood, CA",
+    id: "s2", introPricePerClass: 39, dateAdded: "2026-06-01", name: "Pilates Boutique", neighborhood: "West Hollywood", address: "470 N Doheny Dr, West Hollywood, CA",
     zip: "90048", classTypes: ["Cadillac Reformer", "Chair"],
     dropInPrice: "$59", priceTier: "$$$", introOffer: "Single class for $39",
     bookingUrl: "https://www.pilatesboutique.com/", instagram: "@studiopilatesboutique",
@@ -68,12 +68,12 @@ const STUDIOS = [
     videoId: null, color: "#B8A090",
   },
   {
-    id: "s3", name: "Silver Springs", neighborhood: "West Hollywood", address: "8710 Melrose Ave, West Hollywood, CA",
+    id: "s3", introPricePerClass: 20, dateAdded: "2026-06-01", name: "Silver Springs", neighborhood: "West Hollywood", address: "8710 Melrose Ave, West Hollywood, CA",
     zip: "90069", classTypes: ["Heated HIIT Pilates", "Hot Yoga", "Sculpt"],
     dropInPrice: "$35", priceTier: "$$", introOffer: "2 classes for $40",
     bookingUrl: "https://silverspringsla.com/pages/schedule", instagram: "@silverspringsmelrose",
     tags: { level: "All Levels" }, parkingType: "Parking Lot", parkingEase: "Moderate",
-    isFavorite: true, favoriteNote: "The sound system alone changed how I feel about studio music. And they have a parking lot. In LA.",
+    isFavorite: false,
     goodToKnow: ["They give you a mat, towel, and face towel - all free", "They have their own parking lot which never happens in LA", "They clean everything up for you after class", "Palo Santo at the end of class - so calming"],
     bestFor: "Anyone who wants a studio that goes above and beyond on the details. The sound system, the amenities, the parking lot - everything is thought through.",
     rating: 4.9, ratings: { aesthetic: 5, music: 5, cleanliness: 5, difficulty: 4.5 },
@@ -89,7 +89,7 @@ const STUDIOS = [
     videoId: null, color: "#A0B8B8",
   },
   {
-    id: "s4", name: "Karen Lord Pilates", neighborhood: "Santa Monica", address: "1427 7th St, Santa Monica, CA",
+    id: "s4", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Karen Lord Pilates", neighborhood: "Santa Monica", address: "1427 7th St, Santa Monica, CA",
     zip: "90401", classTypes: ["Modern Reformer"],
     dropInPrice: "$43", priceTier: "$$", introOffer: "Single class for $25",
     bookingUrl: "https://www.karenlordpilatesmovement.com/book-a-class", instagram: "@karenlordpilates",
@@ -110,7 +110,7 @@ const STUDIOS = [
     videoId: null, color: "#D4B8A0",
   },
   {
-    id: "s5", name: "The Pilates Cave", neighborhood: "West LA", address: "11824 W Pico Blvd, Los Angeles, CA",
+    id: "s5", introPricePerClass: 35, dateAdded: "2026-06-01", name: "The Pilates Cave", neighborhood: "West LA", address: "11824 W Pico Blvd, Los Angeles, CA",
     zip: "90064", classTypes: ["Reformer", "Mat"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "First class $35",
     bookingUrl: "https://thepilatescave.com/schedule-pilates-cave/", instagram: "@thepilatescave",
@@ -131,11 +131,12 @@ const STUDIOS = [
     videoId: null, color: "#B0C0A8",
   },
   {
-    id: "s6", name: "Oblix Studio", neighborhood: "Beverly Hills", address: "243 N Robertson Blvd, Beverly Hills, CA",
+    id: "s6", introPricePerClass: 21, dateAdded: "2026-06-01", name: "Oblix Studio", neighborhood: "Beverly Hills", address: "243 N Robertson Blvd, Beverly Hills, CA",
     zip: "90211", classTypes: ["Lagree", "Megaformer"],
     dropInPrice: "$42", priceTier: "$$", introOffer: "Buy one, get one for $42",
     bookingUrl: "https://www.oblixstudio.com/schedule", instagram: "@oblixstudios",
     tags: { level: "Intermediate" }, parkingType: "Metered Parking", parkingEase: "Easy",
+    isFavorite: true, favoriteNote: "The most humbling Lagree class in LA. You will shake. The music and backlighting make it an experience.",
     goodToKnow: ["Incredible intro offers - check their site", "Music is loud and fun - mostly hip hop and rap", "Be ready to be humbled - this class is no joke"],
     bestFor: "Anyone who wants a seriously challenging Lagree class in a beautiful studio with great music. Come humble.",
     rating: 4.5, ratings: { aesthetic: 4.5, music: 4, cleanliness: 5, difficulty: 4.7 },
@@ -151,12 +152,12 @@ const STUDIOS = [
     videoId: null, color: "#C0A8C0",
   },
   {
-    id: "s7", name: "Be Kind Studios", neighborhood: "Malibu", address: "23465 Civic Center Way, Suite #830, Malibu, CA",
+    id: "s7", introPricePerClass: 35, dateAdded: "2026-06-01", name: "Be Kind Studios", neighborhood: "Malibu", address: "23465 Civic Center Way, Suite #830, Malibu, CA",
     zip: "90265", classTypes: ["Reformer"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "Single class for $35",
     bookingUrl: "https://bekindstudios.com/locations#/", instagram: "@bekindstudios",
     tags: { level: "Intermediate" }, parkingType: "Parking Lot", parkingEase: "Easy",
-    isFavorite: true, favoriteNote: "Worth the drive to Malibu. The coffee and matcha machine alone is worth mentioning.",
+    isFavorite: false,
     goodToKnow: ["They have an infamous coffee and matcha machine - actually so good", "One of their newest locations - attention to detail in the design is insane", "Every class is going to be challenging", "Instructors are super nice and knowledgeable"],
     bestFor: "Anyone willing to make the drive to Malibu for a stunning studio with consistently challenging classes, amazing instructors, and honestly the best studio coffee machine in LA.",
     rating: 4.7, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4.3 },
@@ -172,7 +173,7 @@ const STUDIOS = [
     videoId: null, color: "#A8C0D0",
   },
   {
-    id: "s8", name: "Sculpt Club", neighborhood: "Studio City", address: "12348 Ventura Blvd, Suite C, Studio City, CA",
+    id: "s8", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Sculpt Club", neighborhood: "Studio City", address: "12348 Ventura Blvd, Suite C, Studio City, CA",
     zip: "91604", classTypes: ["Booty & Abs", "Full Body Sculpt", "Pilates", "Mat & Tower Pilates"],
     dropInPrice: "$38", priceTier: "$$", introOffer: "3 classes for $70",
     bookingUrl: "https://www.sculptclubco.com/schedule", instagram: "@sculptclubla",
@@ -192,7 +193,7 @@ const STUDIOS = [
     videoId: null, color: "#D0C0A0",
   },
   {
-    id: "s9", name: "The Heated Room", neighborhood: "Santa Monica", address: "315 Wilshire Blvd, Santa Monica, CA",
+    id: "s9", introPricePerClass: 20, dateAdded: "2026-06-01", name: "The Heated Room", neighborhood: "Santa Monica", address: "315 Wilshire Blvd, Santa Monica, CA",
     zip: "90401", classTypes: ["Power Pilates", "Semi-Private Reformer"],
     dropInPrice: "$40-$55", priceTier: "$$-$$$", introOffer: "Mat: 2 classes for $40, Reformer: Single class for $45",
     bookingUrl: "https://www.heatedroom.com/schedule?_mt=%2Fschedule%2Fdaily%3FactiveCategoryId%3D0", instagram: "@heatedroom",
@@ -213,11 +214,12 @@ const STUDIOS = [
     videoId: null, color: "#B8C4B8",
   },
   {
-    id: "s10", name: "Coco House Pilates", neighborhood: "Beverly Hills", address: "350 N Canon Dr, Beverly Hills, CA",
+    id: "s10", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Coco House Pilates", neighborhood: "Beverly Hills", address: "350 N Canon Dr, Beverly Hills, CA",
     zip: "90210", classTypes: ["Heated Mat Pilates", "Reformer", "Tower"],
     dropInPrice: "$45-$65", priceTier: "$$$", introOffer: "Mat: Single class for $25, Reformer: Single class for $30\"",
     bookingUrl: "https://www.cocohousepilates.com/book-a-class", instagram: "@cocohousepilates",
     tags: { level: "All Levels" }, parkingType: "Metered Parking, Parking Garage free for 2 hours", parkingEase: "Easy",
+    isFavorite: true, favoriteNote: "The infrared heat, red light therapy, and eucalyptus steam reset at the end. Nothing accidental, everything working.",
     goodToKnow: ["Heated class - come hydrated", "Dark, moody mat pilates room - very different from typical studio", "Grip socks mandatory for both rooms", "Plenty of free parking around the studio"],
     bestFor: "Intermediate to advanced studio goers who want to be pushed. The combinations are unmatched and you will leave feeling like it is the hardest pilates class you have ever taken.",
     rating: 4.8, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4.7 },
@@ -233,7 +235,7 @@ const STUDIOS = [
     videoId: null, color: "#C8B0A0",
   },
   {
-    id: "s11", name: "Briiomare", neighborhood: "Beverly Hills", address: "236 1/2 S Robertson Blvd, Beverly Hills, CA",
+    id: "s11", introPricePerClass: 17.5, dateAdded: "2026-06-11", name: "Briiomare", neighborhood: "Beverly Hills", address: "236 1/2 S Robertson Blvd, Beverly Hills, CA",
     zip: "90211", classTypes: ["Heated Mat Pilates", "Non-Heated Mat Pilates"],
     dropInPrice: "$35", priceTier: "$$", introOffer: "2 classes for $35",
     bookingUrl: "https://www.briiomare.com/book-a-class", instagram: "@briiomare",
@@ -253,7 +255,7 @@ const STUDIOS = [
     videoId: null, color: "#D4C0B0",
   },
   {
-    id: "s12", name: "Karen Lord Pilates", neighborhood: "West Hollywood", address: "7024 Melrose Ave, Los Angeles, CA",
+    id: "s12", introPricePerClass: 30, dateAdded: "2026-06-14", name: "Karen Lord Pilates", neighborhood: "West Hollywood", address: "7024 Melrose Ave, Los Angeles, CA",
     zip: "90038", classTypes: ["Reformer", "Private Reformer", "Tower Reformer"],
     dropInPrice: "$46", priceTier: "$$$", introOffer: "First class $30",
     bookingUrl: "https://www.karenlordpilatesmovement.com/melrose", instagram: "@karenlordpilates",
@@ -274,12 +276,13 @@ const STUDIOS = [
     videoId: null, color: "#B0A8C0",
   },
   {
-    id: "s13", name: "The Pilates Cave", neighborhood: "Santa Monica", address: "3250 Pico Blvd, Santa Monica, CA",
+    id: "s13", introPricePerClass: 35, dateAdded: "2026-06-16", name: "The Pilates Cave", neighborhood: "Santa Monica", address: "3250 Pico Blvd, Santa Monica, CA",
     zip: "90405", classTypes: ["Reformer", "Mat", "Heated Mat"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "First class $35",
     bookingUrl: "https://thepilatescave.com/pilates-cave/", instagram: "@thepilatescave",
     tags: { level: "All Levels" }, parkingType: "Street Parking", parkingEase: "Moderate",
     brand: "The Pilates Cave",
+    isFavorite: true, favoriteNote: "The full experience in one location - reformer cave, mat cave, sauna cave. The lighting is unreal.",
     goodToKnow: ["This is their newest and largest location with both mat and reformer caves", "Sauna cave with two large saunas and two large showers", "Bring a towel for heated mat classes - not provided, mats are included", "Memberships work across all three locations"],
     bestFor: "Anyone who wants the full Pilates Cave experience in one location - reformer cave, mat cave, sauna cave, and incredible lighting throughout. This is their flagship.",
     rating: 4.6, ratings: { aesthetic: 5, music: 4.5, cleanliness: 5, difficulty: 4 },
@@ -295,7 +298,7 @@ const STUDIOS = [
     videoId: null, color: "#C0B8A8",
   },
   {
-    id: "s14", name: "Summer Pilates", neighborhood: "Santa Monica", address: "625 Montana Ave, Santa Monica, CA",
+    id: "s14", introPricePerClass: 26.67, dateAdded: "2026-06-22", name: "Summer Pilates", neighborhood: "Santa Monica", address: "625 Montana Ave, Santa Monica, CA",
     zip: "90403", classTypes: ["Reformer"],
     dropInPrice: "$45", priceTier: "$$", introOffer: "2 for $65 / 3 for $80",
     bookingUrl: "https://www.summer-pilates.com/schedule", instagram: "@summerpilates__",
@@ -315,7 +318,7 @@ const STUDIOS = [
     videoId: null, color: "#D4C8B0",
   },
   {
-    id: "s15", name: "LA Sculpt", neighborhood: "Malibu", address: "23410 Civic Center Way Ste E-9, Malibu, CA",
+    id: "s15", introPricePerClass: 30, dateAdded: "2026-06-24", name: "LA Sculpt", neighborhood: "Malibu", address: "23410 Civic Center Way Ste E-9, Malibu, CA",
     zip: "90265", classTypes: ["Mat Pilates", "Pilates Sculpt"],
     dropInPrice: "$44", priceTier: "$$", introOffer: "First class $30 / 2 weeks unlimited $79",
     bookingUrl: "https://lasculpt.com/classes", instagram: "@lasculpt_",
@@ -335,7 +338,7 @@ const STUDIOS = [
     videoId: null, color: "#C8B8D0",
   },
   {
-    id: "s16", name: "Burn LA", neighborhood: "Studio City", address: "12080 Ventura Pl, Unit 1-2, Studio City, CA",
+    id: "s16", introPricePerClass: 16.67, dateAdded: "2026-06-30", name: "Burn LA", neighborhood: "Studio City", address: "12080 Ventura Pl, Unit 1-2, Studio City, CA",
     zip: "91604", classTypes: ["BURN45", "ISOBURN", "BUILD"],
     dropInPrice: "$50", priceTier: "$$$", introOffer: "3 for $50 (buy 1 get 2 free)",
     bookingUrl: "https://burnla.com/schedule", instagram: "@burnlosangeles",
@@ -604,8 +607,10 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 // ─── HOME PAGE ───────────────────────────────────────────────
 function HomePage({ navigate, searchAndGo }) {
   const [heroSearch,setHeroSearch] = useState("");
-  const topPicks = STUDIOS.filter(s=>s.isFavorite);
-  const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers").sort((a,b)=>parseFloat(a.dropInPrice.replace(/[^0-9.]/g,""))-parseFloat(b.dropInPrice.replace(/[^0-9.]/g,""))).slice(0,4);
+  const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,4);
+  const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
+  const threeWeeksAgo = new Date(Date.now() - 21 * 24 * 60 * 60 * 1000);
+  const recentlyAdded = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating).slice(0,4);
   const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
 
   return <div>
@@ -664,6 +669,20 @@ function HomePage({ navigate, searchAndGo }) {
         {topPicks.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} featured />)}
       </div>
     </section>
+
+    {/* Recently reviewed */}
+    {recentlyAdded.length > 0 && (
+    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+        <span style={{background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>new</span>
+      </div>
+      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>recently reviewed</h2>
+      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:28,fontWeight:300}}>The latest studios we've been to.</p>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
+        {recentlyAdded.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} />)}
+      </div>
+    </section>
+    )}
 
     {/* Best intro deals */}
     {bestDeals.length > 0 && (
@@ -851,6 +870,7 @@ function StudioCard({ studio, navigate, featured=false }) {
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
       <div style={{height:6,background:BRAND.red}} />
       {featured && s.isFavorite && <div style={{position:"absolute",top:16,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
+      {!(featured && s.isFavorite) && s.dateAdded && (new Date(s.dateAdded) >= new Date(Date.now() - 21*24*60*60*1000)) && <div style={{position:"absolute",top:16,right:14,background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>new</div>}
       <div style={{padding:"22px 22px 18px",flex:1}}>
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
         <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",marginBottom:12}}>{s.neighborhood} · {s.priceTier}</div>
