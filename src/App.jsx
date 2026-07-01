@@ -1079,8 +1079,8 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
       <div style={{marginBottom:28}}>
         <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:14}}>our review</div>
         <div style={{display:"flex",gap:24,alignItems:"flex-start"}} className="review-video-row">
-          <div style={{flexShrink:0}}>
-            <iframe src={`https://www.tiktok.com/embed/v2/${s.tiktokId}`} style={{width:280,height:500,border:"none",borderRadius:16}} allowFullScreen />
+          <div style={{flexShrink:0,width:325}}>
+            <iframe src={`https://www.tiktok.com/embed/v2/${s.tiktokId}`} style={{width:"100%",height:578,border:"none",borderRadius:16}} allowFullScreen />
           </div>
           <div style={{flex:1,paddingTop:8}}>
             <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
