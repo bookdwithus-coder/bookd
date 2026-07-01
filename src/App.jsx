@@ -1051,7 +1051,7 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
         </div>
         <div>
           <h1 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.6rem,4vw,2.2rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15}}>{s.name}</h1>
-          <div style={{fontSize:"0.84rem",color:"rgba(44,37,34,0.5)",marginTop:2}}>{s.neighborhood} · {s.address}</div>
+          <div style={{fontSize:"0.84rem",color:"rgba(44,37,34,0.5)",marginTop:2}}>{s.neighborhood} · <a href={`https://maps.google.com/?q=${encodeURIComponent(s.address)}`} target="_blank" rel="noopener noreferrer" style={{color:BRAND.red,textDecoration:"none",borderBottom:"1px solid rgba(140,45,50,0.2)"}}>{s.address}</a></div>
         </div>
       </div>
 
