@@ -352,7 +352,7 @@ const STUDIOS = [
       vibe: "High energy, music is bumping, and the infrared lighting creates this immersive environment that makes you forget everything else. The combination of the heat, the lights, and the sound system turns it into more of an experience than just a workout. They have multiple locations across LA - Studio City, Brentwood, West Hollywood, and Westlake Village - so you can find one near you.",
       knowBeforeYouGo: "Drop-in is $50. The first timers special is incredible - 3 classes for $50 (buy 1 get 2 free, expires in 14 days). Drink plenty of water before class. Seriously. The mixture of weights, cardio, and infrared heat can be overwhelming on the body if you're not hydrated. Parking is street parking which is usually fine, but avoid Sunday mornings if you can - the farmers market makes it stressful to find a spot and book a class."
     },
-    videoId: null, color: "#D0B8B8",
+    videoId: null, tiktokId: "7559434773093977375", color: "#D0B8B8",
   },
 ];
 
@@ -596,7 +596,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
         <span onClick={()=>{navigate("about");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Our Story</span>
         <span onClick={()=>{navigate("partner");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Partner With Us</span>
       </div>}
-      <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}}`}</style>
+      <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}.review-video-row{flex-direction:column!important;align-items:center!important}.review-video-row iframe{width:100%!important;max-width:325px!important}}`}</style>
     </nav>
   );
 }
@@ -1074,12 +1074,41 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     {/* Photo Gallery */}
     {s.gallery && s.gallery.length > 0 && <GalleryCarousel gallery={s.gallery} studioName={s.name} studioColor={s.color} />}
 
-    {/* Video placeholder */}
-    <div style={{background:"rgba(44,37,34,0.04)",borderRadius:16,padding:"48px 20px",textAlign:"center",marginBottom:28,border:"1px solid rgba(44,37,34,0.06)"}}>
-      <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(44,37,34,0.08)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:"1.2rem",color:"rgba(44,37,34,0.3)"}}>▶</div>
-      <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>Watch Our Review</div>
-      <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",fontWeight:300}}>See the space, the class, the vibe - our full video walkthrough</div>
-    </div>
+    {/* TikTok Video + Our Review */}
+    {s.tiktokId ? (
+      <div style={{marginBottom:28}}>
+        <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:14}}>our review</div>
+        <div style={{display:"flex",gap:24,alignItems:"flex-start"}} className="review-video-row">
+          <div style={{flexShrink:0}}>
+            <iframe src={`https://www.tiktok.com/embed/v2/${s.tiktokId}`} style={{width:280,height:500,border:"none",borderRadius:16}} allowFullScreen />
+          </div>
+          <div style={{flex:1,paddingTop:8}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
+              <div style={{width:28,height:28,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.55rem",color:"#FEEBAB",fontWeight:700}}>b</div>
+              <div>
+                <span style={{fontSize:"0.82rem",fontWeight:500}}>Sydney & Sam</span>
+                <span style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.4)",marginLeft:6}}>bookd review</span>
+              </div>
+            </div>
+            <div style={{fontSize:"1.05rem",lineHeight:1.8,color:"rgba(44,37,34,0.65)",fontWeight:300,fontFamily:"'Libre Baskerville',Georgia,serif",fontStyle:"italic"}}>
+              "{s.heroReview}"
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div style={{background:"#fff",borderRadius:16,padding:"28px 28px",border:"1px solid rgba(44,37,34,0.05)",marginBottom:28}}>
+        <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:14}}>Our Review</div>
+        <div style={{fontSize:"1.05rem",lineHeight:1.8,color:"rgba(44,37,34,0.75)",fontStyle:"italic",fontWeight:300,marginBottom:16,fontFamily:"'Libre Baskerville',Georgia,serif"}}>
+          "{s.heroReview}"
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{width:28,height:28,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.55rem",color:"#FEEBAB",fontWeight:700}}>b</div>
+          <span style={{fontSize:"0.82rem",fontWeight:500}}>Sydney & Sam</span>
+          <span style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.4)"}}>bookd review</span>
+        </div>
+      </div>
+    )}
 
     {/* Good to Know */}
     {s.goodToKnow && s.goodToKnow.length > 0 && (
@@ -1098,19 +1127,6 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
         </div>
       </div>
     )}
-
-    {/* Hero review */}
-    <div style={{background:"#fff",borderRadius:16,padding:"28px 28px",border:"1px solid rgba(44,37,34,0.05)",marginBottom:28}}>
-      <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:14}}>Our Review</div>
-      <div style={{fontSize:"1.05rem",lineHeight:1.8,color:"rgba(44,37,34,0.75)",fontStyle:"italic",fontWeight:300,marginBottom:16,fontFamily:"'Libre Baskerville',Georgia,serif"}}>
-        "{s.heroReview}"
-      </div>
-      <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <div style={{width:28,height:28,borderRadius:"50%",background:BRAND.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.55rem",color:"#FEEBAB",fontWeight:700}}>b</div>
-        <span style={{fontSize:"0.82rem",fontWeight:500}}>Sydney & Sam</span>
-        <span style={{fontSize:"0.72rem",color:BRAND.textLight}}>bookd review</span>
-      </div>
-    </div>
 
     {/* Detailed sub-ratings */}
     <div style={{background:"#fff",borderRadius:16,padding:"24px 28px",border:"1px solid rgba(44,37,34,0.05)",marginBottom:28}}>
