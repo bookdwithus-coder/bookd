@@ -334,6 +334,26 @@ const STUDIOS = [
     },
     videoId: null, color: "#C8B8D0",
   },
+  {
+    id: "s16", name: "Burn LA", neighborhood: "Studio City", address: "12080 Ventura Pl, Unit 1-2, Studio City, CA",
+    zip: "91604", classTypes: ["BURN45", "ISOBURN", "BUILD"],
+    dropInPrice: "$50", priceTier: "$$$", introOffer: "3 for $50 (buy 1 get 2 free)",
+    bookingUrl: "https://burnla.com/schedule", instagram: "@burnlosangeles",
+    tags: { level: "All Levels" }, parkingType: "Street Parking", parkingEase: "Moderate",
+    goodToKnow: ["Right across from Alfred Coffee and Joan's on 3rd", "Sunday mornings are tough - farmers market makes parking stressful, give yourself extra time", "Hydrate before class - the mix of weights, cardio, and infrared heat is intense on the body", "Uses LED/NIR red + blue light and infrared heat therapy throughout class"],
+    bestFor: "Anyone who wants an intense, full-body sweat session with infrared heat and red light therapy in a studio that will leave you absolutely drenched.",
+    rating: 4.5, ratings: { aesthetic: 3, music: 5, cleanliness: 5, difficulty: 5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "This class uses infrared and red lights - your body warms from the inside out, your muscles loosen faster, your heart rate climbs quicker, and you start sweating almost immediately. Burn is its own unique method and it was so hard. We were absolutely drenched and felt amazing after.",
+    sections: {
+      space: "The studio has a really cool lighting setup with infrared and red light panels throughout - when the lights are on during class, the atmosphere is moody and immersive. The lobby and common areas are fairly simple and won't blow you away design-wise, but the in-class experience more than makes up for it. The location is great - right across from Alfred Coffee and Joan's on 3rd, surrounded by cute shops on Ventura.",
+      classExperience: "This is its own method and it hits different. The infrared heat warms your body from the inside out, so your muscles loosen faster, your heart rate climbs quicker, and you start sweating almost immediately. The class combines weights, cardio, and movement in a way that is genuinely intense. We were absolutely drenched by the end. They offer different formats - BURN45 is weighted HIIT, ISOBURN is low-impact isometric work, and BUILD focuses on heavy muscle building. All of them will challenge you.",
+      vibe: "High energy, music is bumping, and the infrared lighting creates this immersive environment that makes you forget everything else. The combination of the heat, the lights, and the sound system turns it into more of an experience than just a workout. They have multiple locations across LA - Studio City, Brentwood, West Hollywood, and Westlake Village - so you can find one near you.",
+      knowBeforeYouGo: "Drop-in is $50. The first timers special is incredible - 3 classes for $50 (buy 1 get 2 free, expires in 14 days). Drink plenty of water before class. Seriously. The mixture of weights, cardio, and infrared heat can be overwhelming on the body if you're not hydrated. Parking is street parking which is usually fine, but avoid Sunday mornings if you can - the farmers market makes it stressful to find a spot and book a class."
+    },
+    videoId: null, color: "#D0B8B8",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
@@ -348,7 +368,7 @@ const CLASS_TYPE_MAP = {
   "Mat Pilates": ["Mat", "Non-Heated Mat Pilates", "Pilates", "Mat & Tower Pilates"],
   "Heated Pilates": ["Heated HIIT Pilates", "Heated Mat Pilates", "Power Pilates", "Heated Mat"],
   "Lagree": ["Lagree", "Megaformer"],
-  "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs", "Pilates Sculpt"],
+  "Sculpt": ["Sculpt", "Full Body Sculpt", "Booty & Abs", "Pilates Sculpt", "BURN45", "ISOBURN", "BUILD"],
   "Hot Yoga": ["Hot Yoga"],
 };
 
