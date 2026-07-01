@@ -881,7 +881,7 @@ function SearchPage({ query, navigate, searchAndGo }) {
   const results = useMemo(() => {
     return baseResults.filter(s => {
       if (filters.neighborhood && s.neighborhood !== filters.neighborhood) return false;
-      if (filters.priceTier && !s.priceTier.includes(filters.priceTier)) return false;
+      if (filters.priceTier && !s.priceTier.split("-").some(p => p.trim() === filters.priceTier)) return false;
       if (filters.parkingEase && s.parkingEase !== filters.parkingEase) return false;
       if (filters.level && s.tags.level !== filters.level) return false;
       return true;
