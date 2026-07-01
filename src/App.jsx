@@ -45,7 +45,7 @@ const STUDIOS = [
       vibe: "The standout here is genuinely the people. The girls at the front desk, the instructors - everyone is just so nice. There's a real sense of community that you feel the second you walk in. It's warm without trying too hard.",
       knowBeforeYouGo: "Single class is $45 which is on the higher end, but they do offer a new client special for $30. The music is always good - solid volume, good playlists. It's a vibe in there."
     },
-    videoId: null, color: "#C4A08A",
+    videoId: null, tiktokId: "7515076695544679710", color: "#C4A08A",
   },
   {
     id: "s2", introPricePerClass: 39, dateAdded: "2026-06-01", name: "Pilates Boutique", neighborhood: "West Hollywood", address: "470 N Doheny Dr, West Hollywood, CA",
@@ -65,7 +65,7 @@ const STUDIOS = [
       vibe: "Quiet and understated. The music is fairly low and doesn't always seem like there's an intentional playlist - more background noise. It's a calm space but it doesn't have that energy you get at some other studios.",
       knowBeforeYouGo: "This is one of the most expensive studios we've been to - drop-in rate is $59. They do have an intro offer for $39. Expect a stretch-focused class rather than an intense workout."
     },
-    videoId: null, color: "#B8A090",
+    videoId: null, tiktokId: "7533274638558760222", color: "#B8A090",
   },
   {
     id: "s3", introPricePerClass: 20, dateAdded: "2026-06-01", name: "Silver Springs", neighborhood: "West Hollywood", address: "8710 Melrose Ave, West Hollywood, CA",
@@ -86,7 +86,7 @@ const STUDIOS = [
       vibe: "This was almost a spiritual experience. The music, the heat, the energy in the room - it all comes together. And the little touches matter: they give you a mat, towel, and face towel all for free. They clean everything up for you. They bring in Palo Santo at the end. It's the details.",
       knowBeforeYouGo: "Drop-in is $35 which is very fair for what you get. They have a great intro deal - 2 classes for $40. They provide mat, towel, and face towel. They have a parking lot. Honestly the perks here are unmatched."
     },
-    videoId: null, color: "#A0B8B8",
+    videoId: null, tiktokId: "7537068715435707679", color: "#A0B8B8",
   },
   {
     id: "s4", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Karen Lord Pilates", neighborhood: "Santa Monica", address: "1427 7th St, Santa Monica, CA",
@@ -107,7 +107,7 @@ const STUDIOS = [
       vibe: "Calm, beautiful, serene. The space does all the talking. It feels luxurious and intentional. But the energy could use a boost - the music was really quiet and it could have been more of a vibe if they just turned up the volume.",
       knowBeforeYouGo: "Drop-in is $43 which is pretty high for LA, especially given the difficulty level. They do have a new client special for $25 which is a great deal to try it out. Free 2-hour parking on 7th St right in front of the studio."
     },
-    videoId: null, color: "#D4B8A0",
+    videoId: null, tiktokId: "7537202000052636959", color: "#D4B8A0",
   },
   {
     id: "s5", introPricePerClass: 35, dateAdded: "2026-06-01", name: "The Pilates Cave", neighborhood: "West LA", address: "11824 W Pico Blvd, Los Angeles, CA",
@@ -128,7 +128,7 @@ const STUDIOS = [
       vibe: "Incredible energy. The kind of studio where you walk in and immediately feel better. The aesthetic carries a lot of the experience. Loved it - but the workout intensity was minimal.",
       knowBeforeYouGo: "Price is on the higher end but they have great intro offers - definitely take advantage. They have multiple locations so make sure you're going to the right one. And don't skip the sauna."
     },
-    videoId: null, color: "#B0C0A8",
+    videoId: null, tiktokId: "7637277743947795743", color: "#B0C0A8",
   },
   {
     id: "s6", introPricePerClass: 21, dateAdded: "2026-06-01", name: "Oblix Studio", neighborhood: "Beverly Hills", address: "243 N Robertson Blvd, Beverly Hills, CA",
@@ -149,7 +149,7 @@ const STUDIOS = [
       vibe: "High energy, loud music, serious workout. The kind of studio where you walk out feeling like you accomplished something. Not pretentious - just intense.",
       knowBeforeYouGo: "Single class is $42. They have some really incredible intro offers - definitely check their site. Be prepared to be humbled, especially if it's your first Lagree class."
     },
-    videoId: null, color: "#C0A8C0",
+    videoId: null, tiktokId: "7542313764046097695", color: "#C0A8C0",
   },
   {
     id: "s7", introPricePerClass: 35, dateAdded: "2026-06-01", name: "Be Kind Studios", neighborhood: "Malibu", address: "23465 Civic Center Way, Suite #830, Malibu, CA",
@@ -170,7 +170,7 @@ const STUDIOS = [
       vibe: "10 out of 10. The energy, the design, the instructors, the little touches like the coffee and matcha machine - everything comes together. If you're in Malibu, this is a must-try.",
       knowBeforeYouGo: "Single class is $45. The drive to Malibu is the only barrier - once you're there, everything is worth it. Try the coffee and matcha machine, seriously."
     },
-    videoId: null, color: "#A8C0D0",
+    videoId: null, tiktokId: "7554971003001130270", color: "#A8C0D0",
   },
   {
     id: "s8", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Sculpt Club", neighborhood: "Studio City", address: "12348 Ventura Blvd, Suite C, Studio City, CA",
@@ -190,7 +190,7 @@ const STUDIOS = [
       vibe: "Welcoming and approachable. This isn't a studio that's trying to intimidate you. It's the kind of place you'd bring a friend who's never done Pilates. The energy is warm and the extras (merch, coffee, chlorophyll drops) make it feel like a little community.",
       knowBeforeYouGo: "$35 for a single class which is moderate for LA. Super beginner friendly so if you're experienced and want intensity, maybe try their Full Body Sculpt instead of Booty and Abs."
     },
-    videoId: null, color: "#D0C0A0",
+    videoId: null, tiktokId: "7560450338931723550", color: "#D0C0A0",
   },
   {
     id: "s9", introPricePerClass: 20, dateAdded: "2026-06-01", name: "The Heated Room", neighborhood: "Santa Monica", address: "315 Wilshire Blvd, Santa Monica, CA",
@@ -211,7 +211,7 @@ const STUDIOS = [
       vibe: "Intense, immersive, and elevated. The music is loud, the energy is high, and the space makes you feel like you're in on a secret. This is not a gentle Pilates class. It's an experience.",
       knowBeforeYouGo: "Price is on the higher end - check their site for current rates and intro offers. They also offer semi-private reformer sessions. Mats, towels, and face towels are all provided. Come ready to work."
     },
-    videoId: null, color: "#B8C4B8",
+    videoId: null, tiktokId: "7569317687692725534", color: "#B8C4B8",
   },
   {
     id: "s10", introPricePerClass: 25, dateAdded: "2026-06-01", name: "Coco House Pilates", neighborhood: "Beverly Hills", address: "350 N Canon Dr, Beverly Hills, CA",
@@ -232,7 +232,7 @@ const STUDIOS = [
       vibe: "This studio feels intentional in a way most studios don't. It's not just a pretty space with nice lighting - every detail is engineered. The infrared heat, the red light therapy in the ceilings, the humidity-controlled climate system - it's all designed to make your body perform better, not just sweat more. It's cozy but elevated. Welcoming but serious. The kind of studio where you walk in and immediately think 'ok, they thought about this.' And the little touches seal it - alkaline filtered water from marble sinks, a eucalyptus steam reset at the end of class from a sauna heater built into a Himalayan salt wall. It's giving wellness experience, not just workout.",
       knowBeforeYouGo: "The heated room uses infrared panels, not traditional heat, so it warms your body from within rather than just blasting hot air - it's a different kind of sweat. Come hydrated. They have alkaline filtered water stations built into these gorgeous marble sinks under the logo. And don't rush out after class - they activate a eucalyptus steam from the Himalayan salt wall at the end that is genuinely grounding."
     },
-    videoId: null, color: "#C8B0A0",
+    videoId: null, tiktokId: "7582437202479615246", color: "#C8B0A0",
   },
   {
     id: "s11", introPricePerClass: 17.5, dateAdded: "2026-06-11", name: "Briiomare", neighborhood: "Beverly Hills", address: "236 1/2 S Robertson Blvd, Beverly Hills, CA",
@@ -252,7 +252,7 @@ const STUDIOS = [
       vibe: "Cozy, welcoming, and elevated without being pretentious. Briiomare started as a Pilates sock brand rooted in community, and you can feel that origin story in the studio. It's built with warmth and purpose. The standalone building gives it a private, intimate feel - like you're going to someone's really well-designed home studio rather than a commercial space.",
       knowBeforeYouGo: "Drop-in is $35 and the intro offer is 2 classes for $35, which is one of the best intro deals we've seen. Easy metered parking on the street. No reformers - they only do heated and non-heated mat classes. The studio is tucked away off Robertson in a standalone building so look for the address carefully. Definitely check them out if you're in Beverly Hills."
     },
-    videoId: null, color: "#D4C0B0",
+    videoId: null, tiktokId: "7642081293483773215", color: "#D4C0B0",
   },
   {
     id: "s12", introPricePerClass: 30, dateAdded: "2026-06-14", name: "Karen Lord Pilates", neighborhood: "West Hollywood", address: "7024 Melrose Ave, Los Angeles, CA",
@@ -273,7 +273,7 @@ const STUDIOS = [
       vibe: "The staff was super nice and the space has a real energy to it. It's much larger than the Santa Monica location and feels like a completely different experience even though it's the same brand. The design choices are bold - this isn't a quiet, calming studio. It's making a statement. The lounge area makes you want to hang before and after class.",
       knowBeforeYouGo: "Drop-in is $46, intro offer is your first class for $30. They also have a 3 classes in 30 days deal for $100. Complimentary valet parking is a huge perk - the entrance is actually from the back through the parking lot, not the front doors on the street. Private sessions are $130 and duets are $190. The reformer room is large so if you want more one-on-one attention, book a private."
     },
-    videoId: null, color: "#B0A8C0",
+    videoId: null, tiktokId: "7639910337109576991", color: "#B0A8C0",
   },
   {
     id: "s13", introPricePerClass: 35, dateAdded: "2026-06-16", name: "The Pilates Cave", neighborhood: "Santa Monica", address: "3250 Pico Blvd, Santa Monica, CA",
@@ -295,7 +295,7 @@ const STUDIOS = [
       vibe: "From the moment you walk in, you can feel the investment they've put into this location. The attention to detail in the lighting, the layout, the branding - it all feels intentional and elevated. It's a luxurious, serene environment that somehow also makes you work incredibly hard. The sauna cave at the end is the perfect reset after class.",
       knowBeforeYouGo: "Drop-in is $45, first class intro is $35. They also have a 3-class intro pack for $95 ($32/class). Bring a towel for heated mat classes - they're not provided, but mats are included. Your membership works across all three Pilates Cave locations, which is a huge perk in LA. The reformer Signature Sculpt class requires Pilates experience or at least 5 beginner flow classes first."
     },
-    videoId: null, color: "#C0B8A8",
+    videoId: null, tiktokId: "7539689270747925791", color: "#C0B8A8",
   },
   {
     id: "s14", introPricePerClass: 26.67, dateAdded: "2026-06-22", name: "Summer Pilates", neighborhood: "Santa Monica", address: "625 Montana Ave, Santa Monica, CA",
@@ -315,7 +315,7 @@ const STUDIOS = [
       vibe: "This is a newer studio that's still evolving, and there's something really cool about that. It feels personal and welcoming - not a polished franchise. The small class size creates a community energy where you actually get to know people. The Montana Ave location adds to it. You're walking distance to great coffee, shops, and the ocean. It's the kind of studio that fits into your whole morning, not just the workout.",
       knowBeforeYouGo: "Drop-in is $45. Intro offers are 2 for $65 or 3 for $80, which is a great way to try it. Easy parking - metered on Montana or free neighborhood parking that's an easy walk to the studio. Only 6 reformers so classes are small but you probably won't have trouble booking. They also offer private sessions and semi-privates."
     },
-    videoId: null, color: "#D4C8B0",
+    videoId: null, tiktokId: "7630637149188050206", color: "#D4C8B0",
   },
   {
     id: "s15", introPricePerClass: 30, dateAdded: "2026-06-24", name: "LA Sculpt", neighborhood: "Malibu", address: "23410 Civic Center Way Ste E-9, Malibu, CA",
@@ -335,7 +335,7 @@ const STUDIOS = [
       vibe: "Welcoming and community-driven. The studio is still relatively new and has a personal energy to it. It's in the Country Mart so you're in a great area for grabbing coffee or shopping after class. There's also a Pepperdine student discount which is a fun touch since the founder is a Pepperdine alum. The overall feel is elevated but approachable.",
       knowBeforeYouGo: "First class is $30, or you can try 3 classes for $81 ($27/class). They also have a 2-week unlimited new client offer for $79 which is a great way to really try it out. Free parking right outside the Malibu Country Mart - no meters, no stress. Class packs run about $44/class for a 5-pack."
     },
-    videoId: null, color: "#C8B8D0",
+    videoId: null, tiktokId: "7623652444848819486", color: "#C8B8D0",
   },
   {
     id: "s16", introPricePerClass: 16.67, dateAdded: "2026-06-30", name: "Burn LA", neighborhood: "Studio City", address: "12080 Ventura Pl, Unit 1-2, Studio City, CA",
