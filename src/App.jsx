@@ -607,10 +607,10 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 // ─── HOME PAGE ───────────────────────────────────────────────
 function HomePage({ navigate, searchAndGo }) {
   const [heroSearch,setHeroSearch] = useState("");
-  const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,4);
+  const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,3);
   const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
   const threeWeeksAgo = new Date(Date.now() - 21 * 24 * 60 * 60 * 1000);
-  const recentlyAdded = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating).slice(0,4);
+  const recentlyAdded = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating).slice(0,3);
   const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
 
   return <div>
