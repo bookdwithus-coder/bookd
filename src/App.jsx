@@ -607,6 +607,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 // ─── HOME PAGE ───────────────────────────────────────────────
 function HomePage({ navigate, searchAndGo }) {
   const [heroSearch,setHeroSearch] = useState("");
+  const [hoveredHood,setHoveredHood] = useState(null);
   const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,3);
   const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
   const threeWeeksAgo = new Date(Date.now() - 21 * 24 * 60 * 60 * 1000);
@@ -650,6 +651,7 @@ function HomePage({ navigate, searchAndGo }) {
     </div>
 
     {/* Brand sentiment strip */}
+    <ScrollReveal>
     <div style={{background:BRAND.red}}>
     <div style={{padding:"32px clamp(16px,4vw,48px) 32px",maxWidth:1100,margin:"0 auto"}}>
       <p style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1rem,2vw,1.3rem)",color:BRAND.butter,lineHeight:1.7,maxWidth:480,fontWeight:400}}>
@@ -658,7 +660,10 @@ function HomePage({ navigate, searchAndGo }) {
     </div>
     </div>
 
+    </ScrollReveal>
+
     {/* bookd picks */}
+    <ScrollReveal delay={0.1}>
     <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
         <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>✦ bookd picks</span>
@@ -670,7 +675,10 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
+    </ScrollReveal>
+
     {/* Recently reviewed */}
+    <ScrollReveal>
     {recentlyAdded.length > 0 && (
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
@@ -684,7 +692,10 @@ function HomePage({ navigate, searchAndGo }) {
     </section>
     )}
 
+    </ScrollReveal>
+
     {/* Best intro deals */}
+    <ScrollReveal>
     {bestDeals.length > 0 && (
     <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
@@ -720,24 +731,60 @@ function HomePage({ navigate, searchAndGo }) {
     </div>
     )}
 
+    </ScrollReveal>
+
     {/* Browse by neighborhood */}
+    <ScrollReveal>
     <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Browse by neighborhood</h2>
       <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>We've been everywhere so you don't have to.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,160px),1fr))",gap:10}}>
         {NEIGHBORHOODS.map(n => {
-          const count = STUDIOS.filter(s=>s.neighborhood===n).length;
-          return <div key={n} onClick={()=>searchAndGo(n)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.06)",borderLeft:`3px solid ${BRAND.red}`,borderRadius:14,padding:"18px 16px",cursor:"pointer",transition:"all 0.2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";e.currentTarget.style.borderLeftColor="#FEEBAB";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";e.currentTarget.style.borderLeftColor=BRAND.red;}}>
-            <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>{n}</div>
-            <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""}</div>
+          const studios = STUDIOS.filter(s=>s.neighborhood===n).sort((a,b)=>b.rating-a.rating);
+          const count = studios.length;
+          return <div key={n} style={{position:"relative"}}
+            onMouseEnter={()=>setHoveredHood(n)}
+            onMouseLeave={()=>setHoveredHood(null)}>
+            <div onClick={()=>searchAndGo(n)} style={{background:hoveredHood===n?BRAND.red:"#fff",color:hoveredHood===n?"#FEEBAB":"#2C2522",border:"1px solid rgba(44,37,34,0.06)",borderLeft:`3px solid ${hoveredHood===n?"#FEEBAB":BRAND.red}`,borderRadius:14,padding:"18px 16px",cursor:"pointer",transition:"all 0.2s"}}>
+              <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>{n}</div>
+              <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""}</div>
+            </div>
+            {hoveredHood===n && (
+              <div style={{position:"absolute",bottom:"100%",left:"50%",transform:"translateX(-50%)",marginBottom:8,zIndex:20,width:240,animation:"fadeUp 0.2s ease"}}>
+                <div style={{background:"#fff",borderRadius:14,border:"1px solid rgba(44,37,34,0.08)",boxShadow:"0 8px 24px rgba(44,37,34,0.12)",padding:"14px 16px"}}>
+                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:10,borderBottom:"1px solid rgba(44,37,34,0.06)",marginBottom:10}}>
+                    <span style={{fontSize:"0.72rem",fontWeight:600,color:BRAND.red}}>{n}</span>
+                    <span style={{fontSize:"0.65rem",color:"rgba(44,37,34,0.35)"}}>{count} studio{count!==1?"s":""}</span>
+                  </div>
+                  <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                    {studios.slice(0,4).map(s => (
+                      <div key={s.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                        <div>
+                          <div style={{fontSize:"0.78rem",fontWeight:500}}>{s.name}</div>
+                          <div style={{fontSize:"0.65rem",color:"rgba(44,37,34,0.4)"}}>{s.classTypes.slice(0,2).join(" · ")}</div>
+                        </div>
+                        <div style={{display:"flex",alignItems:"center",gap:4}}>
+                          <span style={{color:"#C4A050",fontSize:"0.65rem"}}>★</span>
+                          <span style={{fontSize:"0.78rem",fontWeight:600}}>{s.rating}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{marginTop:12,paddingTop:10,borderTop:"1px solid rgba(44,37,34,0.06)",textAlign:"center"}}>
+                    <span style={{fontSize:"0.72rem",color:BRAND.red,fontWeight:500,cursor:"pointer"}} onClick={()=>searchAndGo(n)}>View all in {n}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>;
         })}
       </div>
     </section>
 
+    </ScrollReveal>
+
     {/* Browse by class type */}
+    <ScrollReveal>
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Search by class type</h2>
       <p style={{fontSize:"0.88rem",color:"rgba(44,37,34,0.45)",marginBottom:24,fontWeight:300}}>Find exactly what you're looking for.</p>
@@ -754,7 +801,10 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
+    </ScrollReveal>
+
     {/* Follow us */}
+    <ScrollReveal>
     <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{background:BRAND.butterLight,borderRadius:20,padding:"36px clamp(20px,4vw,40px)",textAlign:"center"}}>
         <div style={{fontSize:"0.65rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:8}}>Stay in the loop</div>
@@ -767,7 +817,10 @@ function HomePage({ navigate, searchAndGo }) {
       </div>
     </section>
 
+    </ScrollReveal>
+
     {/* Where should we go next? */}
+    <ScrollReveal>
     <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
       {/* Background text treatment */}
       <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
@@ -785,7 +838,10 @@ function HomePage({ navigate, searchAndGo }) {
     </section>
     </div>
 
+    </ScrollReveal>
+
     {/* Meet your reviewers */}
+    <ScrollReveal>
     <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
       <div style={{background:BRAND.butterLight,borderRadius:20,padding:0,display:"flex",alignItems:"stretch",flexWrap:"wrap",overflow:"hidden"}}>
         <div style={{flexShrink:0,width:"clamp(120px,20vw,180px)"}}>
@@ -798,8 +854,29 @@ function HomePage({ navigate, searchAndGo }) {
         </div>
       </div>
     </section>
+    </ScrollReveal>
 
   </div>;
+}
+
+// ─── SCROLL REVEAL ─────────────────────────────────────────────
+function ScrollReveal({ children, delay = 0 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.unobserve(el); }
+    }, { threshold: 0.08 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div ref={ref} style={{opacity:visible?1:0,transform:visible?"translateY(0)":"translateY(32px)",transition:`opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`}}>
+      {children}
+    </div>
+  );
 }
 
 // ─── STUDIO REQUEST FORM ─────────────────────────────────────
@@ -873,7 +950,7 @@ function StudioCard({ studio, navigate, featured=false }) {
     <div onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:18,overflow:"hidden",cursor:"pointer",transition:"transform 0.2s,box-shadow 0.2s",boxShadow:"0 1px 3px rgba(44,37,34,0.03)",border:featured?"1px solid rgba(140,45,50,0.15)":"1px solid rgba(44,37,34,0.05)",position:"relative",animation:"fadeUp 0.4s ease both",display:"flex",flexDirection:"column"}}
       onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px rgba(140,45,50,0.12)";}}
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
-      <div style={{height:6,background:BRAND.red}} />
+      <div style={{height:44,background:"linear-gradient(180deg, rgba(140,45,50,0.12) 0%, rgba(140,45,50,0.02) 100%)"}} />
       {featured && s.isFavorite && <div style={{position:"absolute",top:16,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
       {!(featured && s.isFavorite) && s.dateAdded && (new Date(s.dateAdded) >= new Date(Date.now() - 21*24*60*60*1000)) && <div style={{position:"absolute",top:16,right:14,background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>new</div>}
       <div style={{padding:"22px 22px 18px",flex:1}}>
