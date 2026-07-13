@@ -375,7 +375,7 @@ const STUDIOS = [
       vibe: "Elevated, welcoming, and focused. This isn't a studio that relies on heat or darkness or loud music to create an atmosphere - it's clean, bright, and intentional. The energy comes from the method and the instructors. It's the kind of studio where you feel like you're investing in your body, not just working out. They're still relatively new and building their community, which gives it that personal, founder-driven energy.",
       knowBeforeYouGo: "Drop-in is $45 but their intro offers are some of the best in LA - $25 for your first class, or $125 for 12 classes over 21 days which works out to about $10 per class. That's unheard of. Complimentary underground parking. Classes are 45 minutes. The studio is intentionally non-heated. They also have a rebounder class if you want to mix in some cardio."
     },
-    videoId: null, color: "#B8C8B8",
+    videoId: null, tiktokId: "7621437235459607838", color: "#B8C8B8",
   },
 ];
 
