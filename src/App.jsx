@@ -525,7 +525,7 @@ export default function App() {
         <div style={{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:32}}>
           <div>
             <div style={{marginBottom:12}}><BookdLogo height={28} color="#FEEBAB" /></div>
-            <div style={{fontSize:"0.85rem",opacity:0.6,marginBottom:8}}>Honest wellness reviews for LA.</div>
+            <div style={{fontSize:"0.85rem",opacity:0.6,marginBottom:8}}>Your trusted studio tour guides.</div>
             <a href="mailto:bookdwithus@gmail.com" style={{fontSize:"0.82rem",color:"#FEEBAB",textDecoration:"none",opacity:0.8}}>bookdwithus@gmail.com</a>
           </div>
           <div style={{display:"flex",gap:32}}>
@@ -611,7 +611,8 @@ function HomePage({ navigate, searchAndGo }) {
   const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,3);
   const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
   const threeWeeksAgo = new Date(Date.now() - 21 * 24 * 60 * 60 * 1000);
-  const recentlyAdded = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating).slice(0,3);
+  const recentFromDate = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating);
+  const recentlyAdded = recentFromDate.length >= 3 ? recentFromDate.slice(0,3) : STUDIOS.filter(s=>s.dateAdded).sort((a,b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0,3);
   const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
 
   return <div>
@@ -692,6 +693,13 @@ function HomePage({ navigate, searchAndGo }) {
     </section>
     )}
 
+    </ScrollReveal>
+
+    {/* Rotating pull quote */}
+    <ScrollReveal>
+    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
+      <PullQuoteRotator studios={STUDIOS} navigate={navigate} />
+    </section>
     </ScrollReveal>
 
     {/* Best intro deals */}
@@ -857,6 +865,71 @@ function HomePage({ navigate, searchAndGo }) {
     </ScrollReveal>
 
   </div>;
+}
+
+// ─── PULL QUOTE ROTATOR ───────────────────────────────────────
+function PullQuoteRotator({ studios, navigate }) {
+  const quotes = useMemo(() => {
+    return studios.filter(s => s.rating >= 4.25).sort((a,b) => b.rating - a.rating).slice(0,5).map(s => ({
+      text: s.heroReview.length > 120 ? s.heroReview.substring(0, 120).trim() + "..." : s.heroReview,
+      name: s.name,
+      hood: s.neighborhood,
+      id: s.id,
+    }));
+  }, [studios]);
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (quotes.length <= 1) return;
+    const timer = setInterval(() => setIdx(i => (i + 1) % quotes.length), 5000);
+    return () => clearInterval(timer);
+  }, [quotes.length]);
+  if (!quotes.length) return null;
+  return (
+    <div style={{background:BRAND.butterLight,borderRadius:20,padding:"clamp(28px,5vw,48px) clamp(24px,4vw,40px)",textAlign:"center",position:"relative",minHeight:160,display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div style={{position:"relative",width:"100%",maxWidth:560}}>
+        {quotes.map((q,i) => (
+          <div key={i} style={{position:i===0?"relative":"absolute",inset:i===0?undefined:0,display:"flex",alignItems:"center",justifyContent:"center",opacity:idx===i?1:0,transition:"opacity 0.8s ease",pointerEvents:idx===i?"auto":"none"}}>
+            <div>
+              <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.4rem)",fontStyle:"italic",color:BRAND.red,lineHeight:1.6,marginBottom:14,cursor:"pointer"}} onClick={()=>navigate("studio",q.id)}>"{q.text}"</div>
+              <div style={{fontSize:"0.78rem",color:"rgba(140,45,50,0.45)"}}>{q.name} — {q.hood}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{position:"absolute",bottom:16,left:"50%",transform:"translateX(-50%)",display:"flex",gap:6}}>
+        {quotes.map((_,i) => (
+          <div key={i} onClick={()=>setIdx(i)} style={{width:6,height:6,borderRadius:"50%",background:BRAND.red,opacity:idx===i?0.8:0.2,cursor:"pointer",transition:"opacity 0.3s"}} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── ANIMATED RATING BAR ──────────────────────────────────────
+function AnimatedRatingBar({ label, value, delay = 0 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.unobserve(el); }
+    }, { threshold: 0.3 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const pct = (value / 5) * 100;
+  return (
+    <div ref={ref} style={{marginBottom:14}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+        <span style={{fontSize:"0.85rem",fontWeight:500}}>{label}</span>
+        <span style={{fontSize:"0.85rem",fontWeight:600,opacity:visible?1:0,transition:`opacity 0.4s ease ${delay+0.3}s`}}>{value}</span>
+      </div>
+      <div style={{height:6,background:"rgba(44,37,34,0.06)",borderRadius:3,overflow:"hidden"}}>
+        <div style={{height:"100%",background:BRAND.red,borderRadius:3,width:visible?`${pct}%`:"0%",transition:`width 0.8s ease ${delay}s`}} />
+      </div>
+    </div>
+  );
 }
 
 // ─── SCROLL REVEAL ─────────────────────────────────────────────
@@ -1234,10 +1307,10 @@ function StudioPage({ studioId, navigate, communityReviews, addReview }) {
     <div style={{background:"#fff",borderRadius:16,padding:"24px 28px",border:"1px solid rgba(44,37,34,0.05)",marginBottom:28}}>
       <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.08em",color:"rgba(44,37,34,0.35)",fontWeight:500,marginBottom:4}}>Rating Breakdown</div>
       <div style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.35)",marginBottom:16,fontWeight:300}}>Rated on <span onClick={()=>navigate("glossary")} style={{color:"#8C2D32",cursor:"pointer",fontWeight:500}}>the bookd scale</span></div>
-      <SubRating label="Aesthetic" value={s.ratings.aesthetic} icon="◻" />
-      <SubRating label="Music" value={s.ratings.music} icon="♫" />
-      <SubRating label="Cleanliness" value={s.ratings.cleanliness} icon="✦" />
-      <SubRating label="Difficulty" value={s.ratings.difficulty} icon="◇" />
+      <AnimatedRatingBar label="Aesthetic" value={s.ratings.aesthetic} delay={0} />
+      <AnimatedRatingBar label="Music" value={s.ratings.music} delay={0.15} />
+      <AnimatedRatingBar label="Cleanliness" value={s.ratings.cleanliness} delay={0.3} />
+      <AnimatedRatingBar label="Difficulty" value={s.ratings.difficulty} delay={0.45} />
     </div>
 
     {/* Detailed written review sections */}
