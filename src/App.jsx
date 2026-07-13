@@ -357,6 +357,26 @@ const STUDIOS = [
     },
     videoId: null, tiktokId: "7559434773093977375", color: "#D0B8B8",
   },
+  {
+    id: "s17", introPricePerClass: 10.42, dateAdded: "2026-07-12", name: "Move Studios", neighborhood: "Santa Monica", address: "2903 Lincoln Blvd, Santa Monica, CA",
+    zip: "90405", classTypes: ["Reformer", "Mat", "Rebounder"],
+    dropInPrice: "$45", priceTier: "$$", introOffer: "Single class $25 / 12 classes for $125",
+    bookingUrl: "https://move-studios.com/schedule", instagram: "@movestudiosusa",
+    tags: { level: "All Levels" }, parkingType: "Underground Parking", parkingEase: "Easy",
+    goodToKnow: ["Complimentary underground parking", "Intentionally non-heated so you can focus on strength and performance", "First studio in LA to combine Pilates, yoga, and rebounder", "12 Merrithew reformers with 8 flush-mounted speakers"],
+    bestFor: "Anyone who wants a strength-focused Pilates method with multiple class formats under one roof, complimentary parking, and an intro deal that's hard to beat.",
+    rating: 4.25, ratings: { aesthetic: 4, music: 4, cleanliness: 5, difficulty: 4 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "This 40-minute mat class was harder than most hour-long classes we've taken. The space is so nice - super open, great lighting, everything just feels very elevated. We took Kayla's class and absolutely adored her. She had the best energy.",
+    sections: {
+      space: "The studio is super open with great lighting and everything feels very elevated. They have 12 Merrithew reformers, 8 flush-mounted speakers for balanced audio, white oak flooring, natural stone accents, and warm LED lighting. The space is intentionally non-heated, which is a deliberate choice - they want you to focus your energy on movement, strength, and performance rather than just sweating. It's clean, modern, and well thought out. And they have complimentary underground parking which is a huge perk.",
+      classExperience: "We took the mat class and it was 40 minutes that hit harder than most hour-long classes we've taken. We used hand weights, Pilates balls, blocks, and a lot of slow controlled movements using our own body weight. The MOVE method is strength-focused - every class is designed to challenge your body differently. They also offer reformer and rebounder classes (a cardio class on mini trampolines). We can't wait to try the rebounder next. Kayla's class was incredible - her energy and cues were top tier.",
+      vibe: "Elevated, welcoming, and focused. This isn't a studio that relies on heat or darkness or loud music to create an atmosphere - it's clean, bright, and intentional. The energy comes from the method and the instructors. It's the kind of studio where you feel like you're investing in your body, not just working out. They're still relatively new and building their community, which gives it that personal, founder-driven energy.",
+      knowBeforeYouGo: "Drop-in is $45 but their intro offers are some of the best in LA - $25 for your first class, or $125 for 12 classes over 21 days which works out to about $10 per class. That's unheard of. Complimentary underground parking. Classes are 45 minutes. The studio is intentionally non-heated. They also have a rebounder class if you want to mix in some cardio."
+    },
+    videoId: null, color: "#B8C8B8",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
