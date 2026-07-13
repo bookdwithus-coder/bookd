@@ -610,7 +610,7 @@ function HomePage({ navigate, searchAndGo }) {
   const [hoveredHood,setHoveredHood] = useState(null);
   const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,3);
   const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
-  const threeWeeksAgo = new Date(Date.now() - 21 * 24 * 60 * 60 * 1000);
+  const threeWeeksAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
   const recentFromDate = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating);
   const recentlyAdded = recentFromDate.length >= 3 ? recentFromDate.slice(0,3) : STUDIOS.filter(s=>s.dateAdded).sort((a,b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0,3);
   const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
@@ -1025,7 +1025,7 @@ function StudioCard({ studio, navigate, featured=false }) {
       onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 3px rgba(44,37,34,0.03)";}}>
       <div style={{height:44,background:"linear-gradient(180deg, rgba(140,45,50,0.12) 0%, rgba(140,45,50,0.02) 100%)"}} />
       {featured && s.isFavorite && <div style={{position:"absolute",top:16,right:14,background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>bookd pick</div>}
-      {!(featured && s.isFavorite) && s.dateAdded && (new Date(s.dateAdded) >= new Date(Date.now() - 21*24*60*60*1000)) && <div style={{position:"absolute",top:16,right:14,background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>new</div>}
+      {!(featured && s.isFavorite) && s.dateAdded && (new Date(s.dateAdded) >= new Date(Date.now() - 30*24*60*60*1000)) && <div style={{position:"absolute",top:16,right:14,background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"3px 10px",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.05em"}}>new</div>}
       <div style={{padding:"22px 22px 18px",flex:1}}>
         <div style={{fontSize:"1.05rem",fontWeight:600,marginBottom:4,letterSpacing:"-0.01em"}}>{s.name}</div>
         <div style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.4)",marginBottom:12}}>{s.neighborhood} · {s.priceTier}</div>
