@@ -599,7 +599,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
         <span onClick={()=>{navigate("about");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Our Story</span>
         <span onClick={()=>{navigate("partner");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Partner With Us</span>
       </div>}
-      <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}.review-video-row{flex-direction:column!important;align-items:center!important}.review-video-row iframe{width:100%!important;max-width:325px!important}}`}</style>
+      <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}.review-video-row{flex-direction:column!important;align-items:center!important}.review-video-row iframe{width:100%!important;max-width:325px!important}.hood-preview{display:none!important}}`}</style>
     </nav>
   );
 }
@@ -758,7 +758,7 @@ function HomePage({ navigate, searchAndGo }) {
               <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""}</div>
             </div>
             {hoveredHood===n && (
-              <div style={{position:"absolute",bottom:"100%",left:"50%",transform:"translateX(-50%)",marginBottom:8,zIndex:20,width:240,animation:"fadeUp 0.2s ease"}}>
+              <div className="hood-preview" style={{position:"absolute",bottom:"100%",left:"50%",transform:"translateX(-50%)",marginBottom:8,zIndex:20,width:240,animation:"fadeUp 0.2s ease"}}>
                 <div style={{background:"#fff",borderRadius:14,border:"1px solid rgba(44,37,34,0.08)",boxShadow:"0 8px 24px rgba(44,37,34,0.12)",padding:"14px 16px"}}>
                   <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:10,borderBottom:"1px solid rgba(44,37,34,0.06)",marginBottom:10}}>
                     <span style={{fontSize:"0.72rem",fontWeight:600,color:BRAND.red}}>{n}</span>
