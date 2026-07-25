@@ -533,7 +533,7 @@ export default function App() {
     <div style={{minHeight:"100vh",background:BRAND.bg,color:BRAND.text,fontFamily:"'Outfit','DM Sans',sans-serif"}}>
       <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
       <Nav currentPage={page} navigate={navigate} searchAndGo={searchAndGo} mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
-      <main style={{paddingTop:72}}>
+      <main style={{paddingTop:0}}>
         {page==="home" && <HomePage navigate={navigate} searchAndGo={searchAndGo} />}
         {page==="search" && <SearchPage query={pageArg} navigate={navigate} searchAndGo={searchAndGo} />}
         {page==="studio" && <StudioPage studioId={pageArg} navigate={navigate} communityReviews={communityReviews} addReview={addReview} />}
@@ -578,6 +578,9 @@ export default function App() {
         .dark-input::placeholder { color: rgba(254,235,171,0.35); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        .hero-texture { position:relative; }
+        .hero-texture::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0; opacity:0.12; mix-blend-mode:multiply; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+        .hero-texture > * { position:relative; z-index:1; }
         @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes pillFadeIn { from { opacity:0; transform:translateY(8px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
         footer span:hover, footer a:hover { opacity: 1 !important; text-decoration: underline; text-underline-offset: 3px; }
@@ -587,305 +590,673 @@ export default function App() {
 }
 
 // ─── NAV ─────────────────────────────────────────────────────
-function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) {
-  const [q,setQ] = useState("");
+const SHORTLIST_KEY = "bookd_shortlist";
+let SAVED_IDS = [];
+try { const p = JSON.parse(localStorage.getItem(SHORTLIST_KEY) || "[]"); if (Array.isArray(p)) SAVED_IDS = p; } catch (e) {}
+const shortlistListeners = new Set();
+function writeShortlist(next) {
+  SAVED_IDS = next;
+  try { localStorage.setItem(SHORTLIST_KEY, JSON.stringify(next)); } catch (e) {}
+  shortlistListeners.forEach(fn => fn(next));
+}
+function useShortlist() {
+  const [saved, setSaved] = useState(SAVED_IDS);
+  useEffect(() => {
+    const fn = n => setSaved(n);
+    shortlistListeners.add(fn);
+    return () => shortlistListeners.delete(fn);
+  }, []);
+  return {
+    saved,
+    has: id => saved.includes(id),
+    toggle: id => writeShortlist(SAVED_IDS.includes(id) ? SAVED_IDS.filter(x => x !== id) : [...SAVED_IDS, id]),
+  };
+}
+
+/* ---------- scroll reveal ---------- */
+function useReveal(deps = []) {
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-reveal]:not(.bk-in)");
+    if (!els.length) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("bk-in"); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, deps);
+}
+
+/* ---------- shared bits ---------- */
+const SERIF = "'Libre Baskerville',Georgia,serif";
+const SPRING_MAROON = "repeating-linear-gradient(90deg,rgba(140,45,50,0.4) 0 2px,transparent 2px 10px)";
+const SPRING_BUTTER = "repeating-linear-gradient(90deg,rgba(254,235,171,0.55) 0 2px,transparent 2px 10px)";
+
+function ratingBars(s) {
+  return [
+    ["difficulty", s.ratings.difficulty],
+    ["music", s.ratings.music],
+    ["aesthetic", s.ratings.aesthetic],
+    ["cleanliness", s.ratings.cleanliness],
+  ].map(([label, v]) => ({ label, value: Number(v).toFixed(1), pct: (v / 5) * 100, strong: v >= 4.3 }));
+}
+
+function StudioCardV2({ studio: s, navigate, badge, dark = false }) {
+  const { has, toggle } = useShortlist();
+  const saved = has(s.id);
   return (
-    <nav style={{position:"fixed",top:0,left:0,right:0,height:72,background:"rgba(255,255,255,0.95)",backdropFilter:"blur(16px)",borderBottom:"1px solid rgba(44,37,34,0.06)",zIndex:1000,display:"flex",alignItems:"center",padding:"0 clamp(16px,4vw,48px)",gap:16}}>
-      <div onClick={()=>navigate("home")} style={{cursor:"pointer",flexShrink:0}}>
-        <BookdLogo height={24} />
+    <div className="bk-card" onClick={() => navigate("studio", s.id)}
+      style={{ border: "1px solid rgba(44,37,34,0.08)", borderRadius: 18, overflow: "hidden", background: "#fff", cursor: "pointer" }}>
+      <div style={{ background: dark ? BRAND.red : "#FFF9E8", padding: "17px 18px 16px", borderBottom: dark ? "none" : "1px solid rgba(44,37,34,0.07)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+          <span style={{ background: dark ? BRAND.butter : BRAND.red, color: dark ? BRAND.red : BRAND.butter, borderRadius: 100, padding: "4px 11px", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.09em" }}>{badge}</span>
+          <button className="bk-heart" aria-label={saved ? "Remove from my list" : "Save to my list"}
+            onClick={e => { e.stopPropagation(); toggle(s.id); }}
+            style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1, padding: 0, color: dark ? BRAND.butter : BRAND.red }}>{saved ? "♥" : "♡"}</button>
+        </div>
+        <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.4vw,1.62rem)", lineHeight: 1.14, letterSpacing: "-0.015em", marginTop: 14, textWrap: "balance", color: dark ? BRAND.butter : BRAND.text }}>{s.name}</div>
+        <div style={{ fontSize: "0.78rem", color: dark ? "rgba(254,235,171,0.6)" : "rgba(44,37,34,0.48)", marginTop: 6 }}>{s.neighborhood} · {s.classTypes[0]}</div>
       </div>
-      {/* Search bar - left-leaning */}
-      <div style={{flex:"1 1 300px",maxWidth:400,position:"relative"}} className="nav-search">
-        <input type="text" value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&q.trim()){searchAndGo(q.trim());setQ("");}}}
-          placeholder='Search'
-          style={{width:"100%",background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.06)",borderRadius:100,padding:"10px 16px 10px 38px",fontSize:"0.84rem",color:"#2C2522",outline:"none",fontFamily:"inherit"}} />
-        <span style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",opacity:0.25,fontSize:"0.9rem",pointerEvents:"none"}}>⌕</span>
+      <div style={{ padding: "16px 18px 18px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.11em", color: "rgba(44,37,34,0.32)", marginBottom: 10 }}>
+          <span>HOW IT SCORED</span><span>OUT OF 5</span>
+        </div>
+        {ratingBars(s).map(b => (
+          <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 8 }}>
+            <span style={{ width: 72, flexShrink: 0, fontSize: "0.75rem", color: "rgba(44,37,34,0.55)" }}>{b.label}</span>
+            <div style={{ flex: 1, height: 6, background: "rgba(44,37,34,0.07)", borderRadius: 100, overflow: "hidden" }}>
+              <div data-reveal="bar" style={{ "--w": `${b.pct}%`, height: "100%", borderRadius: 100, background: b.strong ? BRAND.red : "rgba(140,45,50,0.5)" }} />
+            </div>
+            <span style={{ width: 24, flexShrink: 0, textAlign: "right", fontSize: "0.76rem", fontWeight: 600 }}>{b.value}</span>
+          </div>
+        ))}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginTop: 15, paddingTop: 13, borderTop: "1px solid rgba(44,37,34,0.07)" }}>
+          <span style={{ fontSize: "0.78rem", color: "rgba(44,37,34,0.5)" }}>{s.dropInPrice} drop-in · ★ {s.rating}</span>
+          <span style={{ fontSize: "0.8rem", fontWeight: 600, color: BRAND.red, whiteSpace: "nowrap" }}>full bookd review →</span>
+        </div>
       </div>
-      <div style={{flex:1}} />
-      <div style={{display:"flex",alignItems:"center",gap:20,fontSize:"0.84rem",fontWeight:600,flexShrink:0,color:BRAND.red}} className="nd">
-        <span onClick={()=>navigate("home")} style={{cursor:"pointer",opacity:currentPage==="home"?1:0.55}}>Home</span>
-        <span onClick={()=>searchAndGo("")} style={{cursor:"pointer",opacity:currentPage==="search"?1:0.55}}>All Studios</span>
-        <span onClick={()=>navigate("glossary")} style={{cursor:"pointer",opacity:currentPage==="glossary"?1:0.55}}>How We Rate</span>
-        <span onClick={()=>navigate("about")} style={{cursor:"pointer",opacity:currentPage==="about"?1:0.55}}>Our Story</span>
-        <span onClick={()=>navigate("partner")} style={{cursor:"pointer",opacity:currentPage==="partner"?1:0.55}}>Partner With Us</span>
-      </div>
-      <div className="nm" onClick={()=>setMobileMenu(!mobileMenu)} style={{cursor:"pointer",padding:8,display:"none",flexDirection:"column",gap:4}}>
-        <div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:20,height:2,background:BRAND.red,borderRadius:1}} /><div style={{width:14,height:2,background:BRAND.red,borderRadius:1}} />
-      </div>
-      {mobileMenu && <div style={{position:"absolute",top:72,left:0,right:0,background:"rgba(255,255,255,0.98)",backdropFilter:"blur(16px)",padding:"16px clamp(16px,4vw,48px) 20px",display:"flex",flexDirection:"column",gap:14,fontSize:"0.95rem",fontWeight:600,borderBottom:"1px solid rgba(44,37,34,0.06)",color:BRAND.red}}>
-        <span onClick={()=>{navigate("home");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Home</span>
-        <span onClick={()=>{searchAndGo("");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>All Studios</span>
-        <span onClick={()=>{navigate("glossary");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>How We Rate</span>
-        <span onClick={()=>{navigate("about");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Our Story</span>
-        <span onClick={()=>{navigate("partner");setMobileMenu(false);}} style={{cursor:"pointer",padding:"8px 0"}}>Partner With Us</span>
-      </div>}
-      <style>{`@media(max-width:640px){.nd{display:none!important}.nm{display:flex!important}.nav-search{max-width:200px!important}.review-video-row{flex-direction:column!important;align-items:center!important}.review-video-row iframe{width:100%!important;max-width:325px!important}.hood-preview{display:none!important}}`}</style>
-    </nav>
+    </div>
   );
 }
 
-// ─── HOME PAGE ───────────────────────────────────────────────
-function HomePage({ navigate, searchAndGo }) {
-  const [heroSearch,setHeroSearch] = useState("");
-  const [hoveredHood,setHoveredHood] = useState(null);
-  const topPicks = STUDIOS.filter(s=>s.isFavorite).sort((a,b)=>b.rating-a.rating).slice(0,3);
-  const bestDeals = STUDIOS.filter(s=>s.introOffer && s.introOffer !== "Check website for intro offers" && s.introPricePerClass).sort((a,b)=>a.introPricePerClass-b.introPricePerClass).slice(0,4);
-  const threeWeeksAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  const recentFromDate = STUDIOS.filter(s => s.dateAdded && new Date(s.dateAdded) >= threeWeeksAgo).sort((a,b) => b.rating - a.rating);
-  const recentlyAdded = recentFromDate.length >= 3 ? recentFromDate.slice(0,3) : STUDIOS.filter(s=>s.dateAdded).sort((a,b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0,3);
-  const QUICK = ["Reformer Pilates","Mat Pilates","Pilates in West Hollywood","Pilates in Santa Monica"];
+/* ============================================================
+   NAV
+   ============================================================ */
 
-  return <div>
-    {/* Hero */}
-    <div style={{background:BRAND.butterLight}}>
-    <section style={{padding:"clamp(44px,7vw,64px) clamp(16px,4vw,48px) clamp(32px,5vw,52px)",textAlign:"center",maxWidth:760,margin:"0 auto"}}>
-      <div style={{marginBottom:20,display:"flex",justifyContent:"center"}}><BookdLogo height={66} /></div>
-      <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.5rem,3.8vw,2.4rem)",fontWeight:400,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:24}}>
-        workout with us.<br/><span style={{fontStyle:"italic",color:BRAND.red}}>your trusted studio tour guides.</span>
-      </div>
-      {/* Search bar */}
-      <div style={{maxWidth:520,margin:"0 auto 24px",position:"relative"}}>
-        <input type="text" value={heroSearch} onChange={e=>setHeroSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&heroSearch.trim())searchAndGo(heroSearch.trim());}}
-          placeholder='Search'
-          style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.1)",borderRadius:100,padding:"16px 56px 16px 24px",fontSize:"0.95rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxShadow:"0 2px 16px rgba(44,37,34,0.04)"}} />
-        <button onClick={()=>{if(heroSearch.trim())searchAndGo(heroSearch.trim());}} style={{position:"absolute",right:6,top:"50%",transform:"translateY(-50%)",background:BRAND.red,color:"#FEEBAB",border:"none",borderRadius:"50%",width:40,height:40,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1rem"}}>↗</button>
-      </div>
-      {/* Quick searches */}
-      <div style={{display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
-        {QUICK.map((q,i) => (
-          <button key={i} onClick={()=>searchAndGo(q)} style={{background:"rgba(44,37,34,0.04)",border:"1px solid rgba(44,37,34,0.06)",borderRadius:100,padding:"8px 16px",fontSize:"0.78rem",cursor:"pointer",fontFamily:"inherit",color:"rgba(44,37,34,0.6)",transition:"all 0.15s",opacity:0,animation:`pillFadeIn 0.4s ease ${0.1+i*0.08}s forwards`}}
-            onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";e.currentTarget.style.borderColor=BRAND.red;}}
-            onMouseLeave={e=>{e.currentTarget.style.background="rgba(44,37,34,0.04)";e.currentTarget.style.color="rgba(44,37,34,0.6)";e.currentTarget.style.borderColor="rgba(44,37,34,0.06)";}}>{q}</button>
-        ))}
-      </div>
-      {/* Studio marquee */}
-      <div style={{overflow:"hidden",marginTop:32,opacity:0.35}}>
-        <div style={{display:"flex",gap:32,whiteSpace:"nowrap",animation:"marqueeScroll 25s linear infinite"}}>
-          {[...STUDIOS,...STUDIOS].map((s,i) => (
-            <span key={i} style={{fontSize:"0.78rem",fontFamily:"'Libre Baskerville',Georgia,serif",fontStyle:"italic",color:BRAND.red,display:"flex",alignItems:"center",gap:8}}>
-              <span style={{fontSize:"0.5rem",color:BRAND.red}}>✦</span> {s.name}
-            </span>
-          ))}
+function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) {
+  const [q, setQ] = useState("");
+  const [listOpen, setListOpen] = useState(false);
+  const { saved, toggle } = useShortlist();
+  const savedStudios = STUDIOS.filter(s => saved.includes(s.id));
+
+  const link = page => ({
+    cursor: "pointer", opacity: currentPage === page ? 1 : 0.6, color: BRAND.red,
+    fontSize: "0.83rem", fontWeight: 600, textDecoration: "none", transition: "opacity .2s",
+  });
+
+  return (
+    <>
+      <nav style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(18px)", borderBottom: "1px solid rgba(44,37,34,0.07)", display: "flex", alignItems: "center", gap: 18, padding: "0 clamp(16px,4vw,44px)", height: 70 }}>
+        <div onClick={() => navigate("home")} style={{ cursor: "pointer", flexShrink: 0, display: "flex" }}><BookdLogo height={23} /></div>
+
+        <div className="bk-navsearch" style={{ flex: "1 1 260px", maxWidth: 380, position: "relative" }}>
+          <input value={q} onChange={e => setQ(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter" && q.trim()) { searchAndGo(q.trim()); setQ(""); } }}
+            placeholder="try “somewhere hard in santa monica”"
+            style={{ width: "100%", background: "rgba(44,37,34,0.04)", border: "1px solid rgba(44,37,34,0.07)", borderRadius: 100, padding: "10px 16px 10px 38px", fontSize: "0.83rem", color: BRAND.text, outline: "none", fontFamily: "inherit", transition: "border-color .2s,background .2s" }} />
+          <span style={{ position: "absolute", left: 15, top: "50%", transform: "translateY(-50%)", opacity: 0.3, fontSize: "0.95rem", pointerEvents: "none" }}>⌕</span>
         </div>
-      </div>
-    </section>
-    </div>
 
-    {/* Brand sentiment strip */}
-    <ScrollReveal>
-    <div style={{background:BRAND.red}}>
-    <div style={{padding:"32px clamp(16px,4vw,48px) 32px",maxWidth:1100,margin:"0 auto"}}>
-      <p style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1rem,2vw,1.3rem)",color:BRAND.butter,lineHeight:1.7,maxWidth:480,fontWeight:400}}>
-        Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you - all in one place.
-      </p>
-    </div>
-    </div>
+        <div style={{ flex: 1 }} />
 
-    </ScrollReveal>
-
-    {/* bookd picks */}
-    <ScrollReveal delay={0.1}>
-    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-        <span style={{background:"rgba(140,45,50,0.12)",color:"#8C2D32",borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>✦ bookd picks</span>
-      </div>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.4rem,3vw,1.9rem)",fontWeight:400,marginBottom:6}}>our current favorites</h2>
-      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:28,fontWeight:300}}>Discover the studios we are loving.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
-        {topPicks.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} featured />)}
-      </div>
-    </section>
-
-    </ScrollReveal>
-
-    {/* Recently reviewed */}
-    <ScrollReveal>
-    {recentlyAdded.length > 0 && (
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-        <span style={{background:BRAND.butter,color:BRAND.red,borderRadius:100,padding:"4px 12px",fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.06em"}}>new</span>
-      </div>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>recently reviewed</h2>
-      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:28,fontWeight:300}}>The latest studios we've been to.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
-        {recentlyAdded.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} />)}
-      </div>
-    </section>
-    )}
-
-    </ScrollReveal>
-
-    {/* Rotating pull quote */}
-    <ScrollReveal>
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <PullQuoteRotator studios={STUDIOS} navigate={navigate} />
-    </section>
-    </ScrollReveal>
-
-    {/* Best intro deals */}
-    <ScrollReveal>
-    {bestDeals.length > 0 && (
-    <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
-        <div style={{display:"flex",gap:24,whiteSpace:"nowrap"}}>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>intro offers</span>
+        <div className="bk-navlinks" style={{ display: "flex", alignItems: "center", gap: 19 }}>
+          <span onClick={() => searchAndGo("")} style={link("search")}>All Studios</span>
+          <span onClick={() => navigate("glossary")} style={link("glossary")}>How We Rate</span>
+          <span onClick={() => navigate("about")} style={link("about")}>Our Story</span>
+          <span onClick={() => navigate("partner")} style={link("partner")}>Partner With Us</span>
         </div>
-      </div>
-    <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6,color:BRAND.butter}}>best intro deals right now</h2>
-      <p style={{fontSize:"0.88rem",color:"rgba(254,235,171,0.6)",marginBottom:24,fontWeight:300}}>First time? These studios have offers worth trying.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,240px),1fr))",gap:14}}>
-        {bestDeals.map(s => (
-          <div key={s.id} onClick={()=>navigate("studio",s.id)} style={{background:"#fff",borderRadius:16,padding:"20px 22px",cursor:"pointer",transition:"transform 0.2s",position:"relative",overflow:"hidden"}}
-            onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";}}
-            onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";}}>
-            <div style={{position:"absolute",top:0,left:0,right:0,height:4,background:BRAND.butter}} />
-            <div style={{fontSize:"0.95rem",fontWeight:600,marginBottom:2}}>{s.name}</div>
-            <div style={{fontSize:"0.72rem",color:BRAND.textLight,marginBottom:10}}>{s.neighborhood} · {s.priceTier}</div>
-            <div style={{background:BRAND.butterLight,borderRadius:12,padding:"12px 14px",marginBottom:10}}>
-              <div style={{fontSize:"0.7rem",textTransform:"uppercase",letterSpacing:"0.06em",color:BRAND.red,fontWeight:600,marginBottom:4}}>Intro Offer</div>
-              <div style={{fontSize:"0.92rem",fontWeight:500,color:BRAND.text}}>{s.introOffer}</div>
-            </div>
-            <div style={{fontSize:"0.72rem",color:BRAND.textLight}}>Drop-in: {s.dropInPrice}</div>
+
+        <button className="bk-mylist" onClick={() => setListOpen(true)}
+          style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: `1px solid rgba(140,45,50,0.3)`, color: BRAND.red, borderRadius: 100, padding: "9px 17px", fontFamily: "inherit", fontSize: "0.82rem", fontWeight: 600, cursor: "pointer", flexShrink: 0, transition: "background .2s,border-color .2s,color .2s" }}>
+          <span style={{ fontSize: "0.86rem", lineHeight: 1 }}>♥</span><span>My List</span><span style={{ opacity: 0.5, fontWeight: 500 }}>{saved.length}</span>
+        </button>
+
+        <div className="bk-burger" onClick={() => setMobileMenu(!mobileMenu)} style={{ cursor: "pointer", padding: 8, display: "none", flexDirection: "column", gap: 4 }}>
+          <div style={{ width: 20, height: 2, background: BRAND.red }} />
+          <div style={{ width: 20, height: 2, background: BRAND.red }} />
+          <div style={{ width: 14, height: 2, background: BRAND.red }} />
+        </div>
+
+        {mobileMenu && (
+          <div style={{ position: "absolute", top: 70, left: 0, right: 0, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(16px)", padding: "16px clamp(16px,4vw,44px) 20px", display: "flex", flexDirection: "column", gap: 14, fontSize: "0.95rem", fontWeight: 600, borderBottom: "1px solid rgba(44,37,34,0.06)", color: BRAND.red }}>
+            <span onClick={() => { navigate("home"); setMobileMenu(false); }} style={{ cursor: "pointer", padding: "8px 0" }}>Home</span>
+            <span onClick={() => { searchAndGo(""); setMobileMenu(false); }} style={{ cursor: "pointer", padding: "8px 0" }}>All Studios</span>
+            <span onClick={() => { navigate("glossary"); setMobileMenu(false); }} style={{ cursor: "pointer", padding: "8px 0" }}>How We Rate</span>
+            <span onClick={() => { navigate("about"); setMobileMenu(false); }} style={{ cursor: "pointer", padding: "8px 0" }}>Our Story</span>
+            <span onClick={() => { navigate("partner"); setMobileMenu(false); }} style={{ cursor: "pointer", padding: "8px 0" }}>Partner With Us</span>
           </div>
-        ))}
-      </div>
-    </section>
-    </div>
-    )}
+        )}
+      </nav>
 
-    </ScrollReveal>
-
-    {/* Browse by neighborhood */}
-    <ScrollReveal>
-    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Browse by neighborhood</h2>
-      <p style={{fontSize:"0.88rem",color:BRAND.textLight,marginBottom:24,fontWeight:300}}>We've been everywhere so you don't have to.</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,160px),1fr))",gap:10}}>
-        {NEIGHBORHOODS.map(n => {
-          const studios = STUDIOS.filter(s=>s.neighborhood===n).sort((a,b)=>b.rating-a.rating);
-          const count = studios.length;
-          return <div key={n} style={{position:"relative"}}
-            onMouseEnter={()=>setHoveredHood(n)}
-            onMouseLeave={()=>setHoveredHood(null)}>
-            <div onClick={()=>searchAndGo(n)} style={{background:hoveredHood===n?BRAND.red:"#fff",color:hoveredHood===n?"#FEEBAB":"#2C2522",border:"1px solid rgba(44,37,34,0.06)",borderLeft:`3px solid ${hoveredHood===n?"#FEEBAB":BRAND.red}`,borderRadius:14,padding:"18px 16px",cursor:"pointer",transition:"all 0.2s"}}>
-              <div style={{fontSize:"0.9rem",fontWeight:500,marginBottom:4}}>{n}</div>
-              <div style={{fontSize:"0.72rem",opacity:0.5}}>{count} studio{count!==1?"s":""}</div>
+      {listOpen && (
+        <>
+          <div onClick={() => setListOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(44,37,34,0.42)", zIndex: 400 }} />
+          <aside style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: "min(400px,92vw)", background: "#fff", zIndex: 401, boxShadow: "-14px 0 46px rgba(44,37,34,0.2)", display: "flex", flexDirection: "column", animation: "bkSlideIn .3s cubic-bezier(.2,.8,.3,1)" }}>
+            <div style={{ background: "#FFF9E8", padding: "22px 24px 20px", borderBottom: "1px solid rgba(44,37,34,0.08)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 14 }}>
+              <div>
+                <div style={{ fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.11em", color: BRAND.red }}>MY LIST</div>
+                <div style={{ fontFamily: SERIF, fontSize: "1.35rem", marginTop: 7 }}>{saved.length === 1 ? "1 studio saved" : `${saved.length} studios saved`}</div>
+                <div style={{ fontSize: "0.78rem", color: "rgba(44,37,34,0.45)", marginTop: 4 }}>Saved on this device.</div>
+              </div>
+              <button onClick={() => setListOpen(false)} style={{ background: "none", border: "none", fontSize: "1.3rem", color: "rgba(44,37,34,0.4)", cursor: "pointer", padding: 0, lineHeight: 1 }}>✕</button>
             </div>
-            {hoveredHood===n && (
-              <div className="hood-preview" style={{position:"absolute",bottom:"100%",left:"50%",transform:"translateX(-50%)",marginBottom:8,zIndex:20,width:240,animation:"fadeUp 0.2s ease"}}>
-                <div style={{background:"#fff",borderRadius:14,border:"1px solid rgba(44,37,34,0.08)",boxShadow:"0 8px 24px rgba(44,37,34,0.12)",padding:"14px 16px"}}>
-                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:10,borderBottom:"1px solid rgba(44,37,34,0.06)",marginBottom:10}}>
-                    <span style={{fontSize:"0.72rem",fontWeight:600,color:BRAND.red}}>{n}</span>
-                    <span style={{fontSize:"0.65rem",color:"rgba(44,37,34,0.35)"}}>{count} studio{count!==1?"s":""}</span>
+            <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 24px" }}>
+              {savedStudios.length === 0 && (
+                <div style={{ textAlign: "center", padding: "48px 12px" }}>
+                  <div style={{ fontSize: "1.8rem", color: BRAND.red, marginBottom: 10 }}>♡</div>
+                  <div style={{ fontFamily: SERIF, fontSize: "1.08rem", marginBottom: 7 }}>nothing saved yet</div>
+                  <p style={{ fontSize: "0.86rem", color: "rgba(44,37,34,0.5)", fontWeight: 300, lineHeight: 1.55 }}>Tap the heart on any studio and we'll keep it right here for you.</p>
+                </div>
+              )}
+              {savedStudios.map(s => (
+                <div key={s.id} style={{ border: "1px solid rgba(44,37,34,0.08)", borderRadius: 14, padding: "15px 16px", marginBottom: 11 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                    <div style={{ minWidth: 0, cursor: "pointer" }} onClick={() => { setListOpen(false); navigate("studio", s.id); }}>
+                      <div style={{ fontFamily: SERIF, fontSize: "1.05rem", lineHeight: 1.2 }}>{s.name}</div>
+                      <div style={{ fontSize: "0.75rem", color: "rgba(44,37,34,0.45)", marginTop: 4 }}>{s.neighborhood} · ★ {s.rating} · {s.dropInPrice}</div>
+                    </div>
+                    <button className="bk-heart" onClick={() => toggle(s.id)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.15rem", color: BRAND.red, padding: 0, lineHeight: 1 }}>♥</button>
                   </div>
-                  <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {studios.slice(0,4).map(s => (
-                      <div key={s.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                        <div>
-                          <div style={{fontSize:"0.78rem",fontWeight:500}}>{s.name}</div>
-                          <div style={{fontSize:"0.65rem",color:"rgba(44,37,34,0.4)"}}>{s.classTypes.slice(0,2).join(" · ")}</div>
-                        </div>
-                        <div style={{display:"flex",alignItems:"center",gap:4}}>
-                          <span style={{color:"#C4A050",fontSize:"0.65rem"}}>★</span>
-                          <span style={{fontSize:"0.78rem",fontWeight:600}}>{s.rating}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{marginTop:12,paddingTop:10,borderTop:"1px solid rgba(44,37,34,0.06)",textAlign:"center"}}>
-                    <span style={{fontSize:"0.72rem",color:BRAND.red,fontWeight:500,cursor:"pointer"}} onClick={()=>searchAndGo(n)}>View all in {n}</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginTop: 12, paddingTop: 11, borderTop: "1px solid rgba(44,37,34,0.07)" }}>
+                    <span style={{ fontSize: "0.77rem", color: "rgba(44,37,34,0.5)" }}>{s.introOffer}</span>
+                    <a href={s.bookingUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.79rem", fontWeight: 600, color: BRAND.red, textDecoration: "none", whiteSpace: "nowrap" }}>book it ↗</a>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>;
-        })}
-      </div>
-    </section>
-
-    </ScrollReveal>
-
-    {/* Browse by class type */}
-    <ScrollReveal>
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.3rem,3vw,1.7rem)",fontWeight:400,marginBottom:6}}>Search by class type</h2>
-      <p style={{fontSize:"0.88rem",color:"rgba(44,37,34,0.45)",marginBottom:24,fontWeight:300}}>Find exactly what you're looking for.</p>
-      <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-        {CLASS_TYPES.map(t => {
-          const mapped = CLASS_TYPE_MAP[t] || [t];
-          const count = STUDIOS.filter(s => s.classTypes.some(ct => mapped.some(m => ct.toLowerCase().includes(m.toLowerCase())))).length;
-          return (
-            <button key={t} onClick={()=>searchAndGo(t)} style={{background:"#fff",border:"1px solid rgba(44,37,34,0.08)",borderRadius:100,padding:"10px 20px",fontSize:"0.84rem",cursor:"pointer",fontFamily:"inherit",color:"#2C2522",transition:"all 0.15s"}}
-              onMouseEnter={e=>{e.currentTarget.style.background=BRAND.red;e.currentTarget.style.color="#FEEBAB";}}
-              onMouseLeave={e=>{e.currentTarget.style.background="#fff";e.currentTarget.style.color="#2C2522";}}>{t} <span style={{opacity:0.4,fontSize:"0.75rem"}}>({count})</span></button>
-          );
-        })}
-      </div>
-    </section>
-
-    </ScrollReveal>
-
-    {/* Follow us */}
-    <ScrollReveal>
-    <section style={{padding:"0 clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <div style={{background:BRAND.butterLight,borderRadius:20,padding:"36px clamp(20px,4vw,40px)",textAlign:"center"}}>
-        <div style={{fontSize:"0.65rem",textTransform:"uppercase",letterSpacing:"0.08em",color:BRAND.red,fontWeight:600,marginBottom:8}}>Stay in the loop</div>
-        <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.5rem)",fontWeight:400,marginBottom:6}}>never miss a new review</h2>
-        <p style={{fontSize:"0.85rem",color:BRAND.textMid,fontWeight:300,maxWidth:420,margin:"0 auto 20px"}}>We drop new studio reviews every week. Follow along so you don't miss one.</p>
-        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-          <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{background:BRAND.red,color:"#FEEBAB",borderRadius:100,padding:"12px 24px",fontSize:"0.84rem",fontWeight:500,textDecoration:"none",display:"inline-block"}}>Follow on Instagram</a>
-          <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{background:"transparent",color:BRAND.red,border:`1px solid ${BRAND.red}`,borderRadius:100,padding:"12px 24px",fontSize:"0.84rem",fontWeight:500,textDecoration:"none",display:"inline-block"}}>Follow on TikTok</a>
-        </div>
-      </div>
-    </section>
-
-    </ScrollReveal>
-
-    {/* Where should we go next? */}
-    <ScrollReveal>
-    <div style={{background:BRAND.red,position:"relative",overflow:"hidden"}}>
-      {/* Background text treatment */}
-      <div style={{position:"absolute",top:-4,left:-10,right:-10,pointerEvents:"none",opacity:0.06,overflow:"hidden"}}>
-        <div style={{display:"flex",gap:20,whiteSpace:"nowrap"}}>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
-          <span style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(48px,8vw,72px)",fontStyle:"italic",color:"#FEEBAB"}}>where should we go next?</span>
-        </div>
-      </div>
-    <section style={{padding:"72px clamp(16px,4vw,48px)",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
-      <h2 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.2rem,3vw,1.5rem)",fontWeight:400,marginBottom:6,color:BRAND.butter}}>where should we go next?</h2>
-      <p style={{fontSize:"0.85rem",color:"rgba(254,235,171,0.6)",fontWeight:300,lineHeight:1.6,marginBottom:20}}>Know a studio we need to try? Tell us and we'll add it to our list.</p>
-      <StudioRequestForm darkMode />
-    </section>
-    </div>
-
-    </ScrollReveal>
-
-    {/* Meet your reviewers */}
-    <ScrollReveal>
-    <section style={{padding:"72px clamp(16px,4vw,48px) 72px",maxWidth:1100,margin:"0 auto"}}>
-      <div style={{background:BRAND.butterLight,borderRadius:20,padding:0,display:"flex",alignItems:"stretch",flexWrap:"wrap",overflow:"hidden"}}>
-        <div style={{flexShrink:0,width:"clamp(120px,20vw,180px)"}}>
-          <img src="/syd-sam.jpg" alt="Sydney and Sam" style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:180}} onError={(e)=>{e.target.parentElement.style.display="none";}} />
-        </div>
-        <div style={{flex:1,minWidth:200,padding:"clamp(24px,3vw,36px)",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-          <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.1rem,2.5vw,1.4rem)",fontWeight:400,marginBottom:4}}>We're Sydney & Sam.</div>
-          <p style={{fontSize:"0.85rem",color:BRAND.textMid,lineHeight:1.6,fontWeight:300,marginBottom:12}}>We turned our boutique fitness obsession into a guide. We actually take the classes, form the opinions, and tell you exactly what we think. The aesthetic, the playlist, and even the parking situation is on our radar.</p>
-          <span onClick={()=>navigate("about")} style={{fontSize:"0.82rem",color:BRAND.red,cursor:"pointer",fontWeight:500}}>Read our story →</span>
-        </div>
-      </div>
-    </section>
-    </ScrollReveal>
-
-  </div>;
+              ))}
+            </div>
+          </aside>
+        </>
+      )}
+    </>
+  );
 }
+
+/* ============================================================
+   HOME PAGE
+   ============================================================ */
+const QUIZ = [
+  { q: "What are you in the mood for?", opts: [
+    { label: "Humble me. I want to shake.", d: 5 },
+    { label: "Something in between", d: 3.6 },
+    { label: "A really good stretch", d: 2.2 },
+    { label: "It's honestly my first class ever", d: 2, beginner: true },
+  ]},
+  { q: "What makes or breaks a studio for you?", opts: [
+    { label: "The playlist, always", k: "music" },
+    { label: "How the space looks", k: "aesthetic" },
+    { label: "A gentle price", k: "price" },
+    { label: "The people in the room", k: "rating" },
+  ]},
+  { q: "Where are we going?", opts: [
+    { label: "West Hollywood", hood: "West Hollywood" },
+    { label: "Santa Monica", hood: "Santa Monica" },
+    { label: "Beverly Hills", hood: "Beverly Hills" },
+    { label: "Malibu or the Valley", hood: "__far" },
+    { label: "Anywhere, I'll drive", hood: "__any" },
+  ]},
+];
+
+
+function HomePage({ navigate, searchAndGo }) {
+  const [heroSearch, setHeroSearch] = useState("");
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [hoveredHood, setHoveredHood] = useState(null);
+  const [quoteIdx, setQuoteIdx] = useState(0);
+  const [showTop, setShowTop] = useState(false);
+  const { has, toggle } = useShortlist();
+  const done = step >= QUIZ.length;
+
+  const picks = useMemo(() => STUDIOS.filter(s => s.isFavorite).sort((a, b) => b.rating - a.rating), []);
+  const recent = useMemo(() => [...STUDIOS].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 3), []);
+  const deals = useMemo(() => STUDIOS.filter(s => s.introPricePerClass).sort((a, b) => a.introPricePerClass - b.introPricePerClass).slice(0, 6), []);
+  const quotes = useMemo(() => STUDIOS.filter(s => s.rating >= 4.25).sort((a, b) => b.rating - a.rating).slice(0, 5), []);
+  const QUICK = ["Reformer Pilates", "Mat Pilates", "Pilates in West Hollywood", "Pilates in Santa Monica"];
+
+  useReveal([done, step]);
+
+  useEffect(() => {
+    if (quotes.length <= 1) return;
+    const t = setInterval(() => setQuoteIdx(i => (i + 1) % quotes.length), 6000);
+    return () => clearInterval(t);
+  }, [quotes.length]);
+
+  const lastY = useRef(0);
+  useEffect(() => {
+    let raf = null;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const y = window.scrollY;
+        setShowTop(y > 320);
+        const mq = document.querySelector("[data-marquee]");
+        if (mq) mq.style.animationDirection = y < lastY.current ? "reverse" : "normal";
+        lastY.current = y;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const matches = useMemo(() => {
+    if (!done) return [];
+    const [a1, a2, a3] = answers;
+    return STUDIOS.map(s => {
+      const diff = 1 - Math.abs(s.ratings.difficulty - a1.d) / 4;
+      let pri;
+      if (a2.k === "price") pri = Math.max(0, 1 - ((s.introPricePerClass || 45) - 10) / 32);
+      else if (a2.k === "rating") pri = s.rating / 5;
+      else pri = s.ratings[a2.k] / 5;
+      let geo;
+      if (a3.hood === "__any") geo = 0.85;
+      else if (a3.hood === "__far") geo = (s.neighborhood === "Malibu" || s.neighborhood === "Studio City") ? 1 : 0.3;
+      else geo = s.neighborhood === a3.hood ? 1 : 0.3;
+      let score = 0.4 * diff + 0.34 * pri + 0.26 * geo;
+      if (a1.beginner && s.tags?.level === "Beginner-Friendly") score += 0.05;
+      return { s, pct: Math.max(64, Math.min(97, Math.round(score * 105))) };
+    }).sort((x, y) => y.pct - x.pct).slice(0, 3);
+  }, [done, answers]);
+
+  const goTo = sel => {
+    const el = document.querySelector(sel);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
+  };
+  const cur = QUIZ[Math.min(step, QUIZ.length - 1)];
+  const bigType = { fontFamily: "'Outfit',sans-serif", fontWeight: 800, fontSize: "clamp(64px,9.5vw,124px)", lineHeight: 0.82, letterSpacing: "-0.045em" };
+
+  return (
+    <div>
+      <BookdStyles />
+
+      {/* ---------- HERO ---------- */}
+      <section id="bk-top" className="bk-hero" style={{ background: "#FFF9E8", position: "relative", overflow: "hidden" }}>
+        <div className="bk-herogrid" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(38px,5vw,62px) clamp(16px,4vw,44px) clamp(30px,4vw,46px)", display: "grid", gridTemplateColumns: "1.15fr 400px", gap: "clamp(24px,4vw,54px)", alignItems: "center", position: "relative", zIndex: 1 }}>
+          <div>
+            <div style={{ position: "relative", paddingTop: 6 }}>
+              <div style={{ ...bigType, color: BRAND.butter, WebkitTextStroke: `1.4px ${BRAND.red}`, userSelect: "none", whiteSpace: "nowrap", transformOrigin: "left center", animation: "bkBreathe 9s ease-in-out infinite", textShadow: "1px 1px 0 #8C2D32,2px 2px 0 #8C2D32,3px 3px 0 #8C2D32,4px 4px 0 #8C2D32,5px 5px 0 #8C2D32,6px 6px 0 #8C2D32,7px 7px 0 #8C2D32,8px 8px 0 #8C2D32,9px 9px 0 #8C2D32,10px 10px 0 #8C2D32,11px 11px 0 #8C2D32,12px 12px 0 #8C2D32,13px 13px 0 #8C2D32,14px 14px 0 #8C2D32,15px 15px 0 #7a2529,16px 16px 22px rgba(140,45,50,0.22)" }}>WORKOUT</div>
+              <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(34px,5.4vw,68px)", lineHeight: 1.05, color: BRAND.red, marginTop: "0.34em", marginLeft: "0.12em" }}>with us.</div>
+            </div>
+            <p style={{ fontSize: "clamp(1rem,1.5vw,1.15rem)", lineHeight: 1.5, color: "rgba(44,37,34,0.66)", fontWeight: 300, marginTop: 18, letterSpacing: "0.01em" }}>Your trusted studio tour guides.</p>
+
+            <div style={{ maxWidth: 420, marginTop: 22, position: "relative" }}>
+              <input value={heroSearch} onChange={e => setHeroSearch(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter" && heroSearch.trim()) searchAndGo(heroSearch.trim()); }}
+                placeholder="Search a studio, a neighborhood, a vibe"
+                style={{ width: "100%", background: "#fff", border: "1px solid rgba(44,37,34,0.1)", borderRadius: 100, padding: "15px 54px 15px 22px", fontSize: "0.92rem", color: BRAND.text, outline: "none", fontFamily: "inherit", boxShadow: "0 2px 18px rgba(44,37,34,0.05)" }} />
+              <button className="bk-go" onClick={() => { if (heroSearch.trim()) searchAndGo(heroSearch.trim()); }}
+                style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", background: BRAND.red, color: BRAND.butter, border: "none", borderRadius: "50%", width: 39, height: 39, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: "0.95rem" }}>↗</button>
+            </div>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 14 }}>
+              {QUICK.map(label => (
+                <button key={label} className="bk-chip" onClick={() => searchAndGo(label)}
+                  style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(44,37,34,0.09)", borderRadius: 100, padding: "7px 15px", fontSize: "0.76rem", cursor: "pointer", fontFamily: "inherit", color: "rgba(44,37,34,0.62)" }}>{label}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* quiz */}
+          <div style={{ position: "relative" }}>
+            <div style={{ position: "absolute", inset: 0, background: BRAND.red, borderRadius: 22, transform: "rotate(-2.5deg)" }} />
+            <div style={{ position: "relative", background: "#fff", border: "1.5px solid rgba(140,45,50,0.2)", borderRadius: 22, padding: "clamp(20px,2.4vw,28px)", boxShadow: "0 14px 44px rgba(44,37,34,0.09)" }}>
+              {!done ? (
+                <>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                    <span style={{ fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.14em", color: BRAND.red }}>STEP {Math.min(step + 1, 3)} OF 3</span>
+                    <span style={{ fontSize: "0.7rem", color: "rgba(44,37,34,0.35)" }}>30 seconds, promise</span>
+                  </div>
+                  <div style={{ height: 4, background: "rgba(140,45,50,0.1)", borderRadius: 100, overflow: "hidden", marginBottom: 18 }}>
+                    <div style={{ height: "100%", background: BRAND.red, borderRadius: 100, width: `${Math.max(6, (step / QUIZ.length) * 100)}%`, transition: "width .5s cubic-bezier(.2,.8,.3,1)" }} />
+                  </div>
+                  <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.25rem,2vw,1.55rem)", lineHeight: 1.2, marginBottom: 16, textWrap: "pretty" }}>{cur.q}</h2>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {cur.opts.map(o => (
+                      <button key={o.label} className="bk-opt" onClick={() => { setAnswers(a => [...a.slice(0, step), o]); setStep(s => s + 1); }}
+                        style={{ textAlign: "left", background: "#fff", border: "1px solid rgba(44,37,34,0.12)", borderRadius: 13, padding: "13px 16px", fontFamily: "inherit", fontSize: "0.9rem", color: BRAND.text, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
+                        <span>{o.label}</span><span style={{ color: "rgba(140,45,50,0.45)", fontSize: "0.85rem" }}>→</span>
+                      </button>
+                    ))}
+                  </div>
+                  {step > 0 && (
+                    <button onClick={() => setStep(s => Math.max(0, s - 1))} style={{ marginTop: 14, background: "none", border: "none", fontFamily: "inherit", fontSize: "0.78rem", color: "rgba(44,37,34,0.4)", cursor: "pointer", padding: 0 }}>← back</button>
+                  )}
+                </>
+              ) : (
+                <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
+                  <div style={{ fontSize: "2.1rem", animation: "bkPop .5s cubic-bezier(.2,1.4,.4,1)" }}>✦</div>
+                  <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontStyle: "italic", fontSize: "1.35rem", color: BRAND.red, margin: "8px 0 6px" }}>okay, we've got three.</h2>
+                  <p style={{ fontSize: "0.87rem", color: "rgba(44,37,34,0.55)", fontWeight: 300, marginBottom: 16 }}>Your matches are waiting right below.</p>
+                  <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
+                    <button onClick={() => goTo("#bk-matches")} style={{ background: BRAND.red, color: BRAND.butter, border: "none", borderRadius: 100, padding: "11px 22px", fontFamily: "inherit", fontSize: "0.85rem", fontWeight: 600, cursor: "pointer" }}>see my matches ↓</button>
+                    <button onClick={() => { setStep(0); setAnswers([]); }} style={{ background: "none", border: "1px solid rgba(44,37,34,0.15)", borderRadius: 100, padding: "11px 20px", fontFamily: "inherit", fontSize: "0.85rem", color: "rgba(44,37,34,0.6)", cursor: "pointer" }}>start over</button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div style={{ position: "absolute", top: -13, left: -10, background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "5px 14px", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.04em", transform: "rotate(-4deg)", boxShadow: "0 4px 14px rgba(140,45,50,0.28)" }}>find your studio</div>
+          </div>
+        </div>
+
+        <div style={{ overflow: "hidden", paddingBottom: 22, position: "relative", zIndex: 1, maskImage: "linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)", WebkitMaskImage: "linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)" }}>
+          <div data-marquee style={{ display: "flex", gap: 30, whiteSpace: "nowrap", width: "max-content", animation: "bkMarquee 42s linear infinite" }}>
+            {[...STUDIOS, ...STUDIOS].map((s, i) => (
+              <span key={i} style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "0.8rem", color: "rgba(140,45,50,0.4)", display: "flex", alignItems: "center", gap: 9 }}>
+                <span style={{ fontSize: "0.5rem" }}>✦</span>{s.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- MATCHES ---------- */}
+      {done && (
+        <section id="bk-matches" style={{ background: "#fff", borderBottom: "1px solid rgba(44,37,34,0.07)" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(40px,5vw,64px) clamp(16px,4vw,44px)" }}>
+            <span style={{ display: "inline-block", background: "rgba(140,45,50,0.1)", color: BRAND.red, borderRadius: 100, padding: "5px 13px", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em" }}>✦ YOUR MATCHES</span>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.5rem,3vw,2.1rem)", margin: "12px 0 4px" }}>you three are going to <span style={{ fontStyle: "italic", color: BRAND.red }}>get along</span>.</h2>
+            <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.45)", fontWeight: 300, marginBottom: 26 }}>
+              Based on {answers[0].label.toLowerCase().replace(/\.$/, "")} · {answers[1].label.toLowerCase()} · {answers[2].hood === "__any" ? "anywhere in LA" : answers[2].hood === "__far" ? "Malibu & the Valley" : answers[2].hood}.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,290px),1fr))", gap: 18 }}>
+              {matches.map(({ s, pct }) => (
+                <div key={s.id} className="bk-card" onClick={() => navigate("studio", s.id)} style={{ border: "1px solid rgba(44,37,34,0.08)", borderRadius: 18, overflow: "hidden", background: "#fff", cursor: "pointer", animation: "bkFadeUp .6s ease backwards" }}>
+                  <div style={{ background: "#FFF9E8", padding: "17px 18px 16px", borderBottom: "1px solid rgba(44,37,34,0.07)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                      <span style={{ background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "4px 11px", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.06em", animation: "bkPop .55s cubic-bezier(.2,1.5,.4,1) .35s backwards" }}>{pct}% MATCH</span>
+                      <button className="bk-heart" onClick={e => { e.stopPropagation(); toggle(s.id); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1, padding: 0, color: BRAND.red }}>{has(s.id) ? "♥" : "♡"}</button>
+                    </div>
+                    <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.4vw,1.62rem)", lineHeight: 1.14, letterSpacing: "-0.015em", marginTop: 14, textWrap: "balance" }}>{s.name}</div>
+                    <div style={{ fontSize: "0.78rem", color: "rgba(44,37,34,0.48)", marginTop: 6 }}>{s.neighborhood} · ★ {s.rating}</div>
+                  </div>
+                  <div style={{ padding: "16px 18px 18px" }}>
+                    <p style={{ fontSize: "0.84rem", lineHeight: 1.55, color: "rgba(44,37,34,0.62)", fontWeight: 300 }}>{s.heroReview}</p>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginTop: 15, paddingTop: 13, borderTop: "1px solid rgba(44,37,34,0.07)" }}>
+                      <span style={{ fontSize: "0.78rem", color: "rgba(44,37,34,0.5)" }}>{s.introOffer}</span>
+                      <span style={{ fontSize: "0.8rem", fontWeight: 600, color: BRAND.red, whiteSpace: "nowrap" }}>full bookd review →</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---------- MISSION ---------- */}
+      <div style={{ background: BRAND.red }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(30px,4vw,44px) clamp(16px,4vw,44px)" }}>
+          <p data-reveal style={{ fontFamily: SERIF, fontSize: "clamp(1rem,1.9vw,1.32rem)", color: BRAND.butter, lineHeight: 1.65, maxWidth: 560, fontWeight: 400, textWrap: "pretty" }}>
+            Search and discover boutique fitness studios across LA. Read honest reviews, compare ratings, and find the right class for you — all in one place.
+          </p>
+          <div data-reveal="spring" style={{ height: 10, marginTop: "clamp(30px,4vw,44px)", background: SPRING_BUTTER }} />
+        </div>
+      </div>
+
+      {/* ---------- INTRO OFFERS ---------- */}
+      <section id="bk-offers" style={{ background: BRAND.red, color: BRAND.butter, position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: -6, left: 0, right: 0, pointerEvents: "none", opacity: 0.07, overflow: "hidden", whiteSpace: "nowrap" }}>
+          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(48px,8vw,76px)", color: BRAND.butter }}>your way in · your way in · your way in · your way in</span>
+        </div>
+        <div style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,44px)", position: "relative", zIndex: 1 }}>
+          <div data-reveal>
+            <span style={{ display: "inline-block", border: "1px solid rgba(254,235,171,0.4)", borderRadius: 100, padding: "5px 13px", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em" }}>INTRO OFFERS</span>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.7rem,3.6vw,2.5rem)", margin: "14px 0 6px" }}>your way in.</h2>
+            <p style={{ fontSize: "0.94rem", color: "rgba(254,235,171,0.62)", fontWeight: 300, maxWidth: 520, lineHeight: 1.6, marginBottom: 28, textWrap: "pretty" }}>
+              New-client pricing at studios worth the trip. One class, no membership, no pressure — just an easy first step through the door.
+            </p>
+          </div>
+          <div data-reveal style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,265px),1fr))", gap: 14 }}>
+            {deals.map(s => (
+              <div key={s.id} className="bk-deal" onClick={() => navigate("studio", s.id)}
+                style={{ display: "flex", flexDirection: "column", border: "1.5px solid rgba(254,235,171,0.34)", borderRadius: 18, padding: "20px 20px 16px", color: BRAND.butter, cursor: "pointer" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontFamily: "'Outfit',sans-serif", fontWeight: 800, fontSize: "clamp(1.9rem,3.2vw,2.5rem)", lineHeight: 1, letterSpacing: "-0.03em" }}>
+                    ${s.introPricePerClass % 1 === 0 ? s.introPricePerClass : s.introPricePerClass.toFixed(2)}
+                  </span>
+                  <span style={{ fontSize: "0.74rem", opacity: 0.55 }}>per class</span>
+                </div>
+                <div style={{ fontSize: "1rem", fontWeight: 600, marginTop: 9 }}>{s.name}</div>
+                <div style={{ fontSize: "0.78rem", opacity: 0.55, marginTop: 2 }}>{s.neighborhood}</div>
+                <div style={{ fontSize: "0.83rem", marginTop: 12, paddingTop: 11, borderTop: "1px solid rgba(254,235,171,0.18)", fontWeight: 300, flex: 1 }}>{s.introOffer}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginTop: 14 }}>
+                  <span style={{ fontSize: "0.8rem", fontWeight: 600 }}>read the review</span>
+                  <span style={{ width: 28, height: 28, borderRadius: "50%", background: BRAND.butter, color: BRAND.red, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", flexShrink: 0 }}>→</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div data-reveal style={{ marginTop: 26 }}>
+            <button className="bk-ghost" onClick={() => searchAndGo("")} style={{ border: "1.5px solid #FEEBAB", background: "transparent", color: BRAND.butter, borderRadius: 100, padding: "11px 22px", fontSize: "0.85rem", fontWeight: 600, fontFamily: "inherit", cursor: "pointer" }}>see all offers</button>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- PICKS + RECENT ---------- */}
+      <section id="bk-studios" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(48px,6vw,76px) clamp(16px,4vw,44px) clamp(30px,4vw,44px)" }}>
+        <div data-reveal style={{ marginBottom: 24 }}>
+          <span style={{ display: "inline-block", background: "rgba(140,45,50,0.1)", color: BRAND.red, borderRadius: 100, padding: "5px 13px", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em" }}>✦ BOOKD PICKS</span>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.4rem,3vw,1.95rem)", margin: "12px 0 5px" }}>our current <span style={{ fontStyle: "italic", color: BRAND.red }}>favorites</span></h2>
+          <p style={{ fontSize: "0.88rem", color: "rgba(44,37,34,0.45)", fontWeight: 300 }}>The ones we keep going back to.</p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,300px),1fr))", gap: 18 }}>
+          {picks.map(s => <StudioCardV2 key={s.id} studio={s} navigate={navigate} badge="BOOKD PICK" />)}
+        </div>
+
+        <div data-reveal="spring" style={{ height: 10, margin: "clamp(46px,5vw,66px) 0 0", background: SPRING_MAROON }} />
+        <div data-reveal style={{ margin: "clamp(28px,3vw,38px) 0 24px" }}>
+          <span style={{ display: "inline-block", background: BRAND.butter, color: BRAND.red, borderRadius: 100, padding: "5px 13px", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em" }}>NEW</span>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.4rem,3vw,1.95rem)", margin: "12px 0 5px" }}>recently <span style={{ fontStyle: "italic", color: BRAND.red }}>reviewed</span></h2>
+          <p style={{ fontSize: "0.88rem", color: "rgba(44,37,34,0.45)", fontWeight: 300 }}>The latest studios we've been to.</p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,300px),1fr))", gap: 18 }}>
+          {recent.map(s => <StudioCardV2 key={s.id} studio={s} navigate={navigate} badge="NEW" dark />)}
+        </div>
+      </section>
+
+      {/* ---------- PULL QUOTE ---------- */}
+      <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,4vw,44px) clamp(48px,6vw,72px)" }}>
+        <div data-reveal style={{ background: "#FFF9E8", borderRadius: 22, padding: "clamp(30px,5vw,52px) clamp(22px,4vw,44px)", position: "relative", overflow: "hidden" }}>
+          <span style={{ position: "absolute", top: 8, left: 22, fontFamily: SERIF, fontSize: "7rem", lineHeight: 1, color: "rgba(140,45,50,0.09)", userSelect: "none" }}>“</span>
+          <div style={{ position: "relative", zIndex: 1, maxWidth: 660 }}>
+            <p onClick={() => navigate("studio", quotes[quoteIdx].id)} style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(1.15rem,2.5vw,1.65rem)", lineHeight: 1.55, color: BRAND.red, textWrap: "pretty", cursor: "pointer" }}>“{quotes[quoteIdx].heroReview}”</p>
+            <div style={{ fontSize: "0.8rem", color: "rgba(140,45,50,0.5)", marginTop: 16 }}>{quotes[quoteIdx].name} — {quotes[quoteIdx].neighborhood}</div>
+          </div>
+          <div style={{ display: "flex", gap: 7, marginTop: 22, position: "relative", zIndex: 1 }}>
+            {quotes.map((_, i) => (
+              <button key={i} onClick={() => setQuoteIdx(i)} style={{ width: 7, height: 7, borderRadius: "50%", border: "none", background: BRAND.red, cursor: "pointer", padding: 0, opacity: i === quoteIdx ? 0.85 : 0.2, transform: i === quoteIdx ? "scale(1.3)" : "none", transition: "opacity .3s,transform .3s" }} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- NEIGHBORHOODS ---------- */}
+      <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,4vw,44px) clamp(48px,6vw,72px)" }}>
+        <div data-reveal="spring" style={{ height: 10, margin: "0 0 clamp(28px,3vw,38px)", background: SPRING_MAROON }} />
+        <div data-reveal>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.35rem,2.8vw,1.85rem)", marginBottom: 5 }}>browse by <span style={{ fontStyle: "italic", color: BRAND.red }}>neighborhood</span></h2>
+          <p style={{ fontSize: "0.88rem", color: "rgba(44,37,34,0.45)", fontWeight: 300, marginBottom: 22 }}>We've been everywhere so you don't have to.</p>
+        </div>
+        <div data-reveal style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,180px),1fr))", gap: 11 }}>
+          {NEIGHBORHOODS.map(n => {
+            const inHood = STUDIOS.filter(s => s.neighborhood === n).sort((a, b) => b.rating - a.rating);
+            const on = hoveredHood === n;
+            return (
+              <div key={n} style={{ position: "relative" }} onMouseEnter={() => setHoveredHood(n)} onMouseLeave={() => setHoveredHood(null)}>
+                <div onClick={() => searchAndGo(n)} style={{ border: on ? `1px solid ${BRAND.red}` : "1px solid rgba(44,37,34,0.08)", borderLeft: `3px solid ${on ? BRAND.butter : BRAND.red}`, borderRadius: 14, padding: "17px 16px", cursor: "pointer", background: on ? BRAND.red : "#fff", color: on ? BRAND.butter : BRAND.text, transform: on ? "translateY(-3px)" : "none", transition: "all .22s" }}>
+                  <div style={{ fontSize: "0.92rem", fontWeight: 600 }}>{n}</div>
+                  <div style={{ fontSize: "0.74rem", opacity: 0.5, marginTop: 3 }}>{inHood.length} studio{inHood.length !== 1 ? "s" : ""}</div>
+                </div>
+                {on && (
+                  <div className="bk-hoodpop" style={{ position: "absolute", bottom: "100%", left: "50%", transform: "translateX(-50%)", marginBottom: 10, zIndex: 40, width: 250, animation: "bkFadeUp .22s ease" }}>
+                    <div style={{ background: "#fff", borderRadius: 14, border: "1px solid rgba(44,37,34,0.08)", boxShadow: "0 12px 34px rgba(44,37,34,0.16)", padding: "14px 16px" }}>
+                      <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: BRAND.red, paddingBottom: 9, borderBottom: "1px solid rgba(44,37,34,0.07)", marginBottom: 10 }}>{n} · {inHood.length} studio{inHood.length !== 1 ? "s" : ""}</div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+                        {inHood.slice(0, 4).map(s => (
+                          <div key={s.id} onClick={() => navigate("studio", s.id)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, cursor: "pointer" }}>
+                            <div style={{ minWidth: 0 }}>
+                              <div style={{ fontSize: "0.79rem", fontWeight: 500 }}>{s.name}</div>
+                              <div style={{ fontSize: "0.66rem", color: "rgba(44,37,34,0.4)" }}>{s.classTypes.slice(0, 2).join(" · ")}</div>
+                            </div>
+                            <div style={{ fontSize: "0.78rem", fontWeight: 600, whiteSpace: "nowrap" }}><span style={{ color: BRAND.star }}>★</span> {s.rating}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ---------- CLASS TYPES ---------- */}
+      <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,4vw,44px) clamp(48px,6vw,72px)" }}>
+        <div data-reveal>
+          <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.35rem,2.8vw,1.85rem)", marginBottom: 5 }}>or by <span style={{ fontStyle: "italic", color: BRAND.red }}>what you feel like</span></h2>
+          <p style={{ fontSize: "0.88rem", color: "rgba(44,37,34,0.45)", fontWeight: 300, marginBottom: 20 }}>Find exactly what you're looking for.</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+            {CLASS_TYPES.map(t => {
+              const mapped = CLASS_TYPE_MAP[t] || [t];
+              const count = STUDIOS.filter(s => s.classTypes.some(ct => mapped.some(m => ct.toLowerCase().includes(m.toLowerCase())))).length;
+              return (
+                <button key={t} className="bk-type" onClick={() => searchAndGo(t)}
+                  style={{ background: "#fff", border: "1px solid rgba(44,37,34,0.1)", borderRadius: 100, padding: "11px 21px", fontSize: "0.86rem", color: BRAND.text, cursor: "pointer", fontFamily: "inherit" }}>
+                  {t} <span style={{ opacity: 0.4, fontSize: "0.75rem" }}>({count})</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- SYD & SAM ---------- */}
+      <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,4vw,44px) clamp(48px,6vw,72px)" }}>
+        <div data-reveal className="bk-us" style={{ background: "#FFF9E8", borderRadius: 22, display: "grid", gridTemplateColumns: "minmax(140px,210px) 1fr", overflow: "hidden" }}>
+          <div style={{ background: BRAND.red, minHeight: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+            <img src="/syd-sam.jpg" alt="Sydney and Sam" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              onError={e => { e.target.style.display = "none"; e.target.parentElement.innerHTML = '<span style="font-family:' + SERIF.replace(/"/g, "'") + ';font-style:italic;font-size:1.5rem;color:rgba(254,235,171,0.75);text-align:center;line-height:1.4">Syd<br/>&amp; Sam</span>'; }} />
+          </div>
+          <div style={{ padding: "clamp(22px,3.5vw,40px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.2rem,2.6vw,1.6rem)", marginBottom: 8 }}>hi, we're Sydney &amp; Sam.</h2>
+            <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.62)", lineHeight: 1.65, fontWeight: 300, maxWidth: 520, textWrap: "pretty" }}>
+              We turned our boutique fitness obsession into a guide. We actually take the classes, form the opinions, and tell you exactly what we think — the aesthetic, the playlist, and even the parking situation is on our radar.
+            </p>
+            <span onClick={() => navigate("about")} style={{ fontSize: "0.86rem", fontWeight: 600, marginTop: 14, color: BRAND.red, cursor: "pointer" }}>Read our story →</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- REQUEST + FOLLOW ---------- */}
+      <section style={{ background: "#FFF9E8", color: BRAND.text }}>
+        <div className="bk-two" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,44px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))", gap: "clamp(28px,4vw,54px)" }}>
+          <div data-reveal>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.8vw,1.75rem)", marginBottom: 8, color: BRAND.red }}>where should we go next?</h2>
+            <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.62)", fontWeight: 300, lineHeight: 1.6, marginBottom: 18, maxWidth: 400 }}>Know a studio we need to try? Tell us and we'll add it to our list.</p>
+            <StudioRequestForm />
+          </div>
+          <div data-reveal>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.8vw,1.75rem)", marginBottom: 8, color: BRAND.red }}>never miss a new review</h2>
+            <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.62)", fontWeight: 300, lineHeight: 1.6, marginBottom: 18, maxWidth: 400 }}>We drop new studio reviews every week. Follow along so you don't miss one.</p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" className="bk-social-solid" style={{ background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Instagram</a>
+              <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" className="bk-social" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>TikTok</a>
+              <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" className="bk-social" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Substack</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {showTop && (
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="bk-totop"
+          style={{ position: "fixed", bottom: 28, right: 28, width: 46, height: 46, borderRadius: "50%", background: BRAND.red, color: BRAND.butter, border: "none", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.05rem", cursor: "pointer", zIndex: 150, boxShadow: "0 6px 20px rgba(140,45,50,0.28)", animation: "bkFadeUp .3s ease" }}>↑</button>
+      )}
+    </div>
+  );
+}
+
+/* ============================================================
+   STYLES  (keyframes, hover states, scroll-reveal, responsive)
+   ============================================================ */
+
+function BookdStyles() {
+  return (
+    <style>{`
+      @keyframes bkFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes bkPop{0%{transform:scale(.7)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+      @keyframes bkMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+      @keyframes bkBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.018)}}
+      @keyframes bkSlideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+
+      /* hero paper texture */
+      .bk-hero::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.14;mix-blend-mode:multiply;
+        background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+      /* scroll reveal */
+      [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .9s cubic-bezier(.16,.86,.3,1)}
+      [data-reveal="spring"]{opacity:1;transform:scaleX(0);transform-origin:left center;transition:transform 1.1s cubic-bezier(.16,.86,.3,1)}
+      [data-reveal="bar"]{opacity:1;transform:none;width:0;transition:width 1s cubic-bezier(.16,.86,.3,1)}
+      [data-reveal].bk-in{opacity:1;transform:none}
+      [data-reveal="bar"].bk-in{width:var(--w)}
+
+      /* interaction */
+      .bk-card{transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s}
+      .bk-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(44,37,34,0.12)}
+      .bk-deal{transition:transform .22s cubic-bezier(.2,.8,.3,1),border-color .22s,background .22s,box-shadow .22s}
+      .bk-deal:hover{transform:translateY(-4px);border-color:#FEEBAB;background:rgba(254,235,171,.09);box-shadow:0 14px 32px rgba(0,0,0,.16)}
+      .bk-heart{transition:transform .18s cubic-bezier(.2,1.5,.4,1)}
+      .bk-heart:hover{transform:scale(1.25)}
+      .bk-heart:active{transform:scale(.82)}
+      .bk-opt{transition:all .16s}
+      .bk-opt:hover{border-color:#8C2D32!important;background:#FFF9E8!important;transform:translateX(6px)}
+      .bk-opt:active{transform:translateX(14px) scale(.985)}
+      .bk-chip{transition:all .18s}
+      .bk-chip:hover{background:#8C2D32!important;color:#FEEBAB!important;border-color:#8C2D32!important;transform:translateY(-2px)}
+      .bk-type{transition:all .18s}
+      .bk-type:hover{background:#8C2D32!important;color:#FEEBAB!important;border-color:#8C2D32!important;transform:translateY(-2px)}
+      .bk-go{transition:transform .2s}
+      .bk-go:hover{transform:translateY(-50%) scale(1.08) rotate(12deg)}
+      .bk-mylist:hover{background:#8C2D32!important;border-color:#8C2D32!important;color:#FEEBAB!important}
+      .bk-ghost{transition:background .2s,color .2s}
+      .bk-ghost:hover{background:#FEEBAB;color:#8C2D32}
+      .bk-social{transition:background .18s,color .18s}
+      .bk-social:hover{background:#8C2D32;color:#FEEBAB}
+      .bk-social-solid{transition:transform .18s}
+      .bk-social-solid:hover{transform:translateY(-2px)}
+      .bk-totop{transition:transform .3s}
+      .bk-totop:hover{transform:translateY(-3px)}
+      .bk-navlinks span:hover{opacity:1!important}
+      input:focus{border-color:rgba(140,45,50,0.45)!important}
+      ::selection{background:#FEEBAB;color:#2C2522}
+
+      @media(max-width:900px){
+        .bk-herogrid{grid-template-columns:1fr!important}
+        .bk-navlinks{display:none!important}
+        .bk-burger{display:flex!important}
+        .bk-navsearch{max-width:none!important}
+      }
+      @media(max-width:640px){
+        .bk-hoodpop{display:none!important}
+        .bk-us{grid-template-columns:1fr!important}
+      }
+      @media(prefers-reduced-motion:reduce){
+        *{animation:none!important}
+        [data-reveal]{opacity:1!important;transform:none!important}
+      }
+    `}</style>
+  );
+}
+
 
 // ─── PULL QUOTE ROTATOR ───────────────────────────────────────
 function PullQuoteRotator({ studios, navigate }) {
