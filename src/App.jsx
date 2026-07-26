@@ -1527,12 +1527,12 @@ function SearchPage({ query, navigate, searchAndGo }) {
     <p style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.35)",margin:"12px 0 8px"}}>{filters.neighborhood||"all neighborhoods"} · {results.length} studio{results.length!==1?"s":""} · sorted by {sortLabel[sortBy]}</p>
 
     {/* Column headers */}
-    <div className="lb-header" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px",gap:8,padding:"10px 16px",fontSize:"0.62rem",textTransform:"uppercase",letterSpacing:"0.1em",color:"rgba(44,37,34,0.35)",fontWeight:600,borderBottom:"1px solid rgba(44,37,34,0.08)",alignItems:"center"}}>
+    <div className="lb-header" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px 56px",gap:8,padding:"10px 16px",fontSize:"0.62rem",textTransform:"uppercase",letterSpacing:"0.1em",color:"rgba(44,37,34,0.35)",fontWeight:600,borderBottom:"1px solid rgba(44,37,34,0.08)",alignItems:"center"}}>
       <div>#</div>
       <div>studio</div>
       <div className="lb-hood">location</div>
       {colHeaders.map(c => (
-        <div key={c.key} onClick={()=>setSortBy(c.key)} style={{textAlign:"center",cursor:"pointer",color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.35)"}}>{c.label}</div>
+        <div key={c.key} onClick={()=>setSortBy(c.key)} style={{textAlign:"center",cursor:"pointer",color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.35)"}}>{c.label}{sortBy===c.key?" ↓":""}</div>
       ))}
     </div>
 
@@ -1543,13 +1543,12 @@ function SearchPage({ query, navigate, searchAndGo }) {
         <div style={{fontSize:"0.82rem",fontWeight:300}}>Try adjusting your filters.</div>
       </div>
     ) : results.map((s,i) => (
-      <div key={s.id} onClick={()=>navigate("studio",s.id)} className="lb-row" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px",gap:8,padding:"14px 16px",alignItems:"center",borderBottom:"1px solid rgba(44,37,34,0.04)",cursor:"pointer",transition:"background 0.15s"}}
+      <div key={s.id} onClick={()=>navigate("studio",s.id)} className="lb-row" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px 56px",gap:8,padding:"14px 16px",alignItems:"center",borderBottom:"1px solid rgba(44,37,34,0.04)",cursor:"pointer",transition:"background 0.15s"}}
         onMouseEnter={e=>{e.currentTarget.style.background="rgba(140,45,50,0.02)";}}
         onMouseLeave={e=>{e.currentTarget.style.background="transparent";}}>
         <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:i<3?"1.1rem":"1rem",fontWeight:700,color:i<3?BRAND.red:"rgba(44,37,34,0.15)",textAlign:"center"}}>{i+1}</div>
         <div style={{minWidth:0}}>
           <div style={{fontSize:"0.88rem",fontWeight:600,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{s.name}</div>
-          <div style={{fontSize:"0.7rem",color:"rgba(44,37,34,0.4)",marginTop:1}}>{s.classTypes.join(" · ")} · {s.priceTier}</div>
         </div>
         <div className="lb-hood" style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.5)"}}>{s.neighborhood}</div>
         {colHeaders.map(c => (
@@ -1561,7 +1560,7 @@ function SearchPage({ query, navigate, searchAndGo }) {
     <style>{`
       @media(max-width:640px){
         .lb-hood{display:none!important}
-        .lb-header,.lb-row{grid-template-columns:28px 1fr 44px 44px 44px 44px!important}
+        .lb-header,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 40px 40px!important}
       }
     `}</style>
   </div>;
