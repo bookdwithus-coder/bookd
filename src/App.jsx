@@ -578,9 +578,6 @@ export default function App() {
         .dark-input::placeholder { color: rgba(254,235,171,0.35); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-        .hero-texture { position:relative; }
-        .hero-texture::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0; opacity:0.12; mix-blend-mode:multiply; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-        .hero-texture > * { position:relative; z-index:1; }
         @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes pillFadeIn { from { opacity:0; transform:translateY(8px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
         footer span:hover, footer a:hover { opacity: 1 !important; text-decoration: underline; text-underline-offset: 3px; }
@@ -649,9 +646,9 @@ function StudioCardV2({ studio: s, navigate, badge, dark = false }) {
       <div style={{ background: dark ? BRAND.red : "#FFF9E8", padding: "17px 18px 16px", borderBottom: dark ? "none" : "1px solid rgba(44,37,34,0.07)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
           <span style={{ background: dark ? BRAND.butter : BRAND.red, color: dark ? BRAND.red : BRAND.butter, borderRadius: 100, padding: "4px 11px", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.09em" }}>{badge}</span>
-          <button className="bk-heart" aria-label={saved ? "Remove from my list" : "Save to my list"}
+          <button aria-label={saved ? "Remove from my list" : "Save to my list"}
             onClick={e => { e.stopPropagation(); toggle(s.id); }}
-            style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1, padding: 0, color: dark ? BRAND.butter : BRAND.red }}>{saved ? "♥" : "♡"}</button>
+            style={{ background: saved ? BRAND.red : "transparent", border: `1px solid ${dark ? BRAND.butter : BRAND.red}`, cursor: "pointer", fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.06em", lineHeight: 1, padding: "4px 10px", borderRadius: 100, color: saved ? (dark ? BRAND.red : "#FEEBAB") : (dark ? BRAND.butter : BRAND.red), fontFamily: "inherit", transition: "all 0.2s" }}>{saved ? "✦ on my list" : "+ my list"}</button>
         </div>
         <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.4vw,1.62rem)", lineHeight: 1.14, letterSpacing: "-0.015em", marginTop: 14, textWrap: "balance", color: dark ? BRAND.butter : BRAND.text }}>{s.name}</div>
         <div style={{ fontSize: "0.78rem", color: dark ? "rgba(254,235,171,0.6)" : "rgba(44,37,34,0.48)", marginTop: 6 }}>{s.neighborhood} · {s.classTypes[0]}</div>
@@ -717,7 +714,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
 
         <button className="bk-mylist" onClick={() => setListOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: `1px solid rgba(140,45,50,0.3)`, color: BRAND.red, borderRadius: 100, padding: "9px 17px", fontFamily: "inherit", fontSize: "0.82rem", fontWeight: 600, cursor: "pointer", flexShrink: 0, transition: "background .2s,border-color .2s,color .2s" }}>
-          <span style={{ fontSize: "0.86rem", lineHeight: 1 }}>♥</span><span>My List</span><span style={{ opacity: 0.5, fontWeight: 500 }}>{saved.length}</span>
+          <span style={{ fontSize: "0.7rem", lineHeight: 1, fontWeight: 700 }}>✦</span><span>My List</span><span style={{ opacity: 0.5, fontWeight: 500 }}>{saved.length}</span>
         </button>
 
         <div className="bk-burger" onClick={() => setMobileMenu(!mobileMenu)} style={{ cursor: "pointer", padding: 8, display: "none", flexDirection: "column", gap: 4 }}>
@@ -752,7 +749,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
             <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px 24px" }}>
               {savedStudios.length === 0 && (
                 <div style={{ textAlign: "center", padding: "48px 12px" }}>
-                  <div style={{ fontSize: "1.8rem", color: BRAND.red, marginBottom: 10 }}>♡</div>
+                  <div style={{ fontSize: "0.9rem", color: BRAND.red, marginBottom: 10, fontWeight: 600 }}>✦</div>
                   <div style={{ fontFamily: SERIF, fontSize: "1.08rem", marginBottom: 7 }}>nothing saved yet</div>
                   <p style={{ fontSize: "0.86rem", color: "rgba(44,37,34,0.5)", fontWeight: 300, lineHeight: 1.55 }}>Tap the heart on any studio and we'll keep it right here for you.</p>
                 </div>
@@ -764,7 +761,7 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
                       <div style={{ fontFamily: SERIF, fontSize: "1.05rem", lineHeight: 1.2 }}>{s.name}</div>
                       <div style={{ fontSize: "0.75rem", color: "rgba(44,37,34,0.45)", marginTop: 4 }}>{s.neighborhood} · ★ {s.rating} · {s.dropInPrice}</div>
                     </div>
-                    <button className="bk-heart" onClick={() => toggle(s.id)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.15rem", color: BRAND.red, padding: 0, lineHeight: 1 }}>♥</button>
+                    <button onClick={() => toggle(s.id)} style={{ background: "none", border: `1px solid ${BRAND.red}`, cursor: "pointer", fontSize: "0.6rem", color: BRAND.red, padding: "3px 8px", lineHeight: 1, borderRadius: 100, fontFamily: "inherit", fontWeight: 600 }}>remove</button>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginTop: 12, paddingTop: 11, borderTop: "1px solid rgba(44,37,34,0.07)" }}>
                     <span style={{ fontSize: "0.77rem", color: "rgba(44,37,34,0.5)" }}>{s.introOffer}</span>
@@ -784,24 +781,24 @@ function Nav({ currentPage, navigate, searchAndGo, mobileMenu, setMobileMenu }) 
    HOME PAGE
    ============================================================ */
 const QUIZ = [
-  { q: "What are you in the mood for?", opts: [
-    { label: "Humble me. I want to shake.", d: 5 },
-    { label: "Something in between", d: 3.6 },
-    { label: "A really good stretch", d: 2.2 },
-    { label: "It's honestly my first class ever", d: 2, beginner: true },
+  { q: "what are you in the mood for?", opts: [
+    { label: "humble me. i want to shake.", d: 5 },
+    { label: "push me, but let me walk out of here.", d: 3.6 },
+    { label: "keep it chill, i just want to move.", d: 2.2 },
+    { label: "it's honestly my first class ever.", d: 2, beginner: true },
   ]},
-  { q: "What makes or breaks a studio for you?", opts: [
-    { label: "The playlist, always", k: "music" },
-    { label: "How the space looks", k: "aesthetic" },
-    { label: "A gentle price", k: "price" },
-    { label: "The people in the room", k: "rating" },
+  { q: "what makes or breaks a studio for you?", opts: [
+    { label: "the playlist, always.", k: "music" },
+    { label: "the aesthetic. i need it to feel intentional.", k: "aesthetic" },
+    { label: "the price. let's not pretend that doesn't matter.", k: "price" },
+    { label: "the vibe. instructors, energy, all of it.", k: "rating" },
   ]},
-  { q: "Where are we going?", opts: [
-    { label: "West Hollywood", hood: "West Hollywood" },
-    { label: "Santa Monica", hood: "Santa Monica" },
-    { label: "Beverly Hills", hood: "Beverly Hills" },
-    { label: "Malibu or the Valley", hood: "__far" },
-    { label: "Anywhere, I'll drive", hood: "__any" },
+  { q: "where are we headed?", opts: [
+    { label: "west hollywood", hood: "West Hollywood" },
+    { label: "santa monica", hood: "Santa Monica" },
+    { label: "beverly hills", hood: "Beverly Hills" },
+    { label: "malibu or the valley", hood: "__far" },
+    { label: "i'll drive anywhere.", hood: "__any" },
   ]},
 ];
 
@@ -879,12 +876,12 @@ function HomePage({ navigate, searchAndGo }) {
       <BookdStyles />
 
       {/* ---------- HERO ---------- */}
-      <section id="bk-top" className="bk-hero" style={{ background: "#FFF9E8", position: "relative", overflow: "hidden" }}>
+      <section id="bk-top" className="bk-hero" style={{ background: BRAND.butterLight, position: "relative", overflow: "hidden" }}>
         <div className="bk-herogrid" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(38px,5vw,62px) clamp(16px,4vw,44px) clamp(30px,4vw,46px)", display: "grid", gridTemplateColumns: "1.15fr 400px", gap: "clamp(24px,4vw,54px)", alignItems: "center", position: "relative", zIndex: 1 }}>
-          <div>
-            <div style={{ position: "relative", paddingTop: 6 }}>
+          <div className="bk-heroleft">
+            <div className="bk-headline" style={{ position: "relative", paddingTop: 6 }}>
               <div style={{ ...bigType, color: BRAND.butter, WebkitTextStroke: `1.4px ${BRAND.red}`, userSelect: "none", whiteSpace: "nowrap", transformOrigin: "left center", animation: "bkBreathe 9s ease-in-out infinite", textShadow: "1px 1px 0 #8C2D32,2px 2px 0 #8C2D32,3px 3px 0 #8C2D32,4px 4px 0 #8C2D32,5px 5px 0 #8C2D32,6px 6px 0 #8C2D32,7px 7px 0 #8C2D32,8px 8px 0 #8C2D32,9px 9px 0 #8C2D32,10px 10px 0 #8C2D32,11px 11px 0 #8C2D32,12px 12px 0 #8C2D32,13px 13px 0 #8C2D32,14px 14px 0 #8C2D32,15px 15px 0 #7a2529,16px 16px 22px rgba(140,45,50,0.22)" }}>WORKOUT</div>
-              <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(34px,5.4vw,68px)", lineHeight: 1.05, color: BRAND.red, marginTop: "0.34em", marginLeft: "0.12em" }}>with us.</div>
+              <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(34px,5.4vw,68px)", lineHeight: 1.05, color: BRAND.red, marginTop: "0.5em", marginLeft: "0.12em" }}>with us.</div>
             </div>
             <p style={{ fontSize: "clamp(1rem,1.5vw,1.15rem)", lineHeight: 1.5, color: "rgba(44,37,34,0.66)", fontWeight: 300, marginTop: 18, letterSpacing: "0.01em" }}>Your trusted studio tour guides.</p>
 
@@ -897,12 +894,6 @@ function HomePage({ navigate, searchAndGo }) {
                 style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", background: BRAND.red, color: BRAND.butter, border: "none", borderRadius: "50%", width: 39, height: 39, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: "0.95rem" }}>↗</button>
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 14 }}>
-              {QUICK.map(label => (
-                <button key={label} className="bk-chip" onClick={() => searchAndGo(label)}
-                  style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(44,37,34,0.09)", borderRadius: 100, padding: "7px 15px", fontSize: "0.76rem", cursor: "pointer", fontFamily: "inherit", color: "rgba(44,37,34,0.62)" }}>{label}</button>
-              ))}
-            </div>
           </div>
 
           {/* quiz */}
@@ -934,7 +925,7 @@ function HomePage({ navigate, searchAndGo }) {
               ) : (
                 <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
                   <div style={{ fontSize: "2.1rem", animation: "bkPop .5s cubic-bezier(.2,1.4,.4,1)" }}>✦</div>
-                  <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontStyle: "italic", fontSize: "1.35rem", color: BRAND.red, margin: "8px 0 6px" }}>okay, we've got three.</h2>
+                  <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontStyle: "italic", fontSize: "1.35rem", color: BRAND.red, margin: "8px 0 6px" }}>your matches are waiting.</h2>
                   <p style={{ fontSize: "0.87rem", color: "rgba(44,37,34,0.55)", fontWeight: 300, marginBottom: 16 }}>Your matches are waiting right below.</p>
                   <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
                     <button onClick={() => goTo("#bk-matches")} style={{ background: BRAND.red, color: BRAND.butter, border: "none", borderRadius: 100, padding: "11px 22px", fontFamily: "inherit", fontSize: "0.85rem", fontWeight: 600, cursor: "pointer" }}>see my matches ↓</button>
@@ -973,7 +964,7 @@ function HomePage({ navigate, searchAndGo }) {
                   <div style={{ background: "#FFF9E8", padding: "17px 18px 16px", borderBottom: "1px solid rgba(44,37,34,0.07)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
                       <span style={{ background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "4px 11px", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.06em", animation: "bkPop .55s cubic-bezier(.2,1.5,.4,1) .35s backwards" }}>{pct}% MATCH</span>
-                      <button className="bk-heart" onClick={e => { e.stopPropagation(); toggle(s.id); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1, padding: 0, color: BRAND.red }}>{has(s.id) ? "♥" : "♡"}</button>
+                      <button className="bk-heart" onClick={e => { e.stopPropagation(); toggle(s.id); }} style={{ background: has(s.id) ? BRAND.red : "transparent", border: `1px solid ${BRAND.red}`, cursor: "pointer", fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.06em", lineHeight: 1, padding: "4px 10px", borderRadius: 100, color: has(s.id) ? "#FEEBAB" : BRAND.red, fontFamily: "inherit", transition: "all 0.2s" }}>{has(s.id) ? "✦ saved" : "save"}</button>
                     </div>
                     <div style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.4vw,1.62rem)", lineHeight: 1.14, letterSpacing: "-0.015em", marginTop: 14, textWrap: "balance" }}>{s.name}</div>
                     <div style={{ fontSize: "0.78rem", color: "rgba(44,37,34,0.48)", marginTop: 6 }}>{s.neighborhood} · ★ {s.rating}</div>
@@ -1157,21 +1148,27 @@ function HomePage({ navigate, searchAndGo }) {
         </div>
       </section>
 
-      {/* ---------- REQUEST + FOLLOW ---------- */}
-      <section style={{ background: "#FFF9E8", color: BRAND.text }}>
-        <div className="bk-two" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,44px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))", gap: "clamp(28px,4vw,54px)" }}>
-          <div data-reveal>
-            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.8vw,1.75rem)", marginBottom: 8, color: BRAND.red }}>where should we go next?</h2>
-            <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.62)", fontWeight: 300, lineHeight: 1.6, marginBottom: 18, maxWidth: 400 }}>Know a studio we need to try? Tell us and we'll add it to our list.</p>
-            <StudioRequestForm />
+      {/* ---------- REQUEST ---------- */}
+      <section style={{ background: BRAND.red, color: BRAND.butter }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,44px)" }}>
+          <div data-reveal style={{ maxWidth: 520 }}>
+            <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.8vw,1.75rem)", marginBottom: 8, color: BRAND.butter }}>where should we go next?</h2>
+            <p style={{ fontSize: "0.9rem", color: "rgba(254,235,171,0.5)", fontWeight: 300, lineHeight: 1.6, marginBottom: 18, maxWidth: 400 }}>Know a studio we need to try? Tell us and we'll add it to our list.</p>
+            <StudioRequestForm darkMode={true} />
           </div>
-          <div data-reveal>
+        </div>
+      </section>
+
+      {/* ---------- FOLLOW ---------- */}
+      <section style={{ background: BRAND.butterLight, color: BRAND.text }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,44px)" }}>
+          <div data-reveal style={{ maxWidth: 520 }}>
             <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(1.3rem,2.8vw,1.75rem)", marginBottom: 8, color: BRAND.red }}>never miss a new review</h2>
             <p style={{ fontSize: "0.9rem", color: "rgba(44,37,34,0.62)", fontWeight: 300, lineHeight: 1.6, marginBottom: 18, maxWidth: 400 }}>We drop new studio reviews every week. Follow along so you don't miss one.</p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" className="bk-social-solid" style={{ background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Instagram</a>
-              <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" className="bk-social" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>TikTok</a>
-              <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" className="bk-social" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Substack</a>
+              <a href="https://instagram.com/bookdwithus" target="_blank" rel="noopener noreferrer" style={{ background: BRAND.red, color: BRAND.butter, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Instagram</a>
+              <a href="https://tiktok.com/@bookdwithus" target="_blank" rel="noopener noreferrer" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>TikTok</a>
+              <a href="https://bookdwithus.substack.com" target="_blank" rel="noopener noreferrer" style={{ border: `1.5px solid ${BRAND.red}`, color: BRAND.red, borderRadius: 100, padding: "12px 22px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>Substack</a>
             </div>
           </div>
         </div>
@@ -1241,6 +1238,9 @@ function BookdStyles() {
 
       @media(max-width:900px){
         .bk-herogrid{grid-template-columns:1fr!important}
+        .bk-heroleft{text-align:center!important}
+        .bk-heroleft div[style]{margin-left:auto!important;margin-right:auto!important}
+        .bk-heroleft .bk-headline{text-align:left!important;display:inline-block!important}
         .bk-navlinks{display:none!important}
         .bk-burger{display:flex!important}
         .bk-navsearch{max-width:none!important}
@@ -1248,6 +1248,9 @@ function BookdStyles() {
       @media(max-width:640px){
         .bk-hoodpop{display:none!important}
         .bk-us{grid-template-columns:1fr!important}
+        .review-video-row{flex-direction:column!important;align-items:center!important}
+        .review-video-row>div{width:100%!important;max-width:100%!important;flex-shrink:1!important}
+        .review-video-row iframe{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:9/16!important}
       }
       @media(prefers-reduced-motion:reduce){
         *{animation:none!important}
