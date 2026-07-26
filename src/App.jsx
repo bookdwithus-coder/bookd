@@ -581,6 +581,11 @@ export default function App() {
         @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes pillFadeIn { from { opacity:0; transform:translateY(8px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
         footer span:hover, footer a:hover { opacity: 1 !important; text-decoration: underline; text-underline-offset: 3px; }
+        @media(max-width:900px){
+          .review-video-row{flex-direction:column!important;align-items:stretch!important}
+          .review-video-row>div{width:100%!important;max-width:100%!important;flex-shrink:1!important}
+          .review-video-row iframe{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:9/16!important}
+        }
       `}</style>
     </div>
   );
@@ -1248,6 +1253,8 @@ function BookdStyles() {
       @media(max-width:640px){
         .bk-hoodpop{display:none!important}
         .bk-us{grid-template-columns:1fr!important}
+      }
+      @media(max-width:900px){
         .review-video-row{flex-direction:column!important;align-items:center!important}
         .review-video-row>div{width:100%!important;max-width:100%!important;flex-shrink:1!important}
         .review-video-row iframe{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:9/16!important}
