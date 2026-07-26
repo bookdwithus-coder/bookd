@@ -585,6 +585,12 @@ export default function App() {
           .review-video-row{flex-direction:column!important;align-items:stretch!important}
           .review-video-row>div{width:100%!important;max-width:100%!important;flex-shrink:1!important}
           .review-video-row iframe{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:9/16!important}
+          .bk-navlinks{display:none!important}
+          .bk-burger{display:flex!important}
+          .bk-navsearch{max-width:none!important}
+        }
+        @media(max-width:640px){
+          .bk-hoodpop{display:none!important}
         }
       `}</style>
     </div>
