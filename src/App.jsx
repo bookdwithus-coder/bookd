@@ -1458,70 +1458,112 @@ function StudioCard({ studio, navigate, featured=false }) {
 // ─── SEARCH PAGE ─────────────────────────────────────────────
 function SearchPage({ query, navigate, searchAndGo }) {
   const [localQ,setLocalQ] = useState(query||"");
-  const [filters,setFilters] = useState({ neighborhood: "", priceTier: "", parkingEase: "", level: "" });
+  const [sortBy,setSortBy] = useState("rating");
+  const [filters,setFilters] = useState({ neighborhood: "", priceTier: "" });
   const baseResults = useMemo(() => smartStudioSearch(localQ, STUDIOS), [localQ]);
   const results = useMemo(() => {
-    return baseResults.filter(s => {
+    let filtered = baseResults.filter(s => {
       if (filters.neighborhood && s.neighborhood !== filters.neighborhood) return false;
       if (filters.priceTier && !s.priceTier.split("-").some(p => p.trim() === filters.priceTier)) return false;
-      if (filters.parkingEase && s.parkingEase !== filters.parkingEase) return false;
-      if (filters.level && s.tags.level !== filters.level) return false;
       return true;
     });
-  }, [baseResults, filters]);
+    if (sortBy === "rating") filtered.sort((a,b) => b.rating - a.rating);
+    else if (sortBy === "aesthetic") filtered.sort((a,b) => b.ratings.aesthetic - a.ratings.aesthetic);
+    else if (sortBy === "music") filtered.sort((a,b) => b.ratings.music - a.ratings.music);
+    else if (sortBy === "cleanliness") filtered.sort((a,b) => b.ratings.cleanliness - a.ratings.cleanliness);
+    else if (sortBy === "difficulty") filtered.sort((a,b) => b.ratings.difficulty - a.ratings.difficulty);
+    else if (sortBy === "price") filtered.sort((a,b) => (a.introPricePerClass||99) - (b.introPricePerClass||99));
+    else if (sortBy === "newest") filtered.sort((a,b) => new Date(b.dateAdded||0) - new Date(a.dateAdded||0));
+    return filtered;
+  }, [baseResults, filters, sortBy]);
   const hasFilters = Object.values(filters).some(v => v);
 
   useEffect(() => { setLocalQ(query||""); }, [query]);
 
-  const filterBtn = (label, value, filterKey) => (
-    <button onClick={()=>setFilters({...filters,[filterKey]:filters[filterKey]===value?"":value})} style={{
-      background:filters[filterKey]===value?BRAND.red:"#fff",
-      color:filters[filterKey]===value?"#FEEBAB":"rgba(44,37,34,0.6)",
-      border:`1px solid ${filters[filterKey]===value?BRAND.red:"rgba(44,37,34,0.08)"}`,
-      borderRadius:100,padding:"6px 14px",fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit",transition:"all 0.15s"
-    }}>{label}</button>
-  );
+  const sortLabel = {rating:"overall",aesthetic:"aesthetic",music:"music",cleanliness:"cleanliness",difficulty:"difficulty",price:"intro price",newest:"newest"};
+  const sortKeys = ["rating","aesthetic","music","cleanliness","difficulty","price","newest"];
+  const colHeaders = [{key:"rating",label:"overall"},{key:"aesthetic",label:"aesthetic"},{key:"music",label:"music"},{key:"cleanliness",label:"clean"},{key:"difficulty",label:"difficulty"}];
 
-  return <div style={{padding:"32px clamp(16px,4vw,48px) 80px",maxWidth:1100,margin:"0 auto"}}>
+  function getScore(s, key) {
+    if (key === "rating") return s.rating;
+    if (key === "price") return s.introPricePerClass ? `$${Math.round(s.introPricePerClass)}` : "-";
+    return s.ratings[key] || "-";
+  }
+
+  return <div style={{padding:"32px clamp(16px,4vw,48px) 80px",maxWidth:1000,margin:"0 auto"}}>
+    {/* Header */}
+    <h1 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.4rem,3vw,1.8rem)",fontWeight:400,marginBottom:4}}>all studios</h1>
+    <p style={{fontSize:"0.85rem",color:"rgba(44,37,34,0.45)",fontWeight:300,marginBottom:20}}>{STUDIOS.length} studios reviewed and ranked.</p>
+
     {/* Search bar */}
-    <div style={{maxWidth:560,marginBottom:20,position:"relative"}}>
+    <div style={{maxWidth:480,marginBottom:16,position:"relative"}}>
       <input type="text" value={localQ} onChange={e=>{setLocalQ(e.target.value);}} onKeyDown={e=>{if(e.key==="Enter")searchAndGo(localQ);}}
-        placeholder='Search by studio, class type, neighborhood, or zip code...'
-        style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.1)",borderRadius:100,padding:"14px 20px 14px 42px",fontSize:"0.9rem",color:"#2C2522",outline:"none",fontFamily:"inherit",boxShadow:"0 1px 8px rgba(44,37,34,0.03)"}} />
-      <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",opacity:0.25,fontSize:"0.95rem"}}>⌕</span>
+        placeholder='search studios, neighborhoods, class types...'
+        style={{width:"100%",background:"#fff",border:"1px solid rgba(44,37,34,0.08)",borderRadius:100,padding:"12px 18px 12px 40px",fontSize:"0.85rem",color:"#2C2522",outline:"none",fontFamily:"inherit"}} />
+      <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",opacity:0.2,fontSize:"0.9rem"}}>⌕</span>
     </div>
 
-    {/* Filter bar */}
-    <div style={{marginBottom:24,display:"flex",flexWrap:"wrap",gap:6,alignItems:"center"}}>
-      <span style={{fontSize:"0.72rem",color:BRAND.textLight,fontWeight:500,marginRight:4}}>Filter:</span>
-      {NEIGHBORHOODS.map(n => filterBtn(n, n, "neighborhood"))}
+    {/* Filter chips */}
+    <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:16,alignItems:"center"}}>
+      <button onClick={()=>setFilters({neighborhood:"",priceTier:""})} style={{background:!hasFilters?BRAND.red:"#fff",color:!hasFilters?"#FEEBAB":"rgba(44,37,34,0.5)",border:`1px solid ${!hasFilters?BRAND.red:"rgba(44,37,34,0.08)"}`,borderRadius:100,padding:"6px 14px",fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit"}}>All</button>
+      {NEIGHBORHOODS.map(n => (
+        <button key={n} onClick={()=>setFilters({...filters,neighborhood:filters.neighborhood===n?"":n})} style={{background:filters.neighborhood===n?BRAND.red:"#fff",color:filters.neighborhood===n?"#FEEBAB":"rgba(44,37,34,0.5)",border:`1px solid ${filters.neighborhood===n?BRAND.red:"rgba(44,37,34,0.08)"}`,borderRadius:100,padding:"6px 14px",fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit"}}>{n}</button>
+      ))}
       <span style={{width:1,height:16,background:"rgba(44,37,34,0.1)",margin:"0 4px"}} />
-      {["$","$$","$$$","$$$$"].map(p => filterBtn(p, p, "priceTier"))}
-      <span style={{width:1,height:16,background:"rgba(44,37,34,0.1)",margin:"0 4px"}} />
-      {["Easy","Moderate","Tricky"].map(e => filterBtn(`Parking: ${e}`, e, "parkingEase"))}
-      {hasFilters && <button onClick={()=>setFilters({neighborhood:"",priceTier:"",parkingEase:"",level:""})} style={{background:"none",border:"none",color:BRAND.red,fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit",fontWeight:500,padding:"6px 8px"}}>Clear all</button>}
+      {["$","$$","$$$","$$$$"].map(p => (
+        <button key={p} onClick={()=>setFilters({...filters,priceTier:filters.priceTier===p?"":p})} style={{background:filters.priceTier===p?BRAND.red:"#fff",color:filters.priceTier===p?"#FEEBAB":"rgba(44,37,34,0.5)",border:`1px solid ${filters.priceTier===p?BRAND.red:"rgba(44,37,34,0.08)"}`,borderRadius:100,padding:"6px 14px",fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit"}}>{p}</button>
+      ))}
+      {hasFilters && <button onClick={()=>setFilters({neighborhood:"",priceTier:""})} style={{background:"none",border:"none",color:BRAND.red,fontSize:"0.76rem",cursor:"pointer",fontFamily:"inherit",fontWeight:500,padding:"6px 8px"}}>Clear all</button>}
     </div>
 
-    {/* Results header */}
-    <div style={{marginBottom:24}}>
-      <h1 style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:"clamp(1.4rem,3vw,1.8rem)",fontWeight:400,marginBottom:4}}>
-        {localQ ? `Results for "${localQ}"` : "All Reviewed Studios"}
-      </h1>
-      <p style={{fontSize:"0.85rem",color:"rgba(44,37,34,0.45)",fontWeight:300}}>{results.length} studio{results.length!==1?"s":""} found · sorted by rating</p>
+    {/* Sort tabs */}
+    <div style={{display:"flex",gap:0,borderBottom:"1px solid rgba(44,37,34,0.08)",marginBottom:4,overflowX:"auto"}}>
+      {sortKeys.map(k => (
+        <button key={k} onClick={()=>setSortBy(k)} style={{padding:"10px 16px",fontSize:"0.78rem",fontWeight:sortBy===k?600:400,cursor:"pointer",borderBottom:sortBy===k?`2px solid ${BRAND.red}`:"2px solid transparent",color:sortBy===k?BRAND.red:"rgba(44,37,34,0.4)",background:"none",border:"none",borderBottomStyle:"solid",borderBottomWidth:2,borderBottomColor:sortBy===k?BRAND.red:"transparent",fontFamily:"inherit",whiteSpace:"nowrap"}}>{sortLabel[k]}</button>
+      ))}
     </div>
 
-    {/* Results */}
-    {results.length===0 ? (
-      <div style={{textAlign:"center",padding:"80px 20px",color:"rgba(44,37,34,0.4)"}}>
-        <div style={{fontSize:"2rem",marginBottom:12,opacity:0.3}}>⌕</div>
+    {/* Context line */}
+    <p style={{fontSize:"0.72rem",color:"rgba(44,37,34,0.35)",margin:"12px 0 8px"}}>{filters.neighborhood||"all neighborhoods"} · {results.length} studio{results.length!==1?"s":""} · sorted by {sortLabel[sortBy]}</p>
+
+    {/* Column headers */}
+    <div className="lb-header" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px",gap:8,padding:"10px 16px",fontSize:"0.62rem",textTransform:"uppercase",letterSpacing:"0.1em",color:"rgba(44,37,34,0.35)",fontWeight:600,borderBottom:"1px solid rgba(44,37,34,0.08)",alignItems:"center"}}>
+      <div>#</div>
+      <div>studio</div>
+      <div className="lb-hood">location</div>
+      {colHeaders.map(c => (
+        <div key={c.key} onClick={()=>setSortBy(c.key)} style={{textAlign:"center",cursor:"pointer",color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.35)"}}>{c.label}</div>
+      ))}
+    </div>
+
+    {/* Rows */}
+    {results.length === 0 ? (
+      <div style={{textAlign:"center",padding:"60px 20px",color:"rgba(44,37,34,0.4)"}}>
         <div style={{fontSize:"0.95rem",marginBottom:8}}>No studios match that search.</div>
-        <div style={{fontSize:"0.82rem",fontWeight:300}}>Try "pilates in West Hollywood" or "megaformer near me"</div>
+        <div style={{fontSize:"0.82rem",fontWeight:300}}>Try adjusting your filters.</div>
       </div>
-    ) : (
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:20}}>
-        {results.map(s => <StudioCard key={s.id} studio={s} navigate={navigate} />)}
+    ) : results.map((s,i) => (
+      <div key={s.id} onClick={()=>navigate("studio",s.id)} className="lb-row" style={{display:"grid",gridTemplateColumns:"36px 1fr 100px 56px 56px 56px 56px",gap:8,padding:"14px 16px",alignItems:"center",borderBottom:"1px solid rgba(44,37,34,0.04)",cursor:"pointer",transition:"background 0.15s"}}
+        onMouseEnter={e=>{e.currentTarget.style.background="rgba(140,45,50,0.02)";}}
+        onMouseLeave={e=>{e.currentTarget.style.background="transparent";}}>
+        <div style={{fontFamily:"'Libre Baskerville',Georgia,serif",fontSize:i<3?"1.1rem":"1rem",fontWeight:700,color:i<3?BRAND.red:"rgba(44,37,34,0.15)",textAlign:"center"}}>{i+1}</div>
+        <div style={{minWidth:0}}>
+          <div style={{fontSize:"0.88rem",fontWeight:600,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{s.name}</div>
+          <div style={{fontSize:"0.7rem",color:"rgba(44,37,34,0.4)",marginTop:1}}>{s.classTypes.join(" · ")} · {s.priceTier}</div>
+        </div>
+        <div className="lb-hood" style={{fontSize:"0.78rem",color:"rgba(44,37,34,0.5)"}}>{s.neighborhood}</div>
+        {colHeaders.map(c => (
+          <div key={c.key} style={{textAlign:"center",fontSize:sortBy===c.key?"0.95rem":"0.82rem",fontWeight:sortBy===c.key?700:400,color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.55)"}}>{c.key==="rating"?s.rating:s.ratings[c.key]}</div>
+        ))}
       </div>
-    )}
+    ))}
+
+    <style>{`
+      @media(max-width:640px){
+        .lb-hood{display:none!important}
+        .lb-header,.lb-row{grid-template-columns:28px 1fr 44px 44px 44px 44px!important}
+      }
+    `}</style>
   </div>;
 }
 
