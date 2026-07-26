@@ -377,6 +377,26 @@ const STUDIOS = [
     },
     videoId: null, tiktokId: "7621437235459607838", color: "#B8C8B8",
   },
+  {
+    id: "s18", introPricePerClass: 13.33, dateAdded: "2026-07-26", name: "Forte Vita", neighborhood: "Brentwood", address: "912 S Barrington Ave, Los Angeles, CA",
+    zip: "90049", classTypes: ["Controlled Sculpt", "Power Sculpt", "Flow Sculpt"],
+    dropInPrice: "$34", priceTier: "$$", introOffer: "3 classes for $40",
+    bookingUrl: "https://www.fortevita.co/schedule", instagram: "@fortevita.co",
+    tags: { level: "All Levels" }, parkingType: "Street Parking", parkingEase: "Tricky",
+    goodToKnow: ["Heated studio at 90-95 degrees - come hydrated", "Mats and towels provided, but no showers - plan accordingly", "Malou Coffee is directly below the studio, Lalaland is just down the street", "They host puppy yoga events with Pawsitive Beginnings rescue", "The studio is upstairs, not street level - look for the entrance on Barrington", "18+ only (16-17 with parental consent)"],
+    bestFor: "Anyone in Brentwood who wants a heated, strength-focused sculpt class with three distinct formats to choose from and a post-class coffee stop literally downstairs.",
+    rating: 4.1, ratings: { aesthetic: 3, music: 4, cleanliness: 5, difficulty: 4.5 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "Such a cute upstairs studio on the corner of San Vicente and Barrington. We love that it sits above the chaos - you walk up and into this sun-drenched heated space that immediately feels intentional. The class was seriously challenging and the three different formats mean you can switch up your workout depending on what your body needs that day.",
+    sections: {
+      space: "Forte Vita is tucked upstairs on the corner of San Vicente and Barrington, above Malou Coffee. The fact that it's not street level is part of the charm - you walk up and into this sun-drenched, heated space that feels separate from everything below. The aesthetic is clean and simple, nothing over the top in terms of decor, but the natural light and warm glow from the heating create a really nice atmosphere. They provide mats and towels, but heads up - no showers, so plan accordingly.",
+      classExperience: "They offer three formats and each one hits differently. Controlled Sculpt is slow, precise, Pilates-inspired deep burn. Power Sculpt layers in strength training and low-impact cardio for more intensity. Flow Sculpt focuses on mobility and recovery through breath-driven movement. We found the difficulty genuinely challenging - a 4.5 - and the heated room at 90-95 degrees means you're sweating almost immediately. The combination of heat and strength work is no joke.",
+      vibe: "Founded by two best friends, and you can feel that personal energy in the studio. It's warm, welcoming, and the kind of place where the instructors know your name. They also host puppy yoga events in partnership with Pawsitive Beginnings, a local rescue - you get 30-45 minutes of guided yoga followed by puppy playtime. The name Forte Vita translates to 'strong life' from Latin and Italian, and the method reflects that - it's about building sustainable strength over time.",
+      knowBeforeYouGo: "Drop-in is $34. The intro offer is 3 classes for $40 which is an incredible deal to try all three formats. Parking in Brentwood is tricky - your best bet is a meter or neighborhood street parking with a short walk. Malou Coffee is directly below the studio for your post-class fix, and Lalaland is just down the street. The studio is 18+ only, with 16-17 year olds welcome with signed parental consent."
+    },
+    videoId: null, tiktokId: "7573147771595689246", color: "#C8C0B0",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
