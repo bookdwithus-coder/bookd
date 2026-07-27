@@ -397,6 +397,26 @@ const STUDIOS = [
     },
     videoId: null, tiktokId: "7573147771595689246", color: "#C8C0B0",
   },
+  {
+    id: "s19", introPricePerClass: 33.33, dateAdded: "2026-07-26", name: "Crane Pilates", neighborhood: "Calabasas", address: "26787 Agoura Rd #E6, Calabasas, CA",
+    zip: "91302", classTypes: ["Reformer", "Mat", "Private Reformer"],
+    dropInPrice: "$50", priceTier: "$$$", introOffer: "3 classes for $100",
+    bookingUrl: "https://www.cranemethod.com/bookhere", instagram: "@cranepilates",
+    tags: { level: "All Levels" }, parkingType: "Parking Lot", parkingEase: "Easy",
+    goodToKnow: ["Heated studio - come hydrated", "Grip socks required - available for purchase if you don't have a pair", "They use unique U-shaped weights instead of traditional dumbbells", "Private reformer studio is just next door across the parking lot", "Right across from Eon for a post-class treat", "Don't skip the merch table"],
+    bestFor: "Anyone willing to make the drive to Calabasas for a classic Pilates class with an athletic edge, easy parking, and a heated studio with unique equipment you won't find elsewhere.",
+    rating: 4.0, ratings: { aesthetic: 3.5, music: 3.5, cleanliness: 5, difficulty: 4 },
+    reviewCount: 0,
+    gallery: [],
+    heroReview: "We took a road trip from the west side to Calabasas to try Crane Pilates and it was worth the drive. We took Hannah's class and she was absolutely incredible. It's a classic Pilates class with a slightly athletic edge so you'll definitely feel the burn. The studio is gorgeous, there's tons of parking, and they use these unique U-shaped weights we haven't seen anywhere else.",
+    sections: {
+      space: "Crane is located in The Summit Shopping Center in Calabasas, right next to Erewhon. The studio itself is gorgeous with Merrithew v2Max reformers with towers and stability chairs. It's heated, which adds to the intensity. The aesthetic is nice but not the most designed studio we've been to - a 3.5. What stood out was the equipment, particularly these unique U-shaped weights they use instead of traditional hand weights or dumbbells. It's a piece of equipment we haven't used at any other studio and it adds a different challenge. They also have a separate private reformer studio just across the parking lot.",
+      classExperience: "We took Hannah's class and she was absolutely incredible. It's classic Pilates with a slightly athletic edge - you will definitely feel the burn. The heat adds another layer of difficulty, and between the reformer work, the towers, and those U-shaped weights, it's a well-rounded challenge. A 4 on difficulty. The class works with everyone from athletes and dancers to everyday clients, which speaks to how well the instructors adjust.",
+      vibe: "Founded by Shannon Crane and Michal Rouse, there's a real precision and discipline to how things are run here. It's not a trendy, influencer-heavy studio - it's a serious Pilates studio that happens to be in a beautiful space. The community feels dedicated and the instructors clearly know their craft. They also offer an instructor certification program if that world interests you.",
+      knowBeforeYouGo: "Drop-in reformer is $50, mat is $32. The intro offer is 3 classes for $100 (45-day expiration) or 2 weeks unlimited for $149. Grip socks are required, no exceptions - they sell them if you forget. Parking is easy with tons of spots in The Summit lot. Eon is right across for a post-class treat, and don't skip the merch table on your way out."
+    },
+    videoId: null, tiktokId: "7593210448074280222", color: "#B8B0C8",
+  },
 ];
 
 // Auto-populate neighborhoods from studio data
