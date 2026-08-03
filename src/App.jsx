@@ -931,7 +931,7 @@ function HomePage({ navigate, searchAndGo }) {
         <div className="bk-herogrid" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(38px,5vw,62px) clamp(16px,4vw,44px) clamp(30px,4vw,46px)", display: "grid", gridTemplateColumns: "1.15fr 400px", gap: "clamp(24px,4vw,54px)", alignItems: "center", position: "relative", zIndex: 1 }}>
           <div className="bk-heroleft">
             <div className="bk-headline" style={{ position: "relative", paddingTop: 6 }}>
-              <div style={{ ...bigType, color: BRAND.butter, WebkitTextStroke: `1.4px ${BRAND.red}`, userSelect: "none", whiteSpace: "nowrap", transformOrigin: "left center", animation: "bkBreathe 9s ease-in-out infinite", textShadow: "1px 1px 0 #8C2D32,2px 2px 0 #8C2D32,3px 3px 0 #8C2D32,4px 4px 0 #8C2D32,5px 5px 0 #8C2D32,6px 6px 0 #8C2D32,7px 7px 0 #8C2D32,8px 8px 0 #8C2D32,9px 9px 0 #8C2D32,10px 10px 0 #8C2D32,11px 11px 0 #8C2D32,12px 12px 0 #8C2D32,13px 13px 0 #8C2D32,14px 14px 0 #8C2D32,15px 15px 0 #7a2529,16px 16px 22px rgba(140,45,50,0.22)" }}>WORKOUT</div>
+              <div style={{ ...bigType, color: BRAND.butter, userSelect: "none", whiteSpace: "nowrap", transformOrigin: "left center", animation: "bkBreathe 9s ease-in-out infinite", textShadow: "1px 1px 0 #8C2D32,2px 2px 0 #8C2D32,3px 3px 0 #8C2D32,4px 4px 0 #8C2D32,5px 5px 0 #8C2D32,6px 6px 0 #8C2D32,7px 7px 0 #8C2D32,8px 8px 0 #8C2D32,9px 9px 0 #8C2D32,10px 10px 0 #8C2D32,11px 11px 0 #8C2D32,12px 12px 0 #8C2D32,13px 13px 0 #8C2D32,14px 14px 0 #8C2D32,15px 15px 0 #7a2529,16px 16px 22px rgba(140,45,50,0.22)" }}>WORKOUT</div>
               <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(34px,5.4vw,68px)", lineHeight: 1.05, color: BRAND.red, marginTop: "0.5em", marginLeft: "0.12em" }}>with us.</div>
             </div>
             <p style={{ fontSize: "clamp(1rem,1.5vw,1.15rem)", lineHeight: 1.5, color: "rgba(44,37,34,0.66)", fontWeight: 300, marginTop: 18, letterSpacing: "0.01em" }}>Your trusted studio tour guides.</p>
@@ -1522,7 +1522,7 @@ function SearchPage({ query, navigate, searchAndGo }) {
 
   const sortLabel = {rating:"overall",aesthetic:"aesthetic",music:"music",cleanliness:"cleanliness",difficulty:"difficulty",price:"intro price",newest:"newest"};
   const sortKeys = ["rating","aesthetic","music","cleanliness","difficulty","price","newest"];
-  const colHeaders = [{key:"rating",label:"overall"},{key:"aesthetic",label:"aesthetic"},{key:"music",label:"music"},{key:"cleanliness",label:"clean"},{key:"difficulty",label:"difficulty"}];
+  const colHeaders = [{key:"rating",label:"overall",short:"★"},{key:"aesthetic",label:"aesthetic",short:"aes"},{key:"music",label:"music",short:"mus"},{key:"cleanliness",label:"clean",short:"cln"},{key:"difficulty",label:"difficulty",short:"dif"}];
 
   function getScore(s, key) {
     if (key === "rating") return s.rating;
@@ -1572,7 +1572,7 @@ function SearchPage({ query, navigate, searchAndGo }) {
       <div>studio</div>
       <div className="lb-hood">location</div>
       {colHeaders.map(c => (
-        <div key={c.key} onClick={()=>setSortBy(c.key)} style={{textAlign:"center",cursor:"pointer",color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.35)"}}>{c.label}{sortBy===c.key?" ↓":""}</div>
+        <div key={c.key} onClick={()=>setSortBy(c.key)} style={{textAlign:"center",cursor:"pointer",color:sortBy===c.key?BRAND.red:"rgba(44,37,34,0.35)"}}><span className="lb-full">{c.label}</span><span className="lb-short">{c.short}</span>{sortBy===c.key?" ↓":""}</div>
       ))}
     </div>
 
@@ -1598,9 +1598,12 @@ function SearchPage({ query, navigate, searchAndGo }) {
     ))}
 
     <style>{`
+      .lb-short{display:none}
       @media(max-width:640px){
         .lb-hood{display:none!important}
-        .lb-header,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 40px 40px!important}
+        .lb-header,.lb-row{grid-template-columns:24px 1fr 36px 36px 36px 36px 36px!important;gap:4px!important}
+        .lb-full{display:none!important}
+        .lb-short{display:inline!important}
       }
     `}</style>
   </div>;
